@@ -1,0 +1,96 @@
+<strings>
+    <string id="AppName">analogwatch</string>
+
+    <!-- View names -->
+    <string id="ClockView">Clock</string>
+
+    <!-- Messages -->
+    <string id="NoMessages">No messages</string>
+    <string id="Connecting">Connecting...</string>
+    <string id="Connected">Connected</string>
+    <string id="Disconnected">Disconnected</string>
+
+    <!-- Settings -->
+    <string id="ViewModeTitle">Default View</string>
+    <string id="ViewModeClock">Clock</string>
+    <string id="ViewModeAnalogClock">Analog Clock</string>
+
+    <!-- Profile names -->
+    <string id="ColorProfileTitle">Color Profile</string>
+    <string id="ProfileClassic">Classic Red</string>
+    <string id="ProfileBlueSteel">Blue Steel</string>
+    <string id="ProfileOrange">Orange</string>
+    <string id="ProfileWhite">White</string>
+    <string id="ProfileCustom">Custom</string>
+
+    <string id="UpdateSecondsTitle">Update Every Second</string>
+
+    <string id="HandFgColorTitle">Hand Foreground</string>
+    <string id="HandBgColorTitle">Hand Background</string>
+    <string id="HandCenterColorTitle">Hand Center</string>
+
+
+    <string id="FaceBgColorTitle">Face Background</string>
+    <string id="FaceBorderColorTitle">Face Border</string>
+
+    <string id="DayBgColorTitle">Day Background</string>
+    <string id="DayNameColorTitle">Day Name</string>
+    <string id="DayNumberColorTitle">Day Number</string>
+    <string id="DayOutlineColorTitle">Day Outline</string>
+
+    <string id="HourMarkerColorTitle">Hour Marker</string>
+    <string id="MinuteTickColorTitle">Minute Tick</string>
+    <string id="NumberColorTitle">Number</string>
+    <string id="BatteryFullTitle">Battery Full</string>
+    <string id="BatteryEmptyTitle">Battery Empty</string>
+
+
+    <string id="GroupHandsTitle">Hands Settings</string>
+    <string id="GroupHandsDesc">Customize the appearance of the watch hands.</string>
+    <string id="GroupFaceTitle">Face Settings</string>
+    <string id="GroupFaceDesc">Customize the appearance of the watch face.</string>
+    <string id="DayFaceTitle">Day Settings</string>
+    <string id="DayFaceDesc">Customize the appearance for day of the watch face.</string>
+    <string id="MarkerFaceTitle">Marker Settings</string>
+    <string id="MarkerFaceDesc">Customize the appearance for markers on the watch face.</string>
+
+
+    <string id="ColorBlue">Blue</string>
+    <string id="ColorGold">Gold</string>
+    <string id="ColorDarkGray">Dark Gray</string>
+    <string id="ColorGray">Gray</string>
+    <string id="ColorGreen">Green</string>
+    <string id="ColorYellow">Yellow</string>
+    <string id="ColorBlack">Black</string>
+    <string id="ColorPrussianBlue">Prussian Blue</string>
+    <string id="ColorNavyElectric">Navy Electric</string>
+    <string id="ColorOxfordNavy">Oxford Navy</string>
+    <string id="ColorCoffeeBean">Coffee Bean</string>
+    <string id="ColorDarkAmethyst">Dark Amethyst</string>
+    <string id="ColorRichMahogany">Rich Mahogany</string>
+    <string id="ColorDeepSpaceBlue">Deep Space Blue</string>
+    <string id="ColorGraphite">Graphite</string>
+    <string id="ColorCharcoal">Charcoal</string>
+    <string id="ColorChestnut">Chestnut</string>
+    <string id="ColorOxblood">Oxblood</string>
+    <string id="ColorLimeMoss">Lime Moss</string>
+    <string id="ColorSmartBlue">Smart Blue</string>
+    <string id="ColorSapphire">Sapphire</string>
+    <string id="ColorCornflowerOcean">Cornflower Ocean</string>
+    <string id="ColorCoolSteel">Cool Steel</string>
+    <string id="ColorSilver">Silver</string>
+    <string id="ColorPaleSky">Pale Sky</string>
+    <string id="ColorPowderBlue">Powder Blue</string>
+    <string id="ColorVanillaCustard">Vanilla Custard</string>
+    <string id="ColorGoldenPollen">Golden Pollen</string>
+    <string id="ColorAmberFlame">Amber Flame</string>
+    <string id="ColorBurntPeach">Burnt Peach</string>
+    <string id="ColorPumpkinSpice">Pumpkin Spice</string>
+    <string id="ColorCrimsonCarrot">Crimson Carrot</string>
+    <string id="ColorCinnabar">Cinnabar</string>
+    <string id="ColorRed">Red</string>
+    <string id="ColorFreshSky">Fresh Sky</string>
+    <string id="ColorAlmondSilk">Almond Silk</string>
+    <string id="ColorIvory">Ivory</string>
+    <string id="ColorWhite">White</string>
+</strings>
