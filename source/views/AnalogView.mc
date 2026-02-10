@@ -57,6 +57,11 @@ class AnalogView extends WatchUi
   private const PROFILE_WHITE = 3;
   private const PROFILE_CUSTOM = 4;
 
+  // New variables for Partial Updates
+  private var _backgroundBuffer as Graphics.BufferedBitmap  ? ;
+  private var _screenCenterPoint as Lang.Array<Lang.Number> ? ;
+  private var _prevSecond as Lang.Number                    ? ;
+
   // Constructor
   private function initialize() {
     WatchFace.initialize();
@@ -292,6 +297,36 @@ class AnalogView extends WatchUi
     _arcRadius = (_radius * 0.92).toNumber();
 
     _iconFont = WatchUi.loadResource(Rez.Fonts.IconFont);
+
+    // Initialize the off-screen buffer
+    // We create a bitmap the size of the screen
+    if (Graphics has: BufferedBitmap) {
+      var bitmapOptions = {
+        : width => dc.getWidth(), : height => dc.getHeight(),
+        /*
+        :palette => [
+            _facebgcolor,
+            _facebordercolor,
+            _handcentercolor,
+            _hourmarkercolor,
+            _minutetickcolor,
+            _numbercolor,
+            Graphics.COLOR_TRANSPARENT
+        ]
+        */
+      };
+
+      // FIX: Check for the new createBufferedBitmap method first (Forerunner
+      // 165 support)
+      if (Graphics has: createBufferedBitmap) {
+        // CIQ 4.0+ way: Returns a Reference, so we must call .get()
+        var bufferRef = Graphics.createBufferedBitmap(bitmapOptions);
+        _backgroundBuffer = bufferRef.get();
+      } else if (Graphics has: BufferedBitmap) {
+        // Old CIQ way (for older devices if you support them)
+        _backgroundBuffer = new Graphics.BufferedBitmap(bitmapOptions);
+      }
+    }
   }
 
   function onUpdate(dc) {
@@ -301,57 +336,157 @@ class AnalogView extends WatchUi
       onLayout(dc); // Safety fallback
     }
 
-    var useAntiAlias = (dc has: setAntiAlias);
+    /*
+        var useAntiAlias = (dc has: setAntiAlias);
 
-    if (useAntiAlias) {
-      dc.setAntiAlias(true);
+        if (useAntiAlias) {
+          dc.setAntiAlias(true);
+        }
+
+        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+        dc.clear();
+
+        dc.setPenWidth(1);
+        drawFace(dc);
+        drawHourMarkers(dc);
+        drawMinuteTicks(dc);
+        drawNumbers(dc);
+        drawLoad(dc);
+        drawDateInfo(dc);
+        drawTime(dc);
+        drawBluetoothStatus(dc);
+
+        if (useAntiAlias) {
+          dc.setAntiAlias(false);
+        }
+        */
+
+    // 1. Check if we need to redraw the static background
+    // We only redraw the buffer if settings changed or it's empty
+    var targetDc = dc;
+
+    if (_backgroundBuffer != null) {
+      // If we have a buffer, we draw the static face into IT, not the screen
+      targetDc = _backgroundBuffer.getDc();
     }
 
-    dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-    dc.clear();
+    // 2. Draw Static Elements to the Buffer (or Screen if no buffer)
+    // ONLY do this if we actually need to refresh the background
+    // (For simplicity, we do it every frame here, but ideally you cache this)
+    targetDc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+    targetDc.clear();
 
-    dc.setPenWidth(1);
-    drawFace(dc);
-    drawHourMarkers(dc);
-    drawMinuteTicks(dc);
-    drawNumbers(dc);
+    // Pass targetDc (the buffer) to these functions
+    drawFace(targetDc);
+    drawHourMarkers(targetDc);
+    drawMinuteTicks(targetDc);
+    drawNumbers(targetDc);
+
+    // 3. If we used a buffer, copy it to the real screen now
+    if (_backgroundBuffer != null) {
+      dc.drawBitmap(0, 0, _backgroundBuffer);
+    }
+
+    // 4. Draw Dynamic Elements (Battery, Date, Hands) directly on Screen
+    // These change often, so we draw them on top of the bitmap
     drawLoad(dc);
     drawDateInfo(dc);
-    drawTime(dc);
+    drawTime(dc); // Draws Hour/Minute hands (and second hand if High Power)
     drawBluetoothStatus(dc);
-
-    if (useAntiAlias) {
-      dc.setAntiAlias(false);
-    }
   }
 
-  // NEW: Partial update for efficient second hand updates
   function onPartialUpdate(dc) {
-    // Only redraw the second hand for better battery life
-    if (_updateEverySecond) {
-      _logger.debug("AnalogView",
-                    "=== AnalogView onPartialUpdate (second hand) ===");
-
-      var clockTime = System.getClockTime();
-      var second = clockTime.sec;
-      //      var minute = clockTime.min;
-      //      var hour = clockTime.hour % 12;
-
-      // Clear just the second hand area (optional, for smoother animation)
-      dc.setColor(_facebgcolor, _facebgcolor);
-      // ... draw small clearing circle around center if needed
-
-      // Draw second hand
-      var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
-      dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
-      dc.setPenWidth(_secondPenWidth);
-
-      var x1 = (_centerX - Math.cos(secondAngle) * _radius * 0.1).toNumber();
-      var y1 = (_centerY - Math.sin(secondAngle) * _radius * 0.1).toNumber();
-      var x2 = (_centerX + Math.cos(secondAngle) * _radius * 0.75).toNumber();
-      var y2 = (_centerY + Math.sin(secondAngle) * _radius * 0.75).toNumber();
-      dc.drawLine(x1, y1, x2, y2);
+    _logger.debug("AnalogView", "=== AnalogView onPartialUpdate ===");
+    // 1. Security Checks
+    if (!_updateEverySecond || _backgroundBuffer == null) {
+      return;
     }
+
+    var clockTime = System.getClockTime();
+    var second = clockTime.sec;
+
+    // If the second hasn't changed, don't do anything
+    if (_prevSecond == second) {
+      return;
+    }
+
+    // 2. Setup Geometry
+    var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
+    var prevAngle = (_prevSecond != null)
+                        ? (_prevSecond * Math.PI) / 30 - Math.PI / 2
+                        : secondAngle;
+
+    _prevSecond = second; // Update for next time
+
+    // 3. Define the Clip Region (The "Box" to update)
+    // We need a box that covers the OLD hand (to erase it) AND the NEW hand
+    var extraPadding = 2; // Extra pixels to account for line width
+
+    // Calculate tip positions
+    var curX = (_centerX + Math.cos(secondAngle) * _radius * 0.75).toNumber();
+    var curY = (_centerY + Math.sin(secondAngle) * _radius * 0.75).toNumber();
+    var prevX = (_centerX + Math.cos(prevAngle) * _radius * 0.75).toNumber();
+    var prevY = (_centerY + Math.sin(prevAngle) * _radius * 0.75).toNumber();
+
+    // Get min/max of the Center, Current Tip, and Previous Tip
+    var minX = _centerX;
+    var maxX = _centerX;
+    var minY = _centerY;
+    var maxY = _centerY;
+
+    if (curX < minX) {
+      minX = curX;
+    }
+    if (curX > maxX) {
+      maxX = curX;
+    }
+    if (curY < minY) {
+      minY = curY;
+    }
+    if (curY > maxY) {
+      maxY = curY;
+    }
+
+    if (prevX < minX) {
+      minX = prevX;
+    }
+    if (prevX > maxX) {
+      maxX = prevX;
+    }
+    if (prevY < minY) {
+      minY = prevY;
+    }
+    if (prevY > maxY) {
+      maxY = prevY;
+    }
+
+    // Apply padding and screen limits
+    minX -= extraPadding;
+    minY -= extraPadding;
+    maxX += extraPadding;
+    maxY += extraPadding;
+
+    // 4. Set the Clip
+    // Garmin will ONLY allow drawing pixels inside this box
+    dc.setClip(minX, minY, (maxX - minX), (maxY - minY));
+
+    // 5. Restore Background (Erasing the old hand)
+    // We draw the BufferedBitmap, but because of setClip,
+    // it only paints the tiny rectangle we defined.
+    dc.drawBitmap(0, 0, _backgroundBuffer);
+
+    // 6. Draw the New Hand
+    dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
+    dc.setPenWidth(_secondPenWidth);
+
+    // Re-calculate start/end exactly as you do in drawTime
+    var x1 = (_centerX - Math.cos(secondAngle) * _radius * 0.1).toNumber();
+    var y1 = (_centerY - Math.sin(secondAngle) * _radius * 0.1).toNumber();
+    // We already calculated the tip (curX, curY) above
+    dc.drawLine(x1, y1, curX, curY);
+
+    // 7. Clear Clip (Good practice)
+    dc.clearClip();
   }
 
   private function drawBluetoothStatus(dc as Graphics.Dc) as Void {
@@ -365,6 +500,7 @@ class AnalogView extends WatchUi
   }
 
   private function drawFace(dc) {
+    _logger.debug("AnalogView", "drawFace");
     // Dark background
     dc.setColor(_facebgcolor, Graphics.COLOR_TRANSPARENT);
     dc.fillCircle(_centerX, _centerY, (_radius * 0.97).toNumber());
@@ -401,6 +537,7 @@ class AnalogView extends WatchUi
   }
 
   private function drawHourMarkers(dc) {
+    _logger.debug("AnalogView", "drawHourMarkers");
     var triangleHeight = (_radius * 0.07).toNumber();
     var triangleBase = (_radius * 0.04).toNumber();
 
@@ -460,30 +597,6 @@ class AnalogView extends WatchUi
 
         dc.drawLine(xStart, yStart, xEnd, yEnd);
       }
-    }
-  }
-
-  /*
-  Assume pen width and color is already set
-  */
-  private function drawSmoothLine(dc, x1, y1, x2, y2) {
-
-    // 1. Check if the device supports anti-aliasing
-    if (dc has: setAntiAlias) {
-      dc.setAntiAlias(true);
-    }
-
-    // 2. Set your line thickness and color
-    // dc.setPenWidth(2);
-    // dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-
-    // 3. Draw the line
-    dc.drawLine(x1, y1, x2, y2);
-
-    // 4. Best Practice: Turn it off after drawing if you have
-    // performance-heavy elements coming up
-    if (dc has: setAntiAlias) {
-      dc.setAntiAlias(false);
     }
   }
 
@@ -577,7 +690,8 @@ class AnalogView extends WatchUi
       var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
       dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
 
-      _logger.debug("AnalogView", "minutehand penwidth: " + _secondPenWidth);
+      _logger.debug("AnalogView",
+                    "drawTime minutehand penwidth: " + _secondPenWidth);
       dc.setPenWidth(_secondPenWidth);
 
       var x1 = (_centerX - Math.cos(secondAngle) * _radius * 0.1).toNumber();
