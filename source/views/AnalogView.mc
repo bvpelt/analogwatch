@@ -64,6 +64,48 @@ class AnalogView extends WatchUi
     _propertieUtility = getPropertieUtility();
     _logger.debug("AnalogView", "Initializing AnalogView");
 
+    var deviceSettings = System.getDeviceSettings();
+    _logger.debug("AnalogView",
+                  "firmwareversion: " + deviceSettings.firmwareVersion);
+    _logger.debug("AnalogView",
+                  "heightUnits: " + deviceSettings.heightUnits.toString());
+    _logger.debug("AnalogView",
+                  "inputButtons: " + ViewUtil.inputButtonsToString(
+                                         deviceSettings.inputButtons));
+    _logger.debug(
+        "AnalogView",
+        "isEnhancedReadabilityModeEnabled: " +
+            deviceSettings.isEnhancedReadabilityModeEnabled.toString());
+    _logger.debug("AnalogView",
+                  "monkeyVersion: " + deviceSettings.monkeyVersion.toString());
+    _logger.debug("AnalogView",
+                  "isGlanceModeEnabled: " +
+                      deviceSettings.isGlanceModeEnabled.toString());
+
+    _logger.debug("AnalogView",
+                  "isTouchScreen: " + deviceSettings.isTouchScreen.toString());
+
+    _logger.debug("AnalogView",
+                  "paceUnits: " + deviceSettings.paceUnits.toString());
+
+    _logger.debug("AnalogView",
+                  "paceUnits: " + deviceSettings.paceUnits.toString());
+
+    _logger.debug("AnalogView", "partNumber: " + deviceSettings.partNumber);
+    _logger.debug("AnalogView", "phoneOperatingSystem: " +
+                                    ViewUtil.phoneOperatingSystemToString(
+                                        deviceSettings.phoneOperatingSystem));
+    _logger.debug("AnalogView", "requiresBurnInProtection: " +
+                                    deviceSettings.requiresBurnInProtection);
+
+    _logger.debug("AnalogView", "screenHeight: " + deviceSettings.screenHeight);
+    _logger.debug("AnalogView", "screenWidth: " + deviceSettings.screenWidth);
+    _logger.debug("AnalogView",
+                  "screenShape: " +
+                      ViewUtil.screenShapeToString(deviceSettings.screenShape));
+    _logger.debug("AnalogView",
+                  "uniqueIdentifier: " + deviceSettings.uniqueIdentifier);
+    _logger.debug("AnalogView", "vibrateOn: " + deviceSettings.vibrateOn);
     // Load settings immediately on startup
     updateSettings();
   }
