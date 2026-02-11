@@ -10,7 +10,7 @@ Published: https://apps.garmin.com/apps/619d861b-b12f-44ab-ad85-2c05f574aeaf
   > > <property id="MinimalDebugLevel" type="number">3</property>
 - build an export
   > > `make clean-storage export`
-- publish the new app using https://apps.garmin.com/en-US/developer/upload and/or https://apps.garmin.com/apps/6186063c-8571-40bc-a524-8914d958483b
+- publish the new app using https://apps.garmin.com/en-US/developer/upload and/or https://apps.garmin.com/apps/820dfa7e-7b9e-4e35-8e14-feb072e74d57
 - publish a revised app using https://apps.garmin.com/en-US/developer/dashboard
 
 # Navigation
