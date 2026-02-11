@@ -58,9 +58,9 @@ class AnalogView extends WatchUi
   private const PROFILE_CUSTOM = 4;
 
   // New variables for Partial Updates
-  private var _backgroundBuffer as Graphics.BufferedBitmap  ? ;
-  private var _screenCenterPoint as Lang.Array<Lang.Number> ? ;
-  private var _prevSecond as Lang.Number                    ? ;
+  private var _backgroundBuffer as Graphics.BufferedBitmap ? ;
+  // private var _screenCenterPoint as Lang.Array<Lang.Number> ? ;
+  private var _prevSecond as Lang.Number ? ;
 
   // Constructor
   private function initialize() {
@@ -73,44 +73,67 @@ class AnalogView extends WatchUi
     _logger.debug("AnalogView",
                   "firmwareversion: " + deviceSettings.firmwareVersion);
     _logger.debug("AnalogView",
-                  "heightUnits: " + deviceSettings.heightUnits.toString());
-    _logger.debug("AnalogView",
-                  "inputButtons: " + ViewUtil.inputButtonsToString(
-                                         deviceSettings.inputButtons));
-    _logger.debug(
-        "AnalogView",
-        "isEnhancedReadabilityModeEnabled: " +
-            deviceSettings.isEnhancedReadabilityModeEnabled.toString());
-    _logger.debug("AnalogView",
                   "monkeyVersion: " + deviceSettings.monkeyVersion.toString());
-    _logger.debug("AnalogView",
-                  "isGlanceModeEnabled: " +
-                      deviceSettings.isGlanceModeEnabled.toString());
-
-    _logger.debug("AnalogView",
-                  "isTouchScreen: " + deviceSettings.isTouchScreen.toString());
-
-    _logger.debug("AnalogView",
-                  "paceUnits: " + deviceSettings.paceUnits.toString());
-
-    _logger.debug("AnalogView",
-                  "paceUnits: " + deviceSettings.paceUnits.toString());
-
     _logger.debug("AnalogView", "partNumber: " + deviceSettings.partNumber);
-    _logger.debug("AnalogView", "phoneOperatingSystem: " +
-                                    ViewUtil.phoneOperatingSystemToString(
-                                        deviceSettings.phoneOperatingSystem));
-    _logger.debug("AnalogView", "requiresBurnInProtection: " +
-                                    deviceSettings.requiresBurnInProtection);
-
     _logger.debug("AnalogView", "screenHeight: " + deviceSettings.screenHeight);
     _logger.debug("AnalogView", "screenWidth: " + deviceSettings.screenWidth);
     _logger.debug("AnalogView",
-                  "screenShape: " +
-                      ViewUtil.screenShapeToString(deviceSettings.screenShape));
-    _logger.debug("AnalogView",
                   "uniqueIdentifier: " + deviceSettings.uniqueIdentifier);
-    _logger.debug("AnalogView", "vibrateOn: " + deviceSettings.vibrateOn);
+    if (deviceSettings has: heightUnits) {
+      _logger.debug("AnalogView",
+                    "heightUnits: " + deviceSettings.heightUnits.toString());
+    }
+
+    if (deviceSettings has: inputButtons) {
+      _logger.debug("AnalogView",
+                    "inputButtons: " + ViewUtil.inputButtonsToString(
+                                           deviceSettings.inputButtons));
+    }
+
+    if (deviceSettings has: isEnhancedReadabilityModeEnabled) {
+      _logger.debug(
+          "AnalogView",
+          "isEnhancedReadabilityModeEnabled: " +
+              deviceSettings.isEnhancedReadabilityModeEnabled.toString());
+    }
+
+    if (deviceSettings has: isGlanceModeEnabled) {
+
+      _logger.debug("AnalogView",
+                    "isGlanceModeEnabled: " +
+                        deviceSettings.isGlanceModeEnabled.toString());
+    }
+
+    if (deviceSettings has: isTouchScreen) {
+      _logger.debug("AnalogView", "isTouchScreen: " +
+                                      deviceSettings.isTouchScreen.toString());
+    }
+
+    if (deviceSettings has: paceUnits) {
+      _logger.debug("AnalogView",
+                    "paceUnits: " + deviceSettings.paceUnits.toString());
+    }
+
+    if (deviceSettings has: phoneOperatingSystem) {
+      _logger.debug("AnalogView", "phoneOperatingSystem: " +
+                                      ViewUtil.phoneOperatingSystemToString(
+                                          deviceSettings.phoneOperatingSystem));
+    }
+
+    if (deviceSettings has: requiresBurnInProtection) {
+      _logger.debug("AnalogView", "requiresBurnInProtection: " +
+                                      deviceSettings.requiresBurnInProtection);
+    }
+
+    if (deviceSettings has: screenShape) {
+      _logger.debug("AnalogView",
+                    "screenShape: " + ViewUtil.screenShapeToString(
+                                          deviceSettings.screenShape));
+    }
+
+    if (deviceSettings has: vibrateOn) {
+      _logger.debug("AnalogView", "vibrateOn: " + deviceSettings.vibrateOn);
+    }
     // Load settings immediately on startup
     updateSettings();
   }
@@ -366,10 +389,14 @@ class AnalogView extends WatchUi
     var targetDc = dc;
 
     if (_backgroundBuffer != null) {
+      _logger.trace("AnalogView", "Use background buffer");
       // If we have a buffer, we draw the static face into IT, not the screen
       targetDc = _backgroundBuffer.getDc();
     }
 
+    if (targetDc has: setAntiAlias) {
+      targetDc.setAntiAlias(true);
+    }
     // 2. Draw Static Elements to the Buffer (or Screen if no buffer)
     // ONLY do this if we actually need to refresh the background
     // (For simplicity, we do it every frame here, but ideally you cache this)
@@ -386,13 +413,22 @@ class AnalogView extends WatchUi
     if (_backgroundBuffer != null) {
       dc.drawBitmap(0, 0, _backgroundBuffer);
     }
-
+    if (targetDc has: setAntiAlias) {
+      targetDc.setAntiAlias(false);
+    }
+    _logger.trace("AnalogView", "Use device context");
     // 4. Draw Dynamic Elements (Battery, Date, Hands) directly on Screen
     // These change often, so we draw them on top of the bitmap
+    if (dc has: setAntiAlias) {
+      dc.setAntiAlias(true);
+    }
     drawLoad(dc);
     drawDateInfo(dc);
     drawTime(dc); // Draws Hour/Minute hands (and second hand if High Power)
     drawBluetoothStatus(dc);
+    if (dc has: setAntiAlias) {
+      dc.setAntiAlias(false);
+    }
   }
 
   function onPartialUpdate(dc) {
@@ -500,7 +536,7 @@ class AnalogView extends WatchUi
   }
 
   private function drawFace(dc) {
-    _logger.debug("AnalogView", "drawFace");
+    _logger.trace("AnalogView", "drawFace");
     // Dark background
     dc.setColor(_facebgcolor, Graphics.COLOR_TRANSPARENT);
     dc.fillCircle(_centerX, _centerY, (_radius * 0.97).toNumber());
@@ -537,7 +573,7 @@ class AnalogView extends WatchUi
   }
 
   private function drawHourMarkers(dc) {
-    _logger.debug("AnalogView", "drawHourMarkers");
+    _logger.trace("AnalogView", "drawHourMarkers");
     var triangleHeight = (_radius * 0.07).toNumber();
     var triangleBase = (_radius * 0.04).toNumber();
 
@@ -690,7 +726,7 @@ class AnalogView extends WatchUi
       var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
       dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
 
-      _logger.debug("AnalogView",
+      _logger.trace("AnalogView",
                     "drawTime minutehand penwidth: " + _secondPenWidth);
       dc.setPenWidth(_secondPenWidth);
 
