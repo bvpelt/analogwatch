@@ -8,15 +8,15 @@ class AnalogApp extends Application
   private var _analogView;
   private var _logger;
   private var _propertieUtility;
-  private var _phoneConnection;
-  private var _lastPhoneConnectionStatus;
+  //  private var _phoneConnection;
+  //  private var _lastPhoneConnectionStatus;
 
   function initialize() {
     AppBase.initialize();
     _logger = getLogger();
-    _phoneConnection = getPhoneConnection();
+    //    _phoneConnection = getPhoneConnection();
     _propertieUtility = getPropertieUtility();
-    _lastPhoneConnectionStatus = false;
+    //    _lastPhoneConnectionStatus = false;
     _logger.debug("AnalogApp", "=== AnalogApp initialize START ===");
 
     var minimumDebugLevel =
@@ -45,35 +45,36 @@ class AnalogApp extends Application
     WatchUi.requestUpdate();
   }
 
-  function checkPhoneConnection() as Void {
-    var deviceSettings = System.getDeviceSettings();
-    var isConnected = false;
+  /*
+    function checkPhoneConnection() as Void {
+      var deviceSettings = System.getDeviceSettings();
+      var isConnected = false;
 
-    if (deviceSettings has: phoneConnected) {
-      isConnected = deviceSettings.phoneConnected;
-    }
-
-    // Check if status changed
-    if (isConnected != _lastPhoneConnectionStatus) {
-      _logger.info("AnalogApp",
-                   "Phone connection changed: " + _lastPhoneConnectionStatus +
-                       " -> " + isConnected);
-
-      if (isConnected) {
-        _phoneConnection.updateConnectionStatus(
-            PhoneConnection.STATUS_CONNECTED);
-        _logger.info("AnalogApp", "Phone connected via Bluetooth");
-      } else {
-        _phoneConnection.updateConnectionStatus(
-            PhoneConnection.STATUS_DISCONNECTED);
-        _logger.info("AnalogApp", "Phone disconnected");
+      if (deviceSettings has: phoneConnected) {
+        isConnected = deviceSettings.phoneConnected;
       }
 
-      _lastPhoneConnectionStatus = isConnected;
-      WatchUi.requestUpdate();
-    }
-  }
+      // Check if status changed
+      if (isConnected != _lastPhoneConnectionStatus) {
+        _logger.info("AnalogApp",
+                     "Phone connection changed: " + _lastPhoneConnectionStatus +
+                         " -> " + isConnected);
 
+        if (isConnected) {
+          _phoneConnection.updateConnectionStatus(
+              isConnected);
+          _logger.info("AnalogApp", "Phone connected via Bluetooth");
+        } else {
+          _phoneConnection.updateConnectionStatus(
+              isConnected);
+          _logger.info("AnalogApp", "Phone disconnected");
+        }
+
+        _lastPhoneConnectionStatus = isConnected;
+        WatchUi.requestUpdate();
+      }
+    }
+  */
   function onSettingsChanged() {
     _logger.info("AnalogApp", "=== Settings changed by user ===");
 

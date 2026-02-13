@@ -3,14 +3,7 @@ using Toybox.Lang;
 class PhoneConnection {
   private static var _instance as PhoneConnection?;
 
-  // Known status levels
-  enum {
-    STATUS_DISCONNECTED = 0,
-    STATUS_CONNECTING = 1,
-    STATUS_CONNECTED = 2,
-  }
-
-  private var _connectionStatus as Lang.Number;
+  var _deviceSettings = null;
 
   // Get singleton instance
   static function getInstance() as PhoneConnection {
@@ -21,11 +14,17 @@ class PhoneConnection {
   }
 
   // Private constructor
-  private function initialize() { _connectionStatus = STATUS_CONNECTED; }
+  private function initialize() {
+    _deviceSettings = System.getDeviceSettings();
+  }
 
-  public function updateConnectionStatus(status) { _connectionStatus = status; }
+  function getConnectionStatus() {
+    if (_deviceSettings == null) {
+      return false;
+    }
 
-  function getConnectionStatus() { return _connectionStatus; }
+    return _deviceSettings.phoneConnected;
+  }
 }
 
 // Global convenience function

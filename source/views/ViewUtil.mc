@@ -6,12 +6,10 @@ using Toybox.System;
 module ViewUtil {
   var _logger = getLogger();
 
-  public function getColor(status as Lang.Number) {
+  public function getColor(status as Lang.Boolean) {
     var color;
-    if (status == PhoneConnection.STATUS_CONNECTED) {
+    if (status) {
       color = Graphics.COLOR_GREEN;
-    } else if (status == PhoneConnection.STATUS_CONNECTING) {
-      color = Graphics.COLOR_YELLOW;
     } else {
       color = Graphics.COLOR_RED;
     }
@@ -20,6 +18,7 @@ module ViewUtil {
   }
 
   public function drawBlueTooth(dc as Graphics.Dc, x, y, font, status) as Void {
+    _logger.debug("ViewUtil", "Draw status: " + status);
     dc.setColor(getColor(status), Graphics.COLOR_TRANSPARENT);
     var bluetoothIcon = "\ue904";
     dc.drawText(x, y, font, bluetoothIcon,

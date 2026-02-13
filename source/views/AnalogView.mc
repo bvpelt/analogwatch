@@ -60,7 +60,7 @@ class AnalogView extends WatchUi
   // New variables for Partial Updates
   private var _backgroundBuffer as Graphics.BufferedBitmap ? ;
   // private var _screenCenterPoint as Lang.Array<Lang.Number> ? ;
-  private var _prevSecond as Lang.Number ? ;
+  //  private var _prevSecond as Lang.Number ? ;
 
   // Constructor
   private function initialize() {
@@ -417,6 +417,7 @@ class AnalogView extends WatchUi
       targetDc.setAntiAlias(false);
     }
     _logger.trace("AnalogView", "Use device context");
+
     // 4. Draw Dynamic Elements (Battery, Date, Hands) directly on Screen
     // These change often, so we draw them on top of the bitmap
     if (dc has: setAntiAlias) {
@@ -431,105 +432,107 @@ class AnalogView extends WatchUi
     }
   }
 
-  function onPartialUpdate(dc) {
-    _logger.debug("AnalogView", "=== AnalogView onPartialUpdate ===");
-    // 1. Security Checks
-    if (!_updateEverySecond || _backgroundBuffer == null) {
-      return;
+  /*
+    function onPartialUpdate(dc) {
+      _logger.debug("AnalogView", "=== AnalogView onPartialUpdate ===");
+      // 1. Security Checks
+      if (!_updateEverySecond || _backgroundBuffer == null) {
+        return;
+      }
+
+      var clockTime = System.getClockTime();
+      var second = clockTime.sec;
+
+      // If the second hasn't changed, don't do anything
+      if (_prevSecond == second) {
+        return;
+      }
+
+      // 2. Setup Geometry
+      var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
+      var prevAngle = (_prevSecond != null)
+                          ? (_prevSecond * Math.PI) / 30 - Math.PI / 2
+                          : secondAngle;
+
+      _prevSecond = second; // Update for next time
+
+      // 3. Define the Clip Region (The "Box" to update)
+      // We need a box that covers the OLD hand (to erase it) AND the NEW hand
+      var extraPadding = 2; // Extra pixels to account for line width
+
+      // Calculate tip positions
+      var curX = (_centerX + Math.cos(secondAngle) * _radius * 0.75).toNumber();
+      var curY = (_centerY + Math.sin(secondAngle) * _radius * 0.75).toNumber();
+      var prevX = (_centerX + Math.cos(prevAngle) * _radius * 0.75).toNumber();
+      var prevY = (_centerY + Math.sin(prevAngle) * _radius * 0.75).toNumber();
+
+      // Get min/max of the Center, Current Tip, and Previous Tip
+      var minX = _centerX;
+      var maxX = _centerX;
+      var minY = _centerY;
+      var maxY = _centerY;
+
+      if (curX < minX) {
+        minX = curX;
+      }
+      if (curX > maxX) {
+        maxX = curX;
+      }
+      if (curY < minY) {
+        minY = curY;
+      }
+      if (curY > maxY) {
+        maxY = curY;
+      }
+
+      if (prevX < minX) {
+        minX = prevX;
+      }
+      if (prevX > maxX) {
+        maxX = prevX;
+      }
+      if (prevY < minY) {
+        minY = prevY;
+      }
+      if (prevY > maxY) {
+        maxY = prevY;
+      }
+
+      // Apply padding and screen limits
+      minX -= extraPadding;
+      minY -= extraPadding;
+      maxX += extraPadding;
+      maxY += extraPadding;
+
+      // 4. Set the Clip
+      // Garmin will ONLY allow drawing pixels inside this box
+      dc.setClip(minX, minY, (maxX - minX), (maxY - minY));
+
+      // 5. Restore Background (Erasing the old hand)
+      // We draw the BufferedBitmap, but because of setClip,
+      // it only paints the tiny rectangle we defined.
+      dc.drawBitmap(0, 0, _backgroundBuffer);
+
+      // 6. Draw the New Hand
+      dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(_secondPenWidth);
+
+      // Re-calculate start/end exactly as you do in drawTime
+      var x1 = (_centerX - Math.cos(secondAngle) * _radius * 0.1).toNumber();
+      var y1 = (_centerY - Math.sin(secondAngle) * _radius * 0.1).toNumber();
+      // We already calculated the tip (curX, curY) above
+      dc.drawLine(x1, y1, curX, curY);
+
+      // 7. Clear Clip (Good practice)
+      dc.clearClip();
     }
-
-    var clockTime = System.getClockTime();
-    var second = clockTime.sec;
-
-    // If the second hasn't changed, don't do anything
-    if (_prevSecond == second) {
-      return;
-    }
-
-    // 2. Setup Geometry
-    var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
-    var prevAngle = (_prevSecond != null)
-                        ? (_prevSecond * Math.PI) / 30 - Math.PI / 2
-                        : secondAngle;
-
-    _prevSecond = second; // Update for next time
-
-    // 3. Define the Clip Region (The "Box" to update)
-    // We need a box that covers the OLD hand (to erase it) AND the NEW hand
-    var extraPadding = 2; // Extra pixels to account for line width
-
-    // Calculate tip positions
-    var curX = (_centerX + Math.cos(secondAngle) * _radius * 0.75).toNumber();
-    var curY = (_centerY + Math.sin(secondAngle) * _radius * 0.75).toNumber();
-    var prevX = (_centerX + Math.cos(prevAngle) * _radius * 0.75).toNumber();
-    var prevY = (_centerY + Math.sin(prevAngle) * _radius * 0.75).toNumber();
-
-    // Get min/max of the Center, Current Tip, and Previous Tip
-    var minX = _centerX;
-    var maxX = _centerX;
-    var minY = _centerY;
-    var maxY = _centerY;
-
-    if (curX < minX) {
-      minX = curX;
-    }
-    if (curX > maxX) {
-      maxX = curX;
-    }
-    if (curY < minY) {
-      minY = curY;
-    }
-    if (curY > maxY) {
-      maxY = curY;
-    }
-
-    if (prevX < minX) {
-      minX = prevX;
-    }
-    if (prevX > maxX) {
-      maxX = prevX;
-    }
-    if (prevY < minY) {
-      minY = prevY;
-    }
-    if (prevY > maxY) {
-      maxY = prevY;
-    }
-
-    // Apply padding and screen limits
-    minX -= extraPadding;
-    minY -= extraPadding;
-    maxX += extraPadding;
-    maxY += extraPadding;
-
-    // 4. Set the Clip
-    // Garmin will ONLY allow drawing pixels inside this box
-    dc.setClip(minX, minY, (maxX - minX), (maxY - minY));
-
-    // 5. Restore Background (Erasing the old hand)
-    // We draw the BufferedBitmap, but because of setClip,
-    // it only paints the tiny rectangle we defined.
-    dc.drawBitmap(0, 0, _backgroundBuffer);
-
-    // 6. Draw the New Hand
-    dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(_secondPenWidth);
-
-    // Re-calculate start/end exactly as you do in drawTime
-    var x1 = (_centerX - Math.cos(secondAngle) * _radius * 0.1).toNumber();
-    var y1 = (_centerY - Math.sin(secondAngle) * _radius * 0.1).toNumber();
-    // We already calculated the tip (curX, curY) above
-    dc.drawLine(x1, y1, curX, curY);
-
-    // 7. Clear Clip (Good practice)
-    dc.clearClip();
-  }
+    */
 
   private function drawBluetoothStatus(dc as Graphics.Dc) as Void {
     var phoneConnection = getPhoneConnection();
     var status = phoneConnection.getConnectionStatus();
 
-    _logger.trace("AnalogView", "Draw bluetooth status: " + status + " at x: " +
+    _logger.debug("AnalogView", "Draw bluetooth status: " + status + " at x: " +
                                     _bluetoothx + " y: " + _bluetoothy);
 
     ViewUtil.drawBlueTooth(dc, _bluetoothx, _bluetoothy, _iconFont, status);
