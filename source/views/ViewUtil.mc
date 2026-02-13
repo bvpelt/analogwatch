@@ -18,7 +18,6 @@ module ViewUtil {
   }
 
   public function drawBlueTooth(dc as Graphics.Dc, x, y, font, status) as Void {
-    _logger.debug("ViewUtil", "Draw status: " + status);
     dc.setColor(getColor(status), Graphics.COLOR_TRANSPARENT);
     var bluetoothIcon = "\ue904";
     dc.drawText(x, y, font, bluetoothIcon,

@@ -59,8 +59,14 @@ class AnalogView extends WatchUi
 
   // New variables for Partial Updates
   private var _backgroundBuffer as Graphics.BufferedBitmap ? ;
-  // private var _screenCenterPoint as Lang.Array<Lang.Number> ? ;
-  //  private var _prevSecond as Lang.Number ? ;
+
+  // Cache for performance optimization
+  private var _hourMarkerPoints as Lang.Array      ? ;
+  private var _minuteTickPoints as Lang.Array      ? ;
+  private var _numberPositions as Lang.Array       ? ;
+  private var _dateBoxPositions as Lang.Dictionary ? ;
+  private var _radiusMultiples as Lang.Dictionary  ? ;
+  private var _layoutCalculated as Lang.Boolean = false;
 
   // Constructor
   private function initialize() {
@@ -156,6 +162,45 @@ class AnalogView extends WatchUi
   function onHide() { _logger.debug("AnalogView", "=== AnalogView onHide"); }
 
   public function updateSettings() {
+    _logger.debug("AnalogView", "==== Updatesettings AnalogView ====");
+
+    var profile = _propertieUtility.getPropertyNumber("ColorProfile", 0);
+
+    _updateEverySecond =
+        _propertieUtility.getPropertyBoolean("UpdateSeconds", true);
+    _logger.debug("AnalogView",
+                  "==== Initialize AnalogView - Update every second: " +
+                      _updateEverySecond.toString() + " ====");
+
+    if (profile == null) {
+      profile = PROFILE_CLASSIC;
+    }
+
+    _logger.debug("AnalogView", "==== Initializing AnalogView with profile: " +
+                                    profile.toString() + " ====");
+
+    // Apply predefined profile or load custom values
+    if (profile == PROFILE_CLASSIC) {
+      applyClassicProfile();
+    } else if (profile == PROFILE_BLUE_STEEL) {
+      applyBlueSteelProfile();
+    } else if (profile == PROFILE_ORANGE) {
+      applyOrangeProfile();
+    } else if (profile == PROFILE_WHITE) {
+      applyWhiteProfile();
+    } else if (profile == PROFILE_CUSTOM) {
+      loadCustomColors();
+    } else {
+      applyClassicProfile(); // Default fallback
+    }
+
+    // Invalidate cached background buffer when colors change
+    _layoutCalculated = false;
+
+    WatchUi.requestUpdate();
+  }
+  // oud
+  public function updateSettingsxx() {
     _logger.debug("AnalogView", "==== Updatesettings AnalogView ====");
 
     var profile = _propertieUtility.getPropertyNumber("ColorProfile", 0);
@@ -321,35 +366,115 @@ class AnalogView extends WatchUi
 
     _iconFont = WatchUi.loadResource(Rez.Fonts.IconFont);
 
+    // PRE-CALCULATE COMMON RADIUS MULTIPLES
+    _radiusMultiples = { "r097" => (_radius * 0.97).toNumber(),
+                         "r090" => (_radius * 0.90).toNumber(),
+                         "r088" => (_radius * 0.88).toNumber(),
+                         "r070" => (_radius * 0.70).toNumber(),
+                         "r055" => (_radius * 0.55).toNumber(),
+                         "r035" => (_radius * 0.035).toNumber(),
+                         "r025" => (_radius * 0.025).toNumber(),
+                         "r004" => (_radius * 0.04).toNumber(),
+                         "r007" => (_radius * 0.07).toNumber(),
+                         "tickLength" => (_radius * 0.04).toNumber(),
+                         "triangleHeight" => (_radius * 0.07).toNumber(),
+                         "triangleBase" => (_radius * 0.04).toNumber() };
+
+    // PRE-CALCULATE HOUR MARKER POSITIONS
+    _hourMarkerPoints = new[12];
+    for (var i = 0; i < 12; i++) {
+      var angle = (i * Math.PI) / 6;
+      var cosAngle = Math.cos(angle);
+      var sinAngle = Math.sin(angle);
+      var perpAngle = angle + Math.PI / 2;
+      var cosPerAngle = Math.cos(perpAngle);
+      var sinPerAngle = Math.sin(perpAngle);
+
+      var triangleHeight = _radiusMultiples["triangleHeight"];
+      var triangleBase = _radiusMultiples["triangleBase"];
+
+      var xOuter = (_centerX + cosAngle * _radiusMultiples["r088"]).toNumber();
+      var yOuter = (_centerY + sinAngle * _radiusMultiples["r088"]).toNumber();
+
+      var xBase1 = (xOuter + cosPerAngle * (triangleBase / 2)).toNumber();
+      var yBase1 = (yOuter + sinPerAngle * (triangleBase / 2)).toNumber();
+      var xBase2 = (xOuter - cosPerAngle * (triangleBase / 2)).toNumber();
+      var yBase2 = (yOuter - sinPerAngle * (triangleBase / 2)).toNumber();
+
+      var xTip =
+          (_centerX + cosAngle * (_radiusMultiples["r088"] - triangleHeight))
+              .toNumber();
+      var yTip =
+          (_centerY + sinAngle * (_radiusMultiples["r088"] - triangleHeight))
+              .toNumber();
+
+      _hourMarkerPoints[i] = [[xBase1, yBase1], [xBase2, yBase2], [xTip, yTip]];
+    }
+
+    // PRE-CALCULATE MINUTE TICK POSITIONS
+    _minuteTickPoints = [];
+    var tickLength = _radiusMultiples["tickLength"];
+    for (var i = 0; i < 60; i++) {
+      if (i % 5 != 0) {
+        var angle = (i * Math.PI) / 30;
+        var cosAngle = Math.cos(angle);
+        var sinAngle = Math.sin(angle);
+
+        var xStart =
+            (_centerX + cosAngle * _radiusMultiples["r088"]).toNumber();
+        var yStart =
+            (_centerY + sinAngle * _radiusMultiples["r088"]).toNumber();
+        var xEnd =
+            (_centerX + cosAngle * (_radiusMultiples["r088"] - tickLength))
+                .toNumber();
+        var yEnd =
+            (_centerY + sinAngle * (_radiusMultiples["r088"] - tickLength))
+                .toNumber();
+
+        _minuteTickPoints.add([xStart, yStart, xEnd, yEnd]);
+      }
+    }
+
+    // PRE-CALCULATE NUMBER POSITIONS
+    _numberPositions = new[12];
+    var numbers = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    for (var i = 0; i < 12; i++) {
+      var angle = (i * Math.PI) / 6 - Math.PI / 2;
+      var x =
+          (_centerX + Math.cos(angle) * _radiusMultiples["r070"]).toNumber();
+      var y =
+          (_centerY + Math.sin(angle) * _radiusMultiples["r070"]).toNumber();
+      _numberPositions[i] = [x, y, numbers [i].toString()];
+    }
+
+    // PRE-CALCULATE DATE BOX POSITIONS
+    //    var font = Graphics.FONT_XTINY;
+    var boxHeight = (_radius * 0.19).toNumber();
+    var boxSpacing = (_radius * 0.03).toNumber();
+    var maxlen = (_centerX + _radius * 0.60).toNumber();
+
+    _dateBoxPositions = {
+      "boxHeight" => boxHeight, "boxSpacing" => boxSpacing, "maxlen" => maxlen,
+      "boxY" => _centerY.toNumber() - boxHeight / 2,
+      "outlinePenWidth" =>
+          (_radius * 0.008).toNumber() < 1 ? 1 : (_radius * 0.008).toNumber()
+    };
+
     // Initialize the off-screen buffer
-    // We create a bitmap the size of the screen
     if (Graphics has: BufferedBitmap) {
       var bitmapOptions = {
         : width => dc.getWidth(), : height => dc.getHeight(),
-        /*
-        :palette => [
-            _facebgcolor,
-            _facebordercolor,
-            _handcentercolor,
-            _hourmarkercolor,
-            _minutetickcolor,
-            _numbercolor,
-            Graphics.COLOR_TRANSPARENT
-        ]
-        */
       };
 
-      // FIX: Check for the new createBufferedBitmap method first (Forerunner
-      // 165 support)
       if (Graphics has: createBufferedBitmap) {
-        // CIQ 4.0+ way: Returns a Reference, so we must call .get()
         var bufferRef = Graphics.createBufferedBitmap(bitmapOptions);
         _backgroundBuffer = bufferRef.get();
       } else if (Graphics has: BufferedBitmap) {
-        // Old CIQ way (for older devices if you support them)
         _backgroundBuffer = new Graphics.BufferedBitmap(bitmapOptions);
       }
     }
+
+    _layoutCalculated = true;
   }
 
   function onUpdate(dc) {
@@ -358,31 +483,6 @@ class AnalogView extends WatchUi
     if (_centerX == 0 || _centerY == 0) {
       onLayout(dc); // Safety fallback
     }
-
-    /*
-        var useAntiAlias = (dc has: setAntiAlias);
-
-        if (useAntiAlias) {
-          dc.setAntiAlias(true);
-        }
-
-        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-        dc.clear();
-
-        dc.setPenWidth(1);
-        drawFace(dc);
-        drawHourMarkers(dc);
-        drawMinuteTicks(dc);
-        drawNumbers(dc);
-        drawLoad(dc);
-        drawDateInfo(dc);
-        drawTime(dc);
-        drawBluetoothStatus(dc);
-
-        if (useAntiAlias) {
-          dc.setAntiAlias(false);
-        }
-        */
 
     // 1. Check if we need to redraw the static background
     // We only redraw the buffer if settings changed or it's empty
@@ -397,6 +497,7 @@ class AnalogView extends WatchUi
     if (targetDc has: setAntiAlias) {
       targetDc.setAntiAlias(true);
     }
+
     // 2. Draw Static Elements to the Buffer (or Screen if no buffer)
     // ONLY do this if we actually need to refresh the background
     // (For simplicity, we do it every frame here, but ideally you cache this)
@@ -432,107 +533,11 @@ class AnalogView extends WatchUi
     }
   }
 
-  /*
-    function onPartialUpdate(dc) {
-      _logger.debug("AnalogView", "=== AnalogView onPartialUpdate ===");
-      // 1. Security Checks
-      if (!_updateEverySecond || _backgroundBuffer == null) {
-        return;
-      }
-
-      var clockTime = System.getClockTime();
-      var second = clockTime.sec;
-
-      // If the second hasn't changed, don't do anything
-      if (_prevSecond == second) {
-        return;
-      }
-
-      // 2. Setup Geometry
-      var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
-      var prevAngle = (_prevSecond != null)
-                          ? (_prevSecond * Math.PI) / 30 - Math.PI / 2
-                          : secondAngle;
-
-      _prevSecond = second; // Update for next time
-
-      // 3. Define the Clip Region (The "Box" to update)
-      // We need a box that covers the OLD hand (to erase it) AND the NEW hand
-      var extraPadding = 2; // Extra pixels to account for line width
-
-      // Calculate tip positions
-      var curX = (_centerX + Math.cos(secondAngle) * _radius * 0.75).toNumber();
-      var curY = (_centerY + Math.sin(secondAngle) * _radius * 0.75).toNumber();
-      var prevX = (_centerX + Math.cos(prevAngle) * _radius * 0.75).toNumber();
-      var prevY = (_centerY + Math.sin(prevAngle) * _radius * 0.75).toNumber();
-
-      // Get min/max of the Center, Current Tip, and Previous Tip
-      var minX = _centerX;
-      var maxX = _centerX;
-      var minY = _centerY;
-      var maxY = _centerY;
-
-      if (curX < minX) {
-        minX = curX;
-      }
-      if (curX > maxX) {
-        maxX = curX;
-      }
-      if (curY < minY) {
-        minY = curY;
-      }
-      if (curY > maxY) {
-        maxY = curY;
-      }
-
-      if (prevX < minX) {
-        minX = prevX;
-      }
-      if (prevX > maxX) {
-        maxX = prevX;
-      }
-      if (prevY < minY) {
-        minY = prevY;
-      }
-      if (prevY > maxY) {
-        maxY = prevY;
-      }
-
-      // Apply padding and screen limits
-      minX -= extraPadding;
-      minY -= extraPadding;
-      maxX += extraPadding;
-      maxY += extraPadding;
-
-      // 4. Set the Clip
-      // Garmin will ONLY allow drawing pixels inside this box
-      dc.setClip(minX, minY, (maxX - minX), (maxY - minY));
-
-      // 5. Restore Background (Erasing the old hand)
-      // We draw the BufferedBitmap, but because of setClip,
-      // it only paints the tiny rectangle we defined.
-      dc.drawBitmap(0, 0, _backgroundBuffer);
-
-      // 6. Draw the New Hand
-      dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
-      dc.setPenWidth(_secondPenWidth);
-
-      // Re-calculate start/end exactly as you do in drawTime
-      var x1 = (_centerX - Math.cos(secondAngle) * _radius * 0.1).toNumber();
-      var y1 = (_centerY - Math.sin(secondAngle) * _radius * 0.1).toNumber();
-      // We already calculated the tip (curX, curY) above
-      dc.drawLine(x1, y1, curX, curY);
-
-      // 7. Clear Clip (Good practice)
-      dc.clearClip();
-    }
-    */
-
   private function drawBluetoothStatus(dc as Graphics.Dc) as Void {
     var phoneConnection = getPhoneConnection();
     var status = phoneConnection.getConnectionStatus();
 
-    _logger.debug("AnalogView", "Draw bluetooth status: " + status + " at x: " +
+    _logger.trace("AnalogView", "Draw bluetooth status: " + status + " at x: " +
                                     _bluetoothx + " y: " + _bluetoothy);
 
     ViewUtil.drawBlueTooth(dc, _bluetoothx, _bluetoothy, _iconFont, status);
@@ -540,22 +545,26 @@ class AnalogView extends WatchUi
 
   private function drawFace(dc) {
     _logger.trace("AnalogView", "drawFace");
+
+    if (_radiusMultiples == null) {
+      return; // Safety check
+    }
+
     // Dark background
     dc.setColor(_facebgcolor, Graphics.COLOR_TRANSPARENT);
-    dc.fillCircle(_centerX, _centerY, (_radius * 0.97).toNumber());
+    dc.fillCircle(_centerX, _centerY, _radiusMultiples["r097"]);
 
     // Outer silver ring
     dc.setColor(_facebordercolor, Graphics.COLOR_TRANSPARENT);
-
     dc.setPenWidth(_outerPenWidth);
-    dc.drawCircle(_centerX, _centerY, (_radius * 0.97).toNumber());
+    dc.drawCircle(_centerX, _centerY, _radiusMultiples["r097"]);
 
     dc.setPenWidth(_innerPenWidth);
-    dc.drawCircle(_centerX, _centerY, (_radius * 0.9).toNumber());
+    dc.drawCircle(_centerX, _centerY, _radiusMultiples["r090"]);
 
     // Center point
     dc.setColor(_handcentercolor, Graphics.COLOR_TRANSPARENT);
-    dc.fillCircle(_centerX, _centerY, (_radius * 0.04).toNumber());
+    dc.fillCircle(_centerX, _centerY, _radiusMultiples["r004"]);
   }
 
   private function drawLoad(dc) {
@@ -577,111 +586,70 @@ class AnalogView extends WatchUi
 
   private function drawHourMarkers(dc) {
     _logger.trace("AnalogView", "drawHourMarkers");
-    var triangleHeight = (_radius * 0.07).toNumber();
-    var triangleBase = (_radius * 0.04).toNumber();
+
+    if (_hourMarkerPoints == null) {
+      return; // Safety check
+    }
+
+    dc.setColor(_hourmarkercolor, Graphics.COLOR_TRANSPARENT);
 
     for (var i = 0; i < 12; i++) {
-      var angle = (i * Math.PI) / 6;
-
-      var cosAngle = Math.cos(angle);
-      var sinAngle = Math.sin(angle);
-      var perpAngle = angle + Math.PI / 2;
-      var cosPerAngle = Math.cos(perpAngle);
-      var sinPerAngle = Math.sin(perpAngle);
-
-      var xOuter = (_centerX + cosAngle * _radius * 0.88).toNumber();
-      var yOuter = (_centerY + sinAngle * _radius * 0.88).toNumber();
-
-      var xBase1 = (xOuter + cosPerAngle * (triangleBase / 2)).toNumber();
-      var yBase1 = (yOuter + sinPerAngle * (triangleBase / 2)).toNumber();
-      var xBase2 = (xOuter - cosPerAngle * (triangleBase / 2)).toNumber();
-      var yBase2 = (yOuter - sinPerAngle * (triangleBase / 2)).toNumber();
-
-      var xTip =
-          (_centerX + cosAngle * (_radius * 0.88 - triangleHeight)).toNumber();
-      var yTip =
-          (_centerY + sinAngle * (_radius * 0.88 - triangleHeight)).toNumber();
-
-      dc.setColor(_hourmarkercolor, Graphics.COLOR_TRANSPARENT);
-      dc.fillPolygon([
-        [xBase1, yBase1],
-        [xBase2, yBase2],
-        [xTip, yTip],
-      ]);
+      dc.fillPolygon(_hourMarkerPoints[i]);
     }
   }
 
   private function drawMinuteTicks(dc) {
-    var tickLength = (_radius * 0.04).toNumber();
+    if (_minuteTickPoints == null) {
+      return; // Safety check
+    }
 
     dc.setColor(_minutetickcolor, Graphics.COLOR_TRANSPARENT);
-
     dc.setPenWidth(_minuteTickPenWidth);
-    _logger.trace("AnalogView",
-                  "Miniuteticks penwidth: " + _minuteTickPenWidth);
+    _logger.trace("AnalogView", "Minuteticks penwidth: " + _minuteTickPenWidth);
 
-    for (var i = 0; i < 60; i++) {
-      if (i % 5 != 0) {
-        var angle = (i * Math.PI) / 30;
-
-        var cosAngle = Math.cos(angle);
-        var sinAngle = Math.sin(angle);
-
-        var xStart = (_centerX + cosAngle * _radius * 0.88).toNumber();
-        var yStart = (_centerY + sinAngle * _radius * 0.88).toNumber();
-        var xEnd =
-            (_centerX + cosAngle * (_radius * 0.88 - tickLength)).toNumber();
-        var yEnd =
-            (_centerY + sinAngle * (_radius * 0.88 - tickLength)).toNumber();
-
-        dc.drawLine(xStart, yStart, xEnd, yEnd);
-      }
+    for (var i = 0; i < _minuteTickPoints.size(); i++) {
+      var tick = _minuteTickPoints[i] as Lang.Array;
+      dc.drawLine(tick[0], tick[1], tick[2], tick[3]);
     }
   }
 
   private function drawNumbers(dc) {
+    if (_numberPositions == null) {
+      return; // Safety check
+    }
+
     dc.setColor(_numbercolor, Graphics.COLOR_TRANSPARENT);
     var font = Graphics.FONT_XTINY;
-    var numbers = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     for (var i = 0; i < 12; i++) {
-      var angle = (i * Math.PI) / 6 - Math.PI / 2;
-      var cosAngle = Math.cos(angle);
-      var sinAngle = Math.sin(angle);
-
-      var x = (_centerX + cosAngle * _radius * 0.7).toNumber();
-      var y = (_centerY + sinAngle * _radius * 0.7).toNumber();
-
-      dc.drawText(x, y, font, numbers[i].toString(),
+      var pos = _numberPositions[i] as Lang.Array;
+      dc.drawText(pos[0], pos[1], font, pos[2],
                   Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
   }
 
   private function drawDateInfo(dc) {
+    if (_dateBoxPositions == null) {
+      return; // Safety check
+    }
+
     var now = Gregorian.info(Time.now(), Time.FORMAT_LONG);
     var weekday = Lang.format("$1$", [now.day_of_week]);
     var dayNum = now.day;
     var dayString = dayNum < 10 ? "0" + dayNum.toString() : dayNum.toString();
 
-    var _centerYPos = _centerY.toNumber();
-
     var font = Graphics.FONT_XTINY;
     var boxNumberWidth = 1.1 * dc.getTextWidthInPixels(dayString, font);
     var boxWeekdayWidth = 1.1 * dc.getTextWidthInPixels(weekday, font);
 
-    var boxHeight = (_radius * 0.19).toNumber();
-    var boxSpacing = (_radius * 0.03).toNumber();
+    var boxHeight = _dateBoxPositions["boxHeight"];
+    var boxSpacing = _dateBoxPositions["boxSpacing"];
+    var maxlen = _dateBoxPositions["maxlen"];
+    var boxY = _dateBoxPositions["boxY"];
+    var outlinePenWidth = _dateBoxPositions["outlinePenWidth"];
 
-    var maxlen = (_centerX + _radius * 0.60).toNumber();
     var boxDNumberX = maxlen - boxNumberWidth;
     var boxWDNameX = maxlen - boxWeekdayWidth - boxNumberWidth - boxSpacing;
-
-    var boxY = _centerYPos - boxHeight / 2;
-
-    var outlinePenWidth = (_radius * 0.008).toNumber();
-    if (outlinePenWidth < 1) {
-      outlinePenWidth = 1;
-    }
 
     // Weekday box
     dc.setColor(_daybgcolor, Graphics.COLOR_TRANSPARENT);
@@ -692,7 +660,7 @@ class AnalogView extends WatchUi
     dc.drawRectangle(boxWDNameX, boxY, boxWeekdayWidth, boxHeight);
 
     dc.setColor(_daynamecolor, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(boxWDNameX + boxWeekdayWidth / 2, _centerYPos, font, weekday,
+    dc.drawText(boxWDNameX + boxWeekdayWidth / 2, _centerY, font, weekday,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
     // Day box
@@ -704,11 +672,15 @@ class AnalogView extends WatchUi
     dc.drawRectangle(boxDNumberX, boxY, boxNumberWidth, boxHeight);
 
     dc.setColor(_day_numbercolor, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(boxDNumberX + boxNumberWidth / 2, _centerYPos, font, dayString,
+    dc.drawText(boxDNumberX + boxNumberWidth / 2, _centerY, font, dayString,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
   }
 
   private function drawTime(dc) {
+    if (_radiusMultiples == null) {
+      return; // Safety check
+    }
+
     var clockTime = System.getClockTime();
     var hour = clockTime.hour % 12;
     var minute = clockTime.min;
@@ -717,12 +689,13 @@ class AnalogView extends WatchUi
     // Hour hand
     var hourAngle =
         (hour * Math.PI) / 6 + (minute * Math.PI) / 360 - Math.PI / 2;
-    drawHand(dc, hourAngle, _radius * 0.55, _radius * 0.035);
+    drawHand(dc, hourAngle, _radiusMultiples["r055"], _radiusMultiples["r035"]);
 
     // Minute hand
     var minuteAngle =
         (minute * Math.PI) / 30 + (second * Math.PI) / 1800 - Math.PI / 2;
-    drawHand(dc, minuteAngle, _radius * 0.7, _radius * 0.025);
+    drawHand(dc, minuteAngle, _radiusMultiples["r070"],
+             _radiusMultiples["r025"]);
 
     if (_updateEverySecond) {
       // Second hand
@@ -733,10 +706,13 @@ class AnalogView extends WatchUi
                     "drawTime minutehand penwidth: " + _secondPenWidth);
       dc.setPenWidth(_secondPenWidth);
 
-      var x1 = (_centerX - Math.cos(secondAngle) * _radius * 0.1).toNumber();
-      var y1 = (_centerY - Math.sin(secondAngle) * _radius * 0.1).toNumber();
-      var x2 = (_centerX + Math.cos(secondAngle) * _radius * 0.75).toNumber();
-      var y2 = (_centerY + Math.sin(secondAngle) * _radius * 0.75).toNumber();
+      var cosAngle = Math.cos(secondAngle);
+      var sinAngle = Math.sin(secondAngle);
+
+      var x1 = (_centerX - cosAngle * _radius * 0.1).toNumber();
+      var y1 = (_centerY - sinAngle * _radius * 0.1).toNumber();
+      var x2 = (_centerX + cosAngle * _radius * 0.75).toNumber();
+      var y2 = (_centerY + sinAngle * _radius * 0.75).toNumber();
       dc.drawLine(x1, y1, x2, y2);
     }
   }
