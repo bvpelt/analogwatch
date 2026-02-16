@@ -1,6 +1,3 @@
-# Set the manifest file
 project.manifest = manifest.xml
-
-# Explicitly include the settings subfolder if it's not being picked up
 base.sourcePath = source
-base.resourcePath = resources;resources/strings;resources;resources/properties;resources/settings;resources/fonts
+base.resourcePath = $(base.resourcePath);resources-round-208x208;resources-round-218x218;resources-round-240x240;resources-round-260x260;resources-round-280x280;resources-round-360x360;resources-round-390x390;resources-round-416x416;resources-round-454x454;resources-rectangle-240x240;resources-rectangle-320x360;resources
