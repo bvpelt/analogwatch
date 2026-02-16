@@ -15,7 +15,7 @@ echo "Processing: $INPUT_FILE"
 PROJECT_ROOT=$(realpath $(dirname "$0"))
 
 # Define the Default/Base output directory
-BASE_DRAWABLES="${PROJECT_ROOT}/resources/drawables"
+BASE_DRAWABLES="${PROJECT_ROOT}/images"
 
 echo "Project Root: $PROJECT_ROOT"
 
@@ -23,17 +23,14 @@ echo "Project Root: $PROJECT_ROOT"
 # These must be siblings to 'resources', not inside it
 mkdir -p "$BASE_DRAWABLES"
 
-mkdir -p "${PROJECT_ROOT}/resources-round-208x208/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-round-218x218/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-round-240x240/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-round-260x260/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-round-280x280/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-round-360x360/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-round-390x390/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-round-416x416/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-round-454x454/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-rectangle-240x240/drawables"
-mkdir -p "${PROJECT_ROOT}/resources-rectangle-320x360/drawables"
+# Create the directories
+mkdir -p icon-{30,35,36,40,54,56,60,61,65,70,80}/drawables
+mkdir -p icon-va3m/drawables
+
+# Move your correctly sized icons into them (assuming you have them or can resize them)
+# Then copy the drawables.xml to each so the compiler sees the resource definition
+find . -maxdepth 1 -name "icon-*" -exec cp resources/drawables/drawables.xml {}/drawables/ \;
+cp resources/drawables/drawables.xml icon-va3m/drawables
 
 # 5. Check if the file exists
 if [ ! -f "$INPUT_FILE" ]; then
@@ -42,7 +39,7 @@ if [ ! -f "$INPUT_FILE" ]; then
 fi
 
 # 6. Generate the source icons into the base folder first
-for size in 80 60 54 40 36 30; do
+for size in 30 35 36 40 54 56 60 61 65 70 80; do
     OUTPUT_NAME="${BASE_DRAWABLES}/launcher_icon_${size}.png"
     echo "  Generating: $OUTPUT_NAME"
     
@@ -55,43 +52,24 @@ done
 echo "Success! Icons generated. Distributing to device folders..."
 
 # Move into the base drawables directory to start copying
-pushd "$BASE_DRAWABLES" > /dev/null
 
 # --- DISTRIBUTION STEP ---
 # We copy the correctly sized icon to "launcher_icon.png" in the specific device folders
 
-# 1. Set Default (80x80)
-cp launcher_icon_80.png launcher_icon.png
+for size in 30 35 36 40 54 56 60 61 65 70 80; do
+    OUTPUT_NAME="${BASE_DRAWABLES}/launcher_icon_${size}.png"
+    mv $OUTPUT_NAME "${PROJECT_ROOT}/icon-${size}/drawables/launcher_icon.png"
+done
+cp "${PROJECT_ROOT}/icon-80/drawables/launcher_icon.png" ${PROJECT_ROOT}/resources/drawables/
 
-# These devices are tiny (208x208) and need the smallest icon Forerunner 45, Swim 2
-cp launcher_icon_30.png ../../resources-round-208x208/drawables/launcher_icon.png
+OUTPUT_NAME="${BASE_DRAWABLES}/launcher_icon_va3m.png"
+echo "  Generating: $OUTPUT_NAME"
 
+inkscape "$INPUT_FILE" \
+--export-width=40 \
+--export-height=33 \
+--export-filename="$OUTPUT_NAME" 2> /dev/null
 
-# Venu Sq 2 is 'rectangle-320x360'. It has a high-res screen, so it needs 54px, not 36px.
-cp launcher_icon_54.png ../../resources-rectangle-320x360/drawables/launcher_icon.png
-
-# 2. Distribute 40x40 icons (For Fenix, Marq, FR245)
-cp launcher_icon_40.png ../../resources-round-218x218/drawables/launcher_icon.png
-cp launcher_icon_40.png ../../resources-round-240x240/drawables/launcher_icon.png
-cp launcher_icon_40.png ../../resources-round-260x260/drawables/launcher_icon.png
-cp launcher_icon_40.png ../../resources-round-280x280/drawables/launcher_icon.png
-
-# 3. Distribute 60x60 icons (For Venu 2/3, FR265, FR965)
-cp launcher_icon_60.png ../../resources-round-360x360/drawables/launcher_icon.png
-cp launcher_icon_60.png ../../resources-round-390x390/drawables/launcher_icon.png
-cp launcher_icon_60.png ../../resources-round-416x416/drawables/launcher_icon.png
-
-# 4. Distribute 80x80 icons (For High-res, Epix Pro 51mm)
-cp launcher_icon_80.png ../../resources-round-454x454/drawables/launcher_icon.png
-
-# 5. Distribute 36x36 icons (For Venu Sq / Older devices)
-cp launcher_icon_36.png ../../resources-rectangle-240x240/drawables/launcher_icon.png
-# Venu Sq 2 is 'rectangle-320x360'. It has a high-res screen, so it needs 54px, not 36px.
-cp launcher_icon_54.png ../../resources-rectangle-320x360/drawables/launcher_icon.png
-
-# Cleanup: Remove the sized temp files from the base folder so you only have 'launcher_icon.png' (80x80) left
-rm launcher_icon_30.png launcher_icon_36.png launcher_icon_40.png launcher_icon_54.png launcher_icon_60.png launcher_icon_80.png
-
-popd > /dev/null
+mv $OUTPUT_NAME "${PROJECT_ROOT}/icon-va3m/drawables/launcher_icon.png"
 
 echo "Distribution complete. Cleaned up temporary files."

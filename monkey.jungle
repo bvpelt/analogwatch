@@ -1,3 +1,79 @@
 project.manifest = manifest.xml
 base.sourcePath = source
-base.resourcePath = $(base.resourcePath);resources-round-208x208;resources-round-218x218;resources-round-240x240;resources-round-260x260;resources-round-280x280;resources-round-360x360;resources-round-390x390;resources-round-416x416;resources-round-454x454;resources-rectangle-240x240;resources-rectangle-320x360;resources
+
+# Default for most watches is 40x40
+base.resourcePath = resources;icon-40
+
+# --- 80x80 Icons ---
+# (Removing fenix8solar51mm from here as it wants 40x40)
+
+# --- 70x70 Icons ---
+venu2.resourcePath = $(base.resourcePath);icon-70
+venu2plus.resourcePath = $(base.resourcePath);icon-70
+venu3.resourcePath = $(base.resourcePath);icon-70
+venu3s.resourcePath = $(base.resourcePath);icon-70
+d2airx10.resourcePath = $(base.resourcePath);icon-70
+approachs7047mm.resourcePath = $(base.resourcePath);icon-70
+
+# --- 65x65 Icons ---
+fenix847mm.resourcePath = $(base.resourcePath);icon-65
+fenix8pro47mm.resourcePath = $(base.resourcePath);icon-65
+fr57047mm.resourcePath = $(base.resourcePath);icon-65
+fr965.resourcePath = $(base.resourcePath);icon-65
+fr970.resourcePath = $(base.resourcePath);icon-65
+venux1.resourcePath = $(base.resourcePath);icon-65
+venu445mm.resourcePath = $(base.resourcePath);icon-65
+d2mach2.resourcePath = $(base.resourcePath);icon-65
+
+# --- 61x61 Icons ---
+venu2s.resourcePath = $(base.resourcePath);icon-61
+
+# --- 60x60 Icons ---
+# Added instinct3, approachs70 (42mm), and descentg2 here
+venu.resourcePath = $(base.resourcePath);icon-60
+fr265.resourcePath = $(base.resourcePath);icon-60
+fr265s.resourcePath = $(base.resourcePath);icon-60
+epix2.resourcePath = $(base.resourcePath);icon-60
+epix2pro42mm.resourcePath = $(base.resourcePath);icon-60
+epix2pro47mm.resourcePath = $(base.resourcePath);icon-60
+epix2pro51mm.resourcePath = $(base.resourcePath);icon-60
+marq2.resourcePath = $(base.resourcePath);icon-60
+marq2aviator.resourcePath = $(base.resourcePath);icon-60
+descentmk343mm.resourcePath = $(base.resourcePath);icon-60
+descentmk351mm.resourcePath = $(base.resourcePath);icon-60
+fenix843mm.resourcePath = $(base.resourcePath);icon-60
+fenixe.resourcePath = $(base.resourcePath);icon-60
+d2air.resourcePath = $(base.resourcePath);icon-60
+d2mach1.resourcePath = $(base.resourcePath);icon-60
+venud.resourcePath = $(base.resourcePath);icon-60
+instinct3amoled45mm.resourcePath = $(base.resourcePath);icon-60
+instinct3amoled50mm.resourcePath = $(base.resourcePath);icon-60
+approachs7042mm.resourcePath = $(base.resourcePath);icon-60
+descentg2.resourcePath = $(base.resourcePath);icon-60
+
+# --- 56x56 Icons ---
+approachs50.resourcePath = $(base.resourcePath);icon-56
+
+# --- 54x54 Icons ---
+fr165.resourcePath = $(base.resourcePath);icon-54
+fr165m.resourcePath = $(base.resourcePath);icon-54
+fr57042mm.resourcePath = $(base.resourcePath);icon-54
+venu441mm.resourcePath = $(base.resourcePath);icon-54
+
+# --- 36x36 Icons ---
+venusq.resourcePath = $(base.resourcePath);icon-36
+venusqm.resourcePath = $(base.resourcePath);icon-36
+
+# --- 35x35 Icons ---
+fr55.resourcePath = $(base.resourcePath);icon-35
+vivoactive4.resourcePath = $(base.resourcePath);icon-35
+legacysagadarthvader.resourcePath = $(base.resourcePath);icon-35
+legacyherofirstavenger.resourcePath = $(base.resourcePath);icon-35
+
+# --- 30x30 Icons ---
+vivoactive4s.resourcePath = $(base.resourcePath);icon-30
+legacyherocaptainmarvel.resourcePath = $(base.resourcePath);icon-30
+legacysagarey.resourcePath = $(base.resourcePath);icon-30
+
+# --- Special Exceptions ---
+vivoactive3m.resourcePath = $(base.resourcePath);icon-va3m

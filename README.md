@@ -7,7 +7,7 @@ Watch implementation
 - change debug level to Warning in the resources/properties/properties.xml and save this file
   > > <property id="MinimalDebugLevel" type="number">3</property>
 - build an export
-  > > `make clean-storage export`
+  > > `make clean-storage export &> release.log`
 - publish the new app using https://apps.garmin.com/en-US/developer/upload and/or https://apps.garmin.com/apps/820dfa7e-7b9e-4e35-8e14-feb072e74d57
 - publish a revised app using https://apps.garmin.com/en-US/developer/dashboard
 
