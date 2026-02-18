@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
-    <iq:application id="a86698cb-8884-4aa9-94bc-b8f001fc9ac9" type="watchface" name="@Strings.AppName" entry="AnalogApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="3.2.0" version="0.4.0">
+    <iq:application id="a86698cb-8884-4aa9-94bc-b8f001fc9ac9" type="watchface" name="@Strings.AppName" entry="AnalogApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="3.2.0" version="0.5.0">
         <iq:products>
             <iq:product id="approachs50"/>
             <iq:product id="approachs7042mm"/>

@@ -12,7 +12,7 @@
     LEVEL_WARN = 3,
     LEVEL_ERROR = 4,
     -->
-    <property id="MinimalDebugLevel" type="number">3</property>
+    <property id="MinimalDebugLevel" type="number">1</property>
 
     <!-- Profile selector -->
     <property id="ColorProfile" type="number">0</property>

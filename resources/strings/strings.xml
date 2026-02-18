@@ -1,5 +1,5 @@
 <strings>
-    <string id="AppName">analogwatch</string>
+    <string id="AppName">Analogwatch</string>
 
     <!-- View names -->
     <string id="ClockView">Clock</string>

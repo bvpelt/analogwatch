@@ -13,6 +13,7 @@ class AnalogView extends WatchUi
   private var _logger;
   private var _propertieUtility;
   private var _iconFont;
+  private var _activityUtility;
 
   private var _radius = 0;
   private var _centerX = 0;
@@ -97,6 +98,8 @@ class AnalogView extends WatchUi
     WatchFace.initialize();
     _logger = getLogger();
     _propertieUtility = getPropertieUtility();
+    _activityUtility = getActivityUtility();
+
     _logger.debug("AnalogView", "Initializing AnalogView");
 
     var deviceSettings = System.getDeviceSettings();
@@ -220,42 +223,6 @@ class AnalogView extends WatchUi
 
     // Invalidate cached background buffer when colors change
     _layoutCalculated = false;
-
-    WatchUi.requestUpdate();
-  }
-  // oud
-  public function updateSettingsxx() {
-    _logger.debug("AnalogView", "==== Updatesettings AnalogView ====");
-
-    var profile = _propertieUtility.getPropertyNumber("ColorProfile", 0);
-
-    _updateEverySecond =
-        _propertieUtility.getPropertyBoolean("UpdateSeconds", true);
-    _logger.debug("AnalogView",
-                  "==== Initialize AnalogView - Update every second: " +
-                      _updateEverySecond.toString() + " ====");
-
-    if (profile == null) {
-      profile = PROFILE_CLASSIC;
-    }
-
-    _logger.debug("AnalogView", "==== Initializing AnalogView with profile: " +
-                                    profile.toString() + " ====");
-
-    // Apply predefined profile or load custom values
-    if (profile == PROFILE_CLASSIC) {
-      applyClassicProfile();
-    } else if (profile == PROFILE_BLUE_STEEL) {
-      applyBlueSteelProfile();
-    } else if (profile == PROFILE_ORANGE) {
-      applyOrangeProfile();
-    } else if (profile == PROFILE_WHITE) {
-      applyWhiteProfile();
-    } else if (profile == PROFILE_CUSTOM) {
-      loadCustomColors();
-    } else {
-      applyClassicProfile(); // Default fallback
-    }
 
     WatchUi.requestUpdate();
   }
@@ -529,6 +496,21 @@ class AnalogView extends WatchUi
 
   function onUpdate(dc) {
     _logger.trace("AnalogView", "=== AnalogView onUpdate ===");
+
+    _logger.debug("AnalogView", "--- ActivityUtility activeMinutesDay: " +
+                                    _activityUtility.getActiveMinutesDay());
+    _logger.debug("AnalogView", "--- ActivityUtility activeMinutesWeek: " +
+                                    _activityUtility.getActiveMinutesWeek());
+    _logger.debug("AnalogView", "--- ActivityUtility calories: " +
+                                    _activityUtility.getCalories());
+    _logger.debug("AnalogView", "--- ActivityUtility distance: " +
+                                    _activityUtility.getDistance());
+    _logger.debug("AnalogView", "--- ActivityUtility floorsClimed: " +
+                                    _activityUtility.getFloorsClimbed());
+    _logger.debug("AnalogView",
+                  "--- ActivityUtility steps: " + _activityUtility.getSteps());
+    _logger.debug("AnalogView", "--- ActivityUtility stepgoal: " +
+                                    _activityUtility.getStepGoal());
 
     if (_centerX == 0 || _centerY == 0) {
       onLayout(dc); // Safety fallback
