@@ -172,7 +172,6 @@ In resources/drawables/drawables.xml put
 
 In /tmp/com.garmin.connectiq/GARMIN/APPS/LOGS/CIQ_LOG.YML there is information of the simulator.
 
-
 # formatting
 
 Format all files using clang-format
@@ -255,31 +254,53 @@ See https://coolors.co/130303-2d080a-7c3626-f5853f-ffcdbc
 ]
 ```
 
+```json
+[
+    {"Mahogany red", "#b20a1b"},
+    {"Burnt Tangerine", "#ca3c25"},
+    {"Old Gold", "#ccbb00"},
+    {"Deep Space Blue", "#07354b"},
+    {"Turf Green", "#206f28"},
+    {"Powder Blush", "#ffbfb7"}
+]
+```
+
+```json
+[
+    {"Prussian Blue", "#121e40"},
+    {"Yale Blue", "#1c5373"},
+    {"Racing Red", "#ff0022"},
+    {"Beige", "#eeebd0"},
+    {"Snow", "#faf2f0"}
+]
+```
+
+```json
+[
+    {"light cyan", "#e0fbfc"},
+    {"light blue", "#c2dfe3"},
+    {"cool steel", "#9db4c0"},
+    {"blue slate", "#5c6b73"},
+    {"jet black", "#253237"}
+]
+```
+
+cc7f66
+
 All used colors with names
 
 
 ```json
 [
   { "name": "black", "hex": "#000000" },
-  { "name": "coffee bean", "hex": "#130303" },
-  { "name": "graphite", "hex": "#3c3744" },
-  { "name": "charcoal", "hex": "#504949" },
-  { "name": "prussian blue", "hex": "#061a40" },
-  { "name": "oxford navy", "hex": "#0d2c54" },
-  { "name": "dark amethyst", "hex": "#241e4e" },
-  { "name": "deep space blue", "hex": "#003559" },
-  { "name": "navy electric", "hex": "#090c9b" },
-  { "name": "sapphire", "hex": "#0353a4" },
-  { "name": "cornflower ocean", "hex": "#006daa" },
-  { "name": "smart blue", "hex": "#3066be" },
-  { "name": "fresh sky", "hex": "#00a6ed" },
-  { "name": "powder blue", "hex": "#b4c5e4" },
-  { "name": "pale sky", "hex": "#b9d6f2" },
-  { "name": "green", "hex": "#26a924" },
-  { "name": "lime moss", "hex": "#7fb800" },
+  { "name": "jet black", "hex": "#253237" },
+  /* --- RED / WARM GROUP (14) --- */
   { "name": "rich mahogany", "hex": "#2d080a" },
   { "name": "oxblood", "hex": "#960200" },
+  { "name": "mahogany red", "hex": "#b20a1b" },
   { "name": "chestnut", "hex": "#7c3626" },
+  { "name": "burnt tangerine", "hex": "#ca3c25" },
+  { "name": "racing red", "hex": "#ff0022" },
   { "name": "red", "hex": "#ff0000" },
   { "name": "cinnabar", "hex": "#ff3333" },
   { "name": "crimson carrot", "hex": "#f6511d" },
@@ -287,11 +308,42 @@ All used colors with names
   { "name": "pumpkin spice", "hex": "#f5853f" },
   { "name": "amber flame", "hex": "#ffb400" },
   { "name": "golden pollen", "hex": "#ffd046" },
-  { "name": "cool steel", "hex": "#a0a0a0" },
+  { "name": "powder blush", "hex": "#ffbfb7" },
+  /* --- GREEN GROUP (14) --- */
+  { "name": "forest night", "hex": "#162615" },
+  { "name": "deep spruce", "hex": "#1a3a22" },
+  { "name": "turf green", "hex": "#206f28" },
+  { "name": "hunter green", "hex": "#355e3b" },
+  { "name": "green", "hex": "#26a924" },
+  { "name": "jade empire", "hex": "#32965d" },
+  { "name": "amazonite", "hex": "#43b581" },
+  { "name": "lime moss", "hex": "#7fb800" },
+  { "name": "apple tart", "hex": "#90ee90" },
+  { "name": "pistachio", "hex": "#93c572" },
+  { "name": "spring leaf", "hex": "#b2ec5d" },
+  { "name": "menthe", "hex": "#b4f8c8" },
+  { "name": "pale neon", "hex": "#d0f0c0" },
+  { "name": "dewdrop", "hex": "#e2f3e4" },
+  /* --- BLUE GROUP (14) --- */
+  { "name": "prussian blue", "hex": "#061a40" },
+  { "name": "oxford navy", "hex": "#0d2c54" },
+  { "name": "dark amethyst", "hex": "#241e4e" },
+  { "name": "deep space blue", "hex": "#07354b" },
+  { "name": "navy electric", "hex": "#090c9b" },
+  { "name": "yale blue", "hex": "#1c5373" },
+  { "name": "sapphire", "hex": "#0353a4" },
+  { "name": "cornflower ocean", "hex": "#006daa" },
+  { "name": "smart blue", "hex": "#3066be" },
+  { "name": "fresh sky", "hex": "#00a6ed" },
+  { "name": "cool steel", "hex": "#9db4c0" },
+  { "name": "powder blue", "hex": "#b4c5e4" },
+  { "name": "pale sky", "hex": "#b9d6f2" },
+  { "name": "light cyan", "hex": "#e0fbfc" },
+  /* --- WHITES / NEUTRALS --- */
   { "name": "silver", "hex": "#c0c0c0" },
-  { "name": "vanilla custard", "hex": "#eadaa2" },
-  { "name": "almond silk", "hex": "#ffcdbc" },
+  { "name": "beige", "hex": "#eeebd0" },
   { "name": "ivory", "hex": "#fbfff1" },
   { "name": "white", "hex": "#ffffff" }
 ]
 ```
+
