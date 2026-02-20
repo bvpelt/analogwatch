@@ -45,5 +45,5 @@ fresh: clean clean-storage build run
 export: clean-storage
 	find . -name "$(APP_NAME).iq" -delete
 	rm -rf icon-*
-	convertsvgtopng.bash ./images/analogview.svg
+	./convertsvgtopng.bash ./images/analogview.svg
 	java -Xms1g -Dfile.encoding=UTF-8 -Dapple.awt.UIElement=true -jar $(BIN_DIR)/monkeybrains.jar -o $(OUTPUT_DIR)/$(APP_NAME).iq -f monkey.jungle -y $(KEY) -e -r -w
