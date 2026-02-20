@@ -1,39 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE settings [
     <!ENTITY colorList '
-        <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
-        <listEntry value="0x130303">@Strings.ColorCoffeeBean</listEntry>
-        <listEntry value="0x3c3744">@Strings.ColorGraphite</listEntry>
-        <listEntry value="0x504949">@Strings.ColorCharcoal</listEntry>
-        <listEntry value="0x061a40">@Strings.ColorPrussianBlue</listEntry>
-        <listEntry value="0x0d2c54">@Strings.ColorOxfordNavy</listEntry>
-        <listEntry value="0x241e4e">@Strings.ColorDarkAmethyst</listEntry>
-        <listEntry value="0x003559">@Strings.ColorDeepSpaceBlue</listEntry>
-        <listEntry value="0x090c9b">@Strings.ColorNavyElectric</listEntry>
-        <listEntry value="0x0353a4">@Strings.ColorSapphire</listEntry>
-        <listEntry value="0x006daa">@Strings.ColorCornflowerOcean</listEntry>
-        <listEntry value="0x3066be">@Strings.ColorSmartBlue</listEntry>
-        <listEntry value="0x00a6ed">@Strings.ColorFreshSky</listEntry>
-        <listEntry value="0xb4c5e4">@Strings.ColorPowderBlue</listEntry>
-        <listEntry value="0xb9d6f2">@Strings.ColorPaleSky</listEntry>
-        <listEntry value="0x26a924">@Strings.ColorGreen</listEntry>
-        <listEntry value="0x7fb800">@Strings.ColorLimeMoss</listEntry>
-        <listEntry value="0x2d080a">@Strings.ColorRichMahogany</listEntry>
-        <listEntry value="0x960200">@Strings.ColorOxblood</listEntry>
-        <listEntry value="0x7c3626">@Strings.ColorChestnut</listEntry>
-        <listEntry value="0xff0000">@Strings.ColorRed</listEntry>
-        <listEntry value="0xff3333">@Strings.ColorCinnabar</listEntry>
-        <listEntry value="0xf6511d">@Strings.ColorCrimsonCarrot</listEntry>
-        <listEntry value="0xce6c47">@Strings.ColorBurntPeach</listEntry>
-        <listEntry value="0xf5853f">@Strings.ColorPumpkinSpice</listEntry>
-        <listEntry value="0xffb400">@Strings.ColorAmberFlame</listEntry>
-        <listEntry value="0xffd046">@Strings.ColorGoldenPollen</listEntry>
-        <listEntry value="0xa0a0a0">@Strings.ColorCoolSteel</listEntry>
-        <listEntry value="0xc0c0c0">@Strings.ColorSilver</listEntry>
-        <listEntry value="0xeadaa2">@Strings.ColorVanillaCustard</listEntry>
-        <listEntry value="0xffcdbc">@Strings.ColorAlmondSilk</listEntry>
-        <listEntry value="0xfbfff1">@Strings.ColorIvory</listEntry>
-        <listEntry value="0xffffff">@Strings.ColorWhite</listEntry>
+    <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
+    <listEntry value="0x253237">@Strings.ColorJetBlack</listEntry>
+    <listEntry value="0x2d080a">@Strings.ColorRichMahogany</listEntry>
+    <listEntry value="0x960200">@Strings.ColorOxblood</listEntry>
+    <listEntry value="0xb20a1b">@Strings.ColorMahoganyRed</listEntry>
+    <listEntry value="0x7c3626">@Strings.ColorChestnut</listEntry>
+    <listEntry value="0xca3c25">@Strings.ColorBurntTangerine</listEntry>
+    <listEntry value="0xff0022">@Strings.ColorRacingRed</listEntry>
+    <listEntry value="0xff0000">@Strings.ColorRed</listEntry>
+    <listEntry value="0xff3333">@Strings.ColorCinnabar</listEntry>
+    <listEntry value="0xf6511d">@Strings.ColorCrimsonCarrot</listEntry>
+    <listEntry value="0xce6c47">@Strings.ColorBurntPeach</listEntry>
+    <listEntry value="0xf5853f">@Strings.ColorPumpkinSpice</listEntry>
+    <listEntry value="0xffb400">@Strings.ColorAmberFlame</listEntry>
+    <listEntry value="0xffd046">@Strings.ColorGoldenPollen</listEntry>
+    <listEntry value="0xffbfb7">@Strings.ColorPowderBlush</listEntry>
+    <listEntry value="0x162615">@Strings.ColorForestNight</listEntry>
+    <listEntry value="0x1a3a22">@Strings.ColorDeepSpruce</listEntry>
+    <listEntry value="0x206f28">@Strings.ColorTurfGreen</listEntry>
+    <listEntry value="0x355e3b">@Strings.ColorHunterGreen</listEntry>
+    <listEntry value="0x26a924">@Strings.ColorGreen</listEntry>
+    <listEntry value="0x32965d">@Strings.ColorJadeEmpire</listEntry>
+    <listEntry value="0x43b581">@Strings.ColorAmazonite</listEntry>
+    <listEntry value="0x7fb800">@Strings.ColorLimeMoss</listEntry>
+    <listEntry value="0x90ee90">@Strings.ColorAppleTart</listEntry>
+    <listEntry value="0x93c572">@Strings.ColorPistachio</listEntry>
+    <listEntry value="0xb2ec5d">@Strings.ColorSpringLeaf</listEntry>
+    <listEntry value="0xb4f8c8">@Strings.ColorMenthe</listEntry>
+    <listEntry value="0xd0f0c0">@Strings.ColorPaleNeon</listEntry>
+    <listEntry value="0xe2f3e4">@Strings.ColorDewdrop</listEntry>
+    <listEntry value="0x061a40">@Strings.ColorPrussianBlue</listEntry>
+    <listEntry value="0x0d2c54">@Strings.ColorOxfordNavy</listEntry>
+    <listEntry value="0x241e4e">@Strings.ColorDarkAmethyst</listEntry>
+    <listEntry value="0x07354b">@Strings.ColorDeepSpaceBlue</listEntry>
+    <listEntry value="0x090c9b">@Strings.ColorNavyElectric</listEntry>
+    <listEntry value="0x1c5373">@Strings.ColorYaleBlue</listEntry>
+    <listEntry value="0x0353a4">@Strings.ColorSapphire</listEntry>
+    <listEntry value="0x006daa">@Strings.ColorCornflowerOcean</listEntry>
+    <listEntry value="0x3066be">@Strings.ColorSmartBlue</listEntry>
+    <listEntry value="0x00a6ed">@Strings.ColorFreshSky</listEntry>
+    <listEntry value="0x9db4c0">@Strings.ColorCoolSteel</listEntry>
+    <listEntry value="0xb4c5e4">@Strings.ColorPowderBlue</listEntry>
+    <listEntry value="0xb9d6f2">@Strings.ColorPaleSky</listEntry>
+    <listEntry value="0xe0fbfc">@Strings.ColorLightCyan</listEntry>
+    <listEntry value="0xc0c0c0">@Strings.ColorSilver</listEntry>
+    <listEntry value="0xeeebd0">@Strings.ColorBeige</listEntry>
+    <listEntry value="0xfbfff1">@Strings.ColorIvory</listEntry>
+    <listEntry value="0xffffff">@Strings.ColorWhite</listEntry>
     '>
 ]>
 <settings>
@@ -49,13 +64,18 @@
         <settingConfig type="list">
             <listEntry value="0">@Strings.ProfileClassic</listEntry>
             <listEntry value="1">@Strings.ProfileBlueSteel</listEntry>
-            <listEntry value="2">@Strings.ProfileOrange</listEntry>
-            <listEntry value="3">@Strings.ProfileWhite</listEntry>
-            <listEntry value="4">@Strings.ProfileCustom</listEntry>
+            <listEntry value="2">@Strings.ProfileBlue</listEntry>
+            <listEntry value="3">@Strings.ProfileOrange</listEntry>
+            <listEntry value="4">@Strings.ProfileWhite</listEntry>
+            <listEntry value="5">@Strings.ProfileCustom</listEntry>
         </settingConfig>
     </setting>
 
     <setting propertyKey="@Properties.UpdateSeconds" title="@Strings.UpdateSecondsTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.UseOuterCircle" title="@Strings.UseOuterCircleTitle">
         <settingConfig type="boolean" />
     </setting>
 
@@ -72,6 +92,12 @@
     </setting>
 
     <setting propertyKey="@Properties.HandCenterColor" title="@Strings.HandCenterColorTitle">
+        <settingConfig type="list">
+            &colorList;
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.SecondFgColor" title="@Strings.SecondFgColorTitle">
         <settingConfig type="list">
             &colorList;
         </settingConfig>

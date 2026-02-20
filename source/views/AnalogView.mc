@@ -22,6 +22,7 @@ class AnalogView extends WatchUi
   private var _handbgcolor;     // = 0x504949;
   private var _handfgcolor;     // = 0xff0000;
   private var _handcentercolor; // = _handfgcolor;
+  private var _secondfgcolor;   // = _handbgcolor;
 
   private var _facebgcolor;     // = 0x000000;
   private var _facebordercolor; // = 0xc0c0c0;
@@ -39,6 +40,7 @@ class AnalogView extends WatchUi
   private var _batteryempty; // = 0xff0000 red
 
   private var _updateEverySecond = true; // default value
+  private var _useOuterCircle = true;    // NEW: default to showing outer circle
 
   private var _outerPenWidth;
   private var _innerPenWidth;
@@ -53,9 +55,10 @@ class AnalogView extends WatchUi
   // Profile definitions
   private const PROFILE_CLASSIC = 0;
   private const PROFILE_BLUE_STEEL = 1;
-  private const PROFILE_ORANGE = 2;
-  private const PROFILE_WHITE = 3;
-  private const PROFILE_CUSTOM = 4;
+  private const PROFILE_BLUE = 2;
+  private const PROFILE_ORANGE = 3;
+  private const PROFILE_WHITE = 4;
+  private const PROFILE_CUSTOM = 5;
 
   // New variables for Partial Updates
   private var _backgroundBuffer as Graphics.BufferedBitmap ? ;
@@ -196,6 +199,11 @@ class AnalogView extends WatchUi
                   "==== Initialize AnalogView - Update every second: " +
                       _updateEverySecond.toString() + " ====");
 
+    _useOuterCircle =
+        _propertieUtility.getPropertyBoolean("UseOuterCircle", true);
+    _logger.debug("AnalogView", "==== Use outer circle: " +
+                                    _useOuterCircle.toString() + " ====");
+
     if (profile == null) {
       profile = PROFILE_CLASSIC;
     }
@@ -208,6 +216,8 @@ class AnalogView extends WatchUi
       applyClassicProfile();
     } else if (profile == PROFILE_BLUE_STEEL) {
       applyBlueSteelProfile();
+    } else if (profile == PROFILE_BLUE) {
+      applyBlueProfile();
     } else if (profile == PROFILE_ORANGE) {
       applyOrangeProfile();
     } else if (profile == PROFILE_WHITE) {
@@ -223,113 +233,100 @@ class AnalogView extends WatchUi
 
     WatchUi.requestUpdate();
   }
-  // oud
-  public function updateSettingsxx() {
-    _logger.debug("AnalogView", "==== Updatesettings AnalogView ====");
-
-    var profile = _propertieUtility.getPropertyNumber("ColorProfile", 0);
-
-    _updateEverySecond =
-        _propertieUtility.getPropertyBoolean("UpdateSeconds", true);
-    _logger.debug("AnalogView",
-                  "==== Initialize AnalogView - Update every second: " +
-                      _updateEverySecond.toString() + " ====");
-
-    if (profile == null) {
-      profile = PROFILE_CLASSIC;
-    }
-
-    _logger.debug("AnalogView", "==== Initializing AnalogView with profile: " +
-                                    profile.toString() + " ====");
-
-    // Apply predefined profile or load custom values
-    if (profile == PROFILE_CLASSIC) {
-      applyClassicProfile();
-    } else if (profile == PROFILE_BLUE_STEEL) {
-      applyBlueSteelProfile();
-    } else if (profile == PROFILE_ORANGE) {
-      applyOrangeProfile();
-    } else if (profile == PROFILE_WHITE) {
-      applyWhiteProfile();
-    } else if (profile == PROFILE_CUSTOM) {
-      loadCustomColors();
-    } else {
-      applyClassicProfile(); // Default fallback
-    }
-
-    WatchUi.requestUpdate();
-  }
 
   private function applyClassicProfile() {
     _logger.debug("AnalogView", "=== Applying Classic Profile ===");
-    _handbgcolor = 0x504949;     // { "charcoal", "#504949" },
-    _handfgcolor = 0xff0000;     // { "red", "#ff0000" },
-    _facebgcolor = 0x000000;     // { "black", "#000000" },
-    _facebordercolor = 0xc0c0c0; // { "silver", "#c0c0c0" },
-    _handcentercolor = 0xff0000; // { "red", "#ff0000" },
-    _daybgcolor = 0x000000;      // { "black", "#000000" },
-    _daynamecolor = 0xff3333;    // { "cinnabar", "#ff3333" },
-    _day_numbercolor = 0xa0a0a0; // { "cool steel", "#a0a0a0" },
-    _dayoutlinecolor = 0xc0c0c0; // { "silver", "#c0c0c0" },
-    _hourmarkercolor = 0xffffff; // { "white", "#ffffff" },
-    _minutetickcolor = 0xa0a0a0; // { "cool steel", "#a0a0a0" },
-    _numbercolor = 0xffffff;     // { "white", "#ffffff" },
-    _batteryfull = 0x26a924;     // { "green" , "#26a924" },
-    _batteryempty = 0xff0000;    // { "red", "#ff0000" },
+    _handbgcolor = 0xffb400; // {"amber flame","#ffb400" },
+    _handfgcolor = 0x960200; //  {"oxblood", "#960200"},
+    _secondfgcolor = _handbgcolor;
+    _facebgcolor = _handfgcolor;
+    _facebordercolor = _facebgcolor;
+    _handcentercolor = 0x000000; // {"black", "#000000" },
+    _daybgcolor = _handfgcolor;
+    _daynamecolor = _handbgcolor;
+    _day_numbercolor = _handbgcolor;
+    _dayoutlinecolor = _handbgcolor;
+    _hourmarkercolor = _handcentercolor;
+    _minutetickcolor = _handcentercolor;
+    _numbercolor = _handcentercolor;
+    _batteryfull = _handbgcolor;
+    _batteryempty = _handfgcolor;
   }
 
   private function applyBlueSteelProfile() {
     _logger.debug("AnalogView", "=== Applying Blue Steel Profile ===");
-    _handbgcolor = 0x0d2c54;     // {"oxford navy", "#0d2c54"}
-    _handfgcolor = 0x00a6ed;     // {"fresh sky", "#00a6ed"},
-    _facebgcolor = 0x061a40;     // {"prussian blue", "#061a40"},
-    _facebordercolor = 0x061a40; // {"prussian blue", "#061a40"},
-    _handcentercolor = 0x061a40; // {"prussian blue", "#061a40"},
-    _daybgcolor = 0x061a40;      // {"prussian blue", "#061a40"},
-    _daynamecolor = 0xffffff;    // {"white", "#ffffff" }
-    _day_numbercolor = 0xffffff; // {"white", "#ffffff" }
-    _dayoutlinecolor = 0x0d2c54; // {"oxford navy", "#0d2c54"}
-    _hourmarkercolor = 0xffffff; // {"white", "#ffffff" }
-    _minutetickcolor = 0xffffff; // {"white", "#ffffff" }
-    _numbercolor = 0x00a6ed;     // {"fresh sky", "#00a6ed"},
-    _batteryfull = 0x26a924;     // { "green" , "#26a924" },
-    _batteryempty = 0xff0000;    // { "red", "#ff0000" },
+    _handbgcolor = 0xffffff;   // {"white", "#ffffff" }
+    _handfgcolor = 0x61a40;    // {"prussian blue", "#061a40"},
+    _secondfgcolor = 0xff0000; // {"red", "#ff0000" },
+    _facebgcolor = _handfgcolor;
+    _facebordercolor = _facebgcolor;
+    _handcentercolor = _secondfgcolor;
+    _daybgcolor = _handfgcolor;
+    _daynamecolor = _handbgcolor;
+    _day_numbercolor = _handbgcolor;
+    _dayoutlinecolor = _handfgcolor;
+    _hourmarkercolor = _handbgcolor;
+    _minutetickcolor = _handbgcolor;
+    _numbercolor = _handbgcolor;
+    _batteryfull = 0x26a924;  // {"green" , "#26a924" },
+    _batteryempty = 0xff0000; // {"red", "#ff0000" },
+  }
+
+  private function applyBlueProfile() {
+    _logger.debug("AnalogView", "=== Applying Blue Profile ===");
+    _handbgcolor = 0xffffff; // {"white", "#ffffff" }
+    _handfgcolor = 0x0353a4; //  {"sapphire", "#0353a4"},
+    _secondfgcolor = _handbgcolor;
+    _facebgcolor = _handfgcolor;
+    _facebordercolor = _facebgcolor;
+    _handcentercolor = _handbgcolor;
+    _daybgcolor = _handfgcolor;
+    _daynamecolor = _handbgcolor;
+    _day_numbercolor = _handbgcolor;
+    _dayoutlinecolor = _handfgcolor;
+    _hourmarkercolor = _handbgcolor;
+    _minutetickcolor = _handbgcolor;
+    _numbercolor = _handbgcolor;
+    _batteryfull = 0x26a924;  // {"green" , "#26a924" },
+    _batteryempty = 0xff0000; // {"red", "#ff0000" },
   }
 
   private function applyOrangeProfile() {
     _logger.debug("AnalogView", "=== Applying Orange Profile ===");
-    _handbgcolor = 0xffcdbc;     // {"almond silk", "#ffcdbc"}
-    _handfgcolor = 0xf5853f;     // {"pumpkin spice","#f5853f"},
-    _facebgcolor = 0x130303;     // {"coffee bean", "#130303"},
-    _facebordercolor = 0x130303; // {"coffee bean", "#130303"},
-    _handcentercolor = 0xf5853f; // {"pumpkin spice","#f5853f"},
-    _daybgcolor = 0x130303;      // {"coffee bean", "#130303"},
-    _daynamecolor = 0xf5853f;    // {"pumpkin spice","#f5853f"},
-    _day_numbercolor = 0xf5853f; // {"pumpkin spice","#f5853f"},
-    _dayoutlinecolor = 0xc0c0c0; // {"silver", "#c0c0c0" },
-    _hourmarkercolor = 0xf5853f; // {"pumpkin spice","#f5853f"},
-    _minutetickcolor = 0xf5853f; // {"pumpkin spice","#f5853f"},
-    _numbercolor = 0xf5853f;     // {"pumpkin spice","#f5853f"},
-    _batteryfull = 0x26a924;     // { "green" , "#26a924" },
-    _batteryempty = 0xff0000;    // { "red", "#ff0000" },
+    _handbgcolor = 0x000000; // {"black", "#000000" },
+    _handfgcolor = 0xffb400; // {"pumpkin spice","#f5853f"},
+    _secondfgcolor = _handbgcolor;
+    _facebgcolor = _handfgcolor;
+    _facebordercolor = _facebgcolor;
+    _handcentercolor = _handfgcolor;
+    _daybgcolor = _handfgcolor;
+    _daynamecolor = _handbgcolor;
+    _day_numbercolor = _handbgcolor;
+    _dayoutlinecolor = _handfgcolor;
+    _hourmarkercolor = _handbgcolor;
+    _minutetickcolor = _handbgcolor;
+    _numbercolor = _handbgcolor;
+    _batteryfull = 0x26a924; // {"green" , "#26a924" },
+    _batteryempty = _handbgcolor;
   }
 
   private function applyWhiteProfile() {
     _logger.debug("AnalogView", "=== Applying White Profile ===");
-    _handbgcolor = 0xc0c0c0;     // { "silver", "#c0c0c0" },
-    _handfgcolor = 0x000000;     // { "black", "#000000" },
-    _facebgcolor = 0xc0c0c0;     // { "silver", "#c0c0c0" },
-    _facebordercolor = 0x000000; // { "black", "#000000" },
-    _handcentercolor = 0xc0c0c0; // { "silver", "#c0c0c0" },
-    _daybgcolor = 0xc0c0c0;      // { "silver", "#c0c0c0" },
-    _daynamecolor = 0x000000;    // { "black", "#000000" },
-    _day_numbercolor = 0x000000; // { "black", "#000000" },
-    _dayoutlinecolor = 0xc0c0c0; // { "silver", "#c0c0c0" },
-    _hourmarkercolor = 0x000000; // { "black", "#000000" },
-    _minutetickcolor = 0x000000; // { "black", "#000000" },
-    _numbercolor = 0x000000;     // { "black", "#000000" },
-    _batteryfull = 0x26a924;     // { "green" , "#26a924" },
-    _batteryempty = 0xff0000;    // { "red", "#ff0000" },
+    _handbgcolor = 0x000000; // {"black", "#000000" }
+    _handfgcolor = 0xffffff; // {"white", "#ffffff" },
+    _secondfgcolor = _handbgcolor;
+    _facebgcolor = _handfgcolor;
+    _facebordercolor = _facebgcolor;
+    _handcentercolor = _handbgcolor;
+    _daybgcolor = _handfgcolor;
+    _daynamecolor = _handbgcolor;
+    _day_numbercolor = _handbgcolor;
+    _dayoutlinecolor = _handbgcolor;
+    _hourmarkercolor = _handbgcolor;
+    _minutetickcolor = _handbgcolor;
+    _numbercolor = _handbgcolor;
+    _batteryfull = 0x26a924;  // {"green" , "#26a924" },
+    _batteryempty = 0xff0000; // {"red", "#ff0000" },
   }
 
   private function loadCustomColors() {
@@ -339,6 +336,8 @@ class AnalogView extends WatchUi
     // Load each color from properties
     _handbgcolor = _propertieUtility.getPropertyNumber("HandBgColor", 0x504949);
     _handfgcolor = _propertieUtility.getPropertyNumber("HandFgColor", 0xff0000);
+    _secondfgcolor =
+        _propertieUtility.getPropertyNumber("SecondFgColor", 0x504949);
     _facebgcolor = _propertieUtility.getPropertyNumber("FaceBgColor", 0x000000);
     _facebordercolor =
         _propertieUtility.getPropertyNumber("FaceBorderColor", 0xc0c0c0);
@@ -379,12 +378,13 @@ class AnalogView extends WatchUi
     _centerX = dc.getWidth() / 2;
     _centerY = dc.getHeight() / 2;
     var minDimension = _centerX < _centerY ? _centerX : _centerY;
-    _radius = minDimension * 0.95;
+    _radius = minDimension; // * 0.95;
 
     _outerPenWidth = (_radius * 0.06).toNumber();
     if (_outerPenWidth < 1) {
       _outerPenWidth = 1;
     }
+
     _innerPenWidth = (_radius * 0.01).toNumber();
     if (_innerPenWidth < 1) {
       _innerPenWidth = 1;
@@ -397,21 +397,55 @@ class AnalogView extends WatchUi
     if (_loadPenWidth < 1) {
       _loadPenWidth = 1;
     }
+    /*
+        _arcRadius = (_radius * 0.92).toNumber();
+
+        _iconFont = WatchUi.loadResource(Rez.Fonts.IconFont);
+
+        // PRE-CALCULATE COMMON RADIUS MULTIPLES
+        _r097 = (_radius * 0.97).toNumber();
+        _r090 = (_radius * 0.90).toNumber();
+        _r088 = (_radius * 0.88).toNumber();
+        _r070 = (_radius * 0.70).toNumber();
+        _r055 = (_radius * 0.55).toNumber();
+        _r035 = (_radius * 0.035).toNumber();
+        _r025 = (_radius * 0.025).toNumber();
+        _r004 = (_radius * 0.04).toNumber();
+        //    _r007 = (_radius * 0.07).toNumber();
+        _tickLength = (_radius * 0.04).toNumber();
+        _triangleHeight = (_radius * 0.07).toNumber();
+        _triangleBase = (_radius * 0.04).toNumber();
+    */
 
     _arcRadius = (_radius * 0.92).toNumber();
 
     _iconFont = WatchUi.loadResource(Rez.Fonts.IconFont);
 
     // PRE-CALCULATE COMMON RADIUS MULTIPLES
-    _r097 = (_radius * 0.97).toNumber();
-    _r090 = (_radius * 0.90).toNumber();
-    _r088 = (_radius * 0.88).toNumber();
-    _r070 = (_radius * 0.70).toNumber();
+    // Adjust based on whether outer circle is used
+    if (_useOuterCircle) {
+      // Standard layout with outer circle
+      _r097 = (_radius * 0.97).toNumber();
+      _r090 = (_radius * 0.90).toNumber();
+      _r088 = (_radius * 0.88).toNumber();
+      _r070 = (_radius * 0.70).toNumber();
+      _arcRadius = (_radius * 0.92).toNumber();
+      _bluetoothy = (_centerY - _radius * 0.50).toNumber();
+    } else {
+      // Expanded layout without outer circle - shift everything outward
+      _r097 = (_radius * 0.97).toNumber(); // Still used for face background
+      _r090 = (_radius * 0.97).toNumber(); // Inner ring moves to edge
+      _r088 = (_radius * 0.95).toNumber(); // Hour markers shift out
+      _r070 = (_radius * 0.77).toNumber(); // Numbers shift out
+      _arcRadius = (_radius * 0.99).toNumber(); // Battery arc at edge
+      _bluetoothy =
+          (_centerY - _radius * 0.57).toNumber(); // Bluetooth shifts out
+    }
+
     _r055 = (_radius * 0.55).toNumber();
     _r035 = (_radius * 0.035).toNumber();
     _r025 = (_radius * 0.025).toNumber();
     _r004 = (_radius * 0.04).toNumber();
-    //    _r007 = (_radius * 0.07).toNumber();
     _tickLength = (_radius * 0.04).toNumber();
     _triangleHeight = (_radius * 0.07).toNumber();
     _triangleBase = (_radius * 0.04).toNumber();
@@ -530,7 +564,7 @@ class AnalogView extends WatchUi
   function onUpdate(dc) {
     _logger.trace("AnalogView", "=== AnalogView onUpdate ===");
 
-    if (_centerX == 0 || _centerY == 0) {
+    if (_centerX == 0 || _centerY == 0 || !_layoutCalculated) {
       onLayout(dc); // Safety fallback
     }
 
@@ -594,16 +628,26 @@ class AnalogView extends WatchUi
   }
 
   private function drawFace(dc) {
-    _logger.trace("AnalogView", "drawFace");
+    _logger.trace("AnalogView", "drawFace _r097: " + _r097 +
+                                    " _r090: " + _r090 + " _r004: " + _r004);
 
     // Dark background
     dc.setColor(_facebgcolor, Graphics.COLOR_TRANSPARENT);
     dc.fillCircle(_centerX, _centerY, _r097);
 
-    // Outer silver ring
-    dc.setColor(_facebordercolor, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(_outerPenWidth);
-    dc.drawCircle(_centerX, _centerY, _r097);
+    /*
+        // Outer silver ring
+        dc.setColor(_facebordercolor, Graphics.COLOR_TRANSPARENT);
+        dc.setPenWidth(_outerPenWidth);
+        dc.drawCircle(_centerX, _centerY, _r097);
+    */
+
+    if (_useOuterCircle) {
+      // Outer silver ring (only if enabled)
+      dc.setColor(_facebordercolor, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(_outerPenWidth);
+      dc.drawCircle(_centerX, _centerY, _r097);
+    }
 
     dc.setPenWidth(_innerPenWidth);
     dc.drawCircle(_centerX, _centerY, _r090);
@@ -732,7 +776,7 @@ class AnalogView extends WatchUi
     if (_updateEverySecond) {
       // Second hand
       var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
-      dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
+      dc.setColor(_secondfgcolor, Graphics.COLOR_TRANSPARENT);
 
       _logger.trace("AnalogView",
                     "drawTime secondhand penwidth: " + _secondPenWidth);

@@ -19,12 +19,13 @@
 
     <!-- Hidden boolean to control custom settings visibility -->
     <property id="IsCustomProfile" type="boolean">false</property>
-
     <property id="UpdateSeconds" type="boolean">true</property>
+    <property id="UseOuterCircle" type="boolean">false</property>
 
     <property id="HandFgColor" type="number">0xff0000</property>
     <property id="HandBgColor" type="number">0x504949</property>
     <property id="HandCenterColor" type="number">0xff0000</property>
+    <property id="SecondFgColor" type="number">0x504949</property>
 
     <property id="FaceBgColor" type="number">0x000000</property>
     <property id="FaceBorderColor" type="number">0xc0c0c0</property>
