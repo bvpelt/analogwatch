@@ -22,6 +22,10 @@
     <property id="UpdateSeconds" type="boolean">true</property>
     <property id="UseOuterCircle" type="boolean">false</property>
 
+    <property id="DataFieldNorth" type="number">0</property>
+    <property id="DataFieldSouth" type="number">1</property>
+    <property id="DataFieldWest" type="number">2</property>
+
     <property id="HandFgColor" type="number">0xff0000</property>
     <property id="HandBgColor" type="number">0x504949</property>
     <property id="HandCenterColor" type="number">0xff0000</property>

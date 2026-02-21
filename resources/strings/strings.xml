@@ -27,6 +27,21 @@
     <string id="UpdateSecondsTitle">Update Every Second</string>
     <string id="UseOuterCircleTitle">Show Outer Circle</string>
 
+     <!-- Data field titles -->
+    <string id="DataFieldNorthTitle">North Data Field</string>
+    <string id="DataFieldSouthTitle">South Data Field</string>
+    <string id="DataFieldWestTitle">West Data Field</string>
+    
+    <!-- Data field options -->
+    <string id="DataFieldNone">None</string>
+    <string id="DataFieldSteps">Steps</string>
+    <string id="DataFieldCalories">Calories</string>
+    <string id="DataFieldDistance">Distance</string>
+    <string id="DataFieldFloors">Floors</string>
+    <string id="DataFieldActiveMinutes">Active Minutes</string>
+    <string id="DataFieldBattery">Battery</string>
+    <string id="DataFieldHeartRate">Heart Rate</string>
+
     <string id="HandFgColorTitle">Hand Foreground</string>
     <string id="HandBgColorTitle">Hand Background</string>
     <string id="HandCenterColorTitle">Hand Center</string>

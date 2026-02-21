@@ -79,6 +79,45 @@
         <settingConfig type="boolean" />
     </setting>
 
+    <setting propertyKey="@Properties.DataFieldNorth" title="@Strings.DataFieldNorthTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.DataFieldNone</listEntry>
+            <listEntry value="1">@Strings.DataFieldSteps</listEntry>
+            <listEntry value="2">@Strings.DataFieldCalories</listEntry>
+            <listEntry value="3">@Strings.DataFieldDistance</listEntry>
+            <listEntry value="4">@Strings.DataFieldFloors</listEntry>
+            <listEntry value="5">@Strings.DataFieldActiveMinutes</listEntry>
+            <listEntry value="6">@Strings.DataFieldBattery</listEntry>
+            <listEntry value="7">@Strings.DataFieldHeartRate</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.DataFieldSouth" title="@Strings.DataFieldSouthTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.DataFieldNone</listEntry>
+            <listEntry value="1">@Strings.DataFieldSteps</listEntry>
+            <listEntry value="2">@Strings.DataFieldCalories</listEntry>
+            <listEntry value="3">@Strings.DataFieldDistance</listEntry>
+            <listEntry value="4">@Strings.DataFieldFloors</listEntry>
+            <listEntry value="5">@Strings.DataFieldActiveMinutes</listEntry>
+            <listEntry value="6">@Strings.DataFieldBattery</listEntry>
+            <listEntry value="7">@Strings.DataFieldHeartRate</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.DataFieldWest" title="@Strings.DataFieldWestTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.DataFieldNone</listEntry>
+            <listEntry value="1">@Strings.DataFieldSteps</listEntry>
+            <listEntry value="2">@Strings.DataFieldCalories</listEntry>
+            <listEntry value="3">@Strings.DataFieldDistance</listEntry>
+            <listEntry value="4">@Strings.DataFieldFloors</listEntry>
+            <listEntry value="5">@Strings.DataFieldActiveMinutes</listEntry>
+            <listEntry value="6">@Strings.DataFieldBattery</listEntry>
+            <listEntry value="7">@Strings.DataFieldHeartRate</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.HandFgColor" title="@Strings.HandFgColorTitle">
         <settingConfig type="list">
             &colorList;
