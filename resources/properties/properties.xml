@@ -30,15 +30,12 @@
     <property id="HandBgColor" type="number">0x504949</property>
     <property id="HandCenterColor" type="number">0xff0000</property>
     <property id="SecondFgColor" type="number">0x504949</property>
-
     <property id="FaceBgColor" type="number">0x000000</property>
     <property id="FaceBorderColor" type="number">0xc0c0c0</property>
-
     <property id="DayBgColor" type="number">0x000000</property>
     <property id="DayNameColor" type="number">0xff3333</property>
     <property id="DayNumberColor" type="number">0xa0a0a0</property>
     <property id="DayOutlineColor" type="number">0xc0c0c0</property>
-
     <property id="HourMarkerColor" type="number">0xffffff</property>
     <property id="MinuteTickColor" type="number">0xa0a0a0</property>
     <property id="NumberColor" type="number">0xffffff</property>

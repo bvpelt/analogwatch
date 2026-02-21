@@ -41,7 +41,7 @@ class AnalogView extends WatchUi
   private var _batteryempty; // = 0xff0000 red
 
   private var _updateEverySecond = true; // default value
-  private var _useOuterCircle = true;    // NEW: default to showing outer circle
+  private var _useOuterCircle = true;    // default to showing outer circle
 
   private var _outerPenWidth;
   private var _innerPenWidth;
@@ -59,7 +59,8 @@ class AnalogView extends WatchUi
   private const PROFILE_BLUE = 2;
   private const PROFILE_ORANGE = 3;
   private const PROFILE_WHITE = 4;
-  private const PROFILE_CUSTOM = 5;
+  private const PROFILE_BLACK = 5;
+  private const PROFILE_CUSTOM = 6;
 
   // New variables for Partial Updates
   private var _backgroundBuffer as Graphics.BufferedBitmap ? ;
@@ -259,6 +260,8 @@ class AnalogView extends WatchUi
       applyOrangeProfile();
     } else if (profile == PROFILE_WHITE) {
       applyWhiteProfile();
+    } else if (profile == PROFILE_BLACK) {
+      applyBlackProfile();
     } else if (profile == PROFILE_CUSTOM) {
       loadCustomColors();
     } else {
@@ -288,6 +291,12 @@ class AnalogView extends WatchUi
     _numbercolor = _handcentercolor;
     _batteryfull = _handbgcolor;
     _batteryempty = _handfgcolor;
+
+    savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
+                       _facebordercolor, _handcentercolor, _daybgcolor,
+                       _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                       _hourmarkercolor, _minutetickcolor, _numbercolor,
+                       _batteryfull, _batteryempty);
   }
 
   private function applyBlueSteelProfile() {
@@ -380,6 +389,31 @@ class AnalogView extends WatchUi
     _hourmarkercolor = _handbgcolor;
     _minutetickcolor = _handbgcolor;
     _numbercolor = _handbgcolor;
+    _batteryfull = 0x26a924;  // {"green" , "#26a924" },
+    _batteryempty = 0xff0000; // {"red", "#ff0000" },
+
+    savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
+                       _facebordercolor, _handcentercolor, _daybgcolor,
+                       _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                       _hourmarkercolor, _minutetickcolor, _numbercolor,
+                       _batteryfull, _batteryempty);
+  }
+
+  private function applyBlackProfile() {
+    _logger.debug("AnalogView", "=== Applying Black Profile ===");
+    _handbgcolor = 0x000000; // {"black", "#000000" }
+    _handfgcolor = 0xffffff; // {"white", "#ffffff" },
+    _secondfgcolor = _handfgcolor;
+    _facebgcolor = _handbgcolor;
+    _facebordercolor = _facebgcolor;
+    _handcentercolor = _handfgcolor;
+    _daybgcolor = _handbgcolor;
+    _daynamecolor = _handfgcolor;
+    _daynumbercolor = _handfgcolor;
+    _dayoutlinecolor = _handbgcolor;
+    _hourmarkercolor = _handfgcolor;
+    _minutetickcolor = _handfgcolor;
+    _numbercolor = _handfgcolor;
     _batteryfull = 0x26a924;  // {"green" , "#26a924" },
     _batteryempty = 0xff0000; // {"red", "#ff0000" },
 
@@ -592,7 +626,7 @@ class AnalogView extends WatchUi
     _dataFieldSouthY = (_centerY + _radius * 0.65).toNumber();
 
     // West position (left side of watch face)
-    _dataFieldWestX = (_centerX - _radius * 0.65).toNumber();
+    _dataFieldWestX = (_centerX - _radius * 0.55).toNumber();
     _dataFieldWestY = _centerY.toNumber();
 
     // Initialize the off-screen buffer - skip on memory-constrained devices
@@ -988,16 +1022,19 @@ class AnalogView extends WatchUi
 
     var value = "";
     var label = "";
+    var tekst = "";
     var font = Graphics.FONT_XTINY;
 
     if (dataFieldType == DATAFIELD_STEPS) {
       var steps = _activityUtility.getSteps();
       value = steps != null ? steps.toString() : "--";
       label = "steps";
+      tekst = Lang.format("$1$ $2$", [value, label]);
     } else if (dataFieldType == DATAFIELD_CALORIES) {
       var calories = _activityUtility.getCalories();
       value = calories != null ? calories.toString() : "--";
       label = "cal";
+      tekst = Lang.format("$1$ $2$", [value, label]);
     } else if (dataFieldType == DATAFIELD_DISTANCE) {
       var distance = _activityUtility.getDistance();
       if (distance != null) {
@@ -1008,36 +1045,42 @@ class AnalogView extends WatchUi
         value = "--";
       }
       label = "km";
+      tekst = Lang.format("$1$ $2$", [value, label]);
     } else if (dataFieldType == DATAFIELD_FLOORS) {
       var floors = _activityUtility.getFloorsClimbed();
       value = floors != null ? floors.toString() : "--";
       label = "floors";
+      tekst = Lang.format("$1$ $2$", [value, label]);
     } else if (dataFieldType == DATAFIELD_ACTIVE_MINUTES) {
       var activeMin = _activityUtility.getActiveMinutesDay();
       // Parse the formatted string to get just total
       // Or modify ActivityUtility to return just the total
       value = activeMin;
       label = "active";
+      tekst = Lang.format("$1$ $2$", [value, label]);
     } else if (dataFieldType == DATAFIELD_BATTERY) {
       var battery = System.getSystemStats().battery;
       value = battery.format("%.0f") + "%";
       label = "batt";
+      tekst = Lang.format("$1$ $2$", [value, label]);
     } else if (dataFieldType == DATAFIELD_HEART_RATE) {
       // You'll need to add heart rate support to ActivityUtility
       value = "--";
       label = "bpm";
+      tekst = Lang.format("$1$ $2$", [value, label]);
     }
 
     // Draw the data field
     dc.setColor(_numbercolor, Graphics.COLOR_TRANSPARENT);
 
     // Draw value
-    dc.drawText(x, y, font, value,
+    dc.drawText(x, y, font, tekst,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
     // Draw label below value
-    dc.drawText(x, y + 12, Graphics.FONT_XTINY, label,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+    // dc.drawText(x, y + 12, Graphics.FONT_XTINY, label,
+    //             Graphics.TEXT_JUSTIFY_CENTER |
+    //             Graphics.TEXT_JUSTIFY_VCENTER);
   }
 
   function onEnterSleep() {

@@ -22,6 +22,7 @@
     <string id="ProfileBlue">Blue</string>
     <string id="ProfileOrange">Orange</string>
     <string id="ProfileWhite">White</string>
+    <string id="ProfileBlack">Black</string>
     <string id="ProfileCustom">Custom</string>
 
     <string id="UpdateSecondsTitle">Update Every Second</string>
@@ -55,7 +56,7 @@
     <string id="DayNumberColorTitle">Day Number</string>
     <string id="DayOutlineColorTitle">Day Outline</string>
 
-    <string id="HourMarkerColorTitle">Hour Marker</string>
+    <string id="HourMarkerColorTitle">Marker</string>
     <string id="MinuteTickColorTitle">Minute Tick</string>
     <string id="NumberColorTitle">Number</string>
     <string id="BatteryFullTitle">Battery Full</string>
@@ -75,6 +76,8 @@
     <string id="ColorBlack">Black</string>
     <string id="ColorJetBlack">Jet Black</string>
     <string id="ColorRichMahogany">Rich Mahogany</string>
+    <string id="ColorCharcoal">Charcoal</string>
+    <string id="ColorGray">Gray</string>
     <string id="ColorOxblood">Oxblood</string>
     <string id="ColorMahoganyRed">Mahogany Red</string>
     <string id="ColorChestnut">Chestnut</string>

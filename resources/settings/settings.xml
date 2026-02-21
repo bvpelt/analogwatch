@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE settings [
     <!ENTITY colorList '
-    <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
+   <listEntry value="0x000000">@Strings.ColorBlack</listEntry>
     <listEntry value="0x253237">@Strings.ColorJetBlack</listEntry>
     <listEntry value="0x2d080a">@Strings.ColorRichMahogany</listEntry>
+    <listEntry value="0x504949">@Strings.ColorCharcoal</listEntry>
     <listEntry value="0x960200">@Strings.ColorOxblood</listEntry>
     <listEntry value="0xb20a1b">@Strings.ColorMahoganyRed</listEntry>
     <listEntry value="0x7c3626">@Strings.ColorChestnut</listEntry>
@@ -42,14 +43,17 @@
     <listEntry value="0x3066be">@Strings.ColorSmartBlue</listEntry>
     <listEntry value="0x00a6ed">@Strings.ColorFreshSky</listEntry>
     <listEntry value="0x9db4c0">@Strings.ColorCoolSteel</listEntry>
-    <listEntry value="0xb4c5e4">@Strings.ColorPowderBlue</listEntry>
+    <listEntry value="0xa0a0a0">@Strings.ColorGray</listEntry>  
+    <listEntry
+    value="0xb4c5e4">@Strings.ColorPowderBlue</listEntry>
     <listEntry value="0xb9d6f2">@Strings.ColorPaleSky</listEntry>
     <listEntry value="0xe0fbfc">@Strings.ColorLightCyan</listEntry>
     <listEntry value="0xc0c0c0">@Strings.ColorSilver</listEntry>
     <listEntry value="0xeeebd0">@Strings.ColorBeige</listEntry>
     <listEntry value="0xfbfff1">@Strings.ColorIvory</listEntry>
     <listEntry value="0xffffff">@Strings.ColorWhite</listEntry>
-    '>
+    '
+    >
 ]>
 <settings>
 
@@ -67,7 +71,8 @@
             <listEntry value="2">@Strings.ProfileBlue</listEntry>
             <listEntry value="3">@Strings.ProfileOrange</listEntry>
             <listEntry value="4">@Strings.ProfileWhite</listEntry>
-            <listEntry value="5">@Strings.ProfileCustom</listEntry>
+            <listEntry value="5">@Strings.ProfileBlack</listEntry>
+            <listEntry value="6">@Strings.ProfileCustom</listEntry>
         </settingConfig>
     </setting>
 
