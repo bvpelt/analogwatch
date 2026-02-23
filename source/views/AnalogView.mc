@@ -787,9 +787,11 @@ class AnalogView extends WatchUi
     dc.setPenWidth(_innerPenWidth);
     dc.drawCircle(_centerX, _centerY, _r090);
 
-    // Center point
-    dc.setColor(_handcentercolor, Graphics.COLOR_TRANSPARENT);
-    dc.fillCircle(_centerX, _centerY, _r004);
+    if (_handcentercolor != _facebgcolor) {
+      // Center point
+      dc.setColor(_handcentercolor, Graphics.COLOR_TRANSPARENT);
+      dc.fillCircle(_centerX, _centerY, _r004);
+    }
   }
 
   private function drawLoad(dc) {
@@ -816,10 +818,12 @@ class AnalogView extends WatchUi
       return; // Safety check
     }
 
-    dc.setColor(_hourmarkercolor, Graphics.COLOR_TRANSPARENT);
+    if (_hourmarkercolor != _facebgcolor) {
+      dc.setColor(_hourmarkercolor, Graphics.COLOR_TRANSPARENT);
 
-    for (var i = 0; i < 12; i++) {
-      dc.fillPolygon(_hourMarkerPoints[i]);
+      for (var i = 0; i < 12; i++) {
+        dc.fillPolygon(_hourMarkerPoints[i]);
+      }
     }
   }
 
@@ -828,13 +832,16 @@ class AnalogView extends WatchUi
       return; // Safety check
     }
 
-    dc.setColor(_minutetickcolor, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(_minuteTickPenWidth);
-    _logger.trace("AnalogView", "Minuteticks penwidth: " + _minuteTickPenWidth);
+    if (_minutetickcolor != _facebgcolor) {
+      dc.setColor(_minutetickcolor, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(_minuteTickPenWidth);
+      _logger.trace("AnalogView",
+                    "Minuteticks penwidth: " + _minuteTickPenWidth);
 
-    for (var i = 0; i < _minuteTickPoints.size(); i++) {
-      var tick = _minuteTickPoints[i] as Lang.Array;
-      dc.drawLine(tick[0], tick[1], tick[2], tick[3]);
+      for (var i = 0; i < _minuteTickPoints.size(); i++) {
+        var tick = _minuteTickPoints[i] as Lang.Array;
+        dc.drawLine(tick[0], tick[1], tick[2], tick[3]);
+      }
     }
   }
 
@@ -843,13 +850,16 @@ class AnalogView extends WatchUi
       return;
     }
 
-    dc.setColor(_numbercolor, Graphics.COLOR_TRANSPARENT);
-    var font = Graphics.FONT_XTINY;
+    if (_numbercolor != _facebgcolor) {
+      dc.setColor(_numbercolor, Graphics.COLOR_TRANSPARENT);
+      var font = Graphics.FONT_XTINY;
 
-    for (var i = 0; i < 12; i++) {
-      dc.drawText(_numberX[i] as Lang.Number, _numberY[i] as Lang.Number, font,
-                  _numberText[i] as Lang.String,
-                  Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+      for (var i = 0; i < 12; i++) {
+        dc.drawText(_numberX[i] as Lang.Number, _numberY[i] as Lang.Number,
+                    font, _numberText[i] as Lang.String,
+                    Graphics.TEXT_JUSTIFY_CENTER |
+                        Graphics.TEXT_JUSTIFY_VCENTER);
+      }
     }
   }
 
@@ -867,29 +877,39 @@ class AnalogView extends WatchUi
     var boxWDNameX =
         _dateBoxMaxlen - boxWeekdayWidth - boxNumberWidth - _dateBoxSpacing;
 
-    // Weekday box
-    dc.setColor(_daybgcolor, Graphics.COLOR_TRANSPARENT);
-    dc.fillRectangle(boxWDNameX, _dateBoxY, boxWeekdayWidth, _dateBoxHeight);
+    if (_daybgcolor != _facebgcolor) {
+      // Weekday box
+      dc.setColor(_daybgcolor, Graphics.COLOR_TRANSPARENT);
+      dc.fillRectangle(boxWDNameX, _dateBoxY, boxWeekdayWidth, _dateBoxHeight);
 
-    dc.setColor(_dayoutlinecolor, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(_dateBoxOutlinePenWidth);
-    dc.drawRectangle(boxWDNameX, _dateBoxY, boxWeekdayWidth, _dateBoxHeight);
+      // Day box
+      dc.setColor(_daybgcolor, Graphics.COLOR_TRANSPARENT);
+      dc.fillRectangle(boxDNumberX, _dateBoxY, boxNumberWidth, _dateBoxHeight);
+    }
 
-    dc.setColor(_daynamecolor, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(boxWDNameX + boxWeekdayWidth / 2, _centerY, font, weekday,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+    if (_dayoutlinecolor != _facebgcolor) {
+      // Weekday box
+      dc.setColor(_dayoutlinecolor, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(_dateBoxOutlinePenWidth);
+      dc.drawRectangle(boxWDNameX, _dateBoxY, boxWeekdayWidth, _dateBoxHeight);
 
-    // Day box
-    dc.setColor(_daybgcolor, Graphics.COLOR_TRANSPARENT);
-    dc.fillRectangle(boxDNumberX, _dateBoxY, boxNumberWidth, _dateBoxHeight);
+      // Day box
+      dc.setColor(_dayoutlinecolor, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(_dateBoxOutlinePenWidth);
+      dc.drawRectangle(boxDNumberX, _dateBoxY, boxNumberWidth, _dateBoxHeight);
+    }
 
-    dc.setColor(_dayoutlinecolor, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(_dateBoxOutlinePenWidth);
-    dc.drawRectangle(boxDNumberX, _dateBoxY, boxNumberWidth, _dateBoxHeight);
+    if (_daynamecolor != _facebgcolor) {
+      dc.setColor(_daynamecolor, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(boxWDNameX + boxWeekdayWidth / 2, _centerY, font, weekday,
+                  Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+    }
 
-    dc.setColor(_daynumbercolor, Graphics.COLOR_TRANSPARENT);
-    dc.drawText(boxDNumberX + boxNumberWidth / 2, _centerY, font, dayString,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+    if (_daynumbercolor != _facebgcolor) {
+      dc.setColor(_daynumbercolor, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(boxDNumberX + boxNumberWidth / 2, _centerY, font, dayString,
+                  Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+    }
   }
 
   private function drawTime(dc) {
@@ -909,22 +929,25 @@ class AnalogView extends WatchUi
     drawHand(dc, minuteAngle, _r070, _r025);
 
     if (_updateEverySecond) {
-      // Second hand
-      var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
-      dc.setColor(_secondfgcolor, Graphics.COLOR_TRANSPARENT);
 
-      _logger.trace("AnalogView",
-                    "drawTime secondhand penwidth: " + _secondPenWidth);
-      dc.setPenWidth(_secondPenWidth);
+      if (_secondfgcolor != _facebgcolor) {
+        // Second hand
+        var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
+        dc.setColor(_secondfgcolor, Graphics.COLOR_TRANSPARENT);
 
-      var cosAngle = Math.cos(secondAngle);
-      var sinAngle = Math.sin(secondAngle);
+        _logger.trace("AnalogView",
+                      "drawTime secondhand penwidth: " + _secondPenWidth);
+        dc.setPenWidth(_secondPenWidth);
 
-      var x1 = (_centerX - cosAngle * _radius * 0.1).toNumber();
-      var y1 = (_centerY - sinAngle * _radius * 0.1).toNumber();
-      var x2 = (_centerX + cosAngle * _radius * 0.75).toNumber();
-      var y2 = (_centerY + sinAngle * _radius * 0.75).toNumber();
-      dc.drawLine(x1, y1, x2, y2);
+        var cosAngle = Math.cos(secondAngle);
+        var sinAngle = Math.sin(secondAngle);
+
+        var x1 = (_centerX - cosAngle * _radius * 0.1).toNumber();
+        var y1 = (_centerY - sinAngle * _radius * 0.1).toNumber();
+        var x2 = (_centerX + cosAngle * _radius * 0.75).toNumber();
+        var y2 = (_centerY + sinAngle * _radius * 0.75).toNumber();
+        dc.drawLine(x1, y1, x2, y2);
+      }
     }
   }
 
@@ -934,85 +957,93 @@ class AnalogView extends WatchUi
     var l = length;
     var w = width;
 
-    // Outline hand
-    var points = [
-      [_centerX, _centerY],
-      [_centerX - sinAngle * w * 0.5, _centerY + cosAngle * w * 0.5],
-      [
-        _centerX + (cosAngle * l) / 15 - sinAngle * w * 0.5,
-        _centerY + (sinAngle * l) / 15 + cosAngle * w * 0.5,
-      ],
-      [
-        _centerX + (cosAngle * 2 * l) / 15 - sinAngle * w * 1.5,
-        _centerY + (sinAngle * 2 * l) / 15 + cosAngle * w * 1.5,
-      ],
-      [
-        _centerX + (cosAngle * 10 * l) / 15 - sinAngle * w * 1.5,
-        _centerY + (sinAngle * 10 * l) / 15 + cosAngle * w * 1.5,
-      ],
-      [
-        _centerX + (cosAngle * 11 * l) / 15 - sinAngle * w * 0.5,
-        _centerY + (sinAngle * 11 * l) / 15 + cosAngle * w * 0.5,
-      ],
-      [
-        _centerX + cosAngle * l - sinAngle * w * 0.5,
-        _centerY + sinAngle * l + cosAngle * w * 0.5,
-      ],
-      [
-        _centerX + cosAngle * l + sinAngle * w * 0.5,
-        _centerY + sinAngle * l - cosAngle * w * 0.5,
-      ],
-      [
-        _centerX + (cosAngle * 11 * l) / 15 + sinAngle * w * 0.5,
-        _centerY + (sinAngle * 11 * l) / 15 - cosAngle * w * 0.5,
-      ],
-      [
-        _centerX + (cosAngle * 10 * l) / 15 + sinAngle * w * 1.5,
-        _centerY + (sinAngle * 10 * l) / 15 - cosAngle * w * 1.5,
-      ],
-      [
-        _centerX + (cosAngle * 2 * l) / 15 + sinAngle * w * 1.5,
-        _centerY + (sinAngle * 2 * l) / 15 - cosAngle * w * 1.5,
-      ],
-      [
-        _centerX + (cosAngle * l) / 15 + sinAngle * w * 0.5,
-        _centerY + (sinAngle * l) / 15 - cosAngle * w * 0.5,
-      ],
-      [_centerX + sinAngle * w * 0.5, _centerY - cosAngle * w * 0.5],
-      [_centerX, _centerY],
-    ];
+    if (_handbgcolor != _facebgcolor) {
+      // Outline hand
+      var points = [
+        [_centerX, _centerY],
+        [_centerX - sinAngle * w * 0.5, _centerY + cosAngle * w * 0.5],
+        [
+          _centerX + (cosAngle * l) / 15 - sinAngle * w * 0.5,
+          _centerY + (sinAngle * l) / 15 + cosAngle * w * 0.5,
+        ],
+        [
+          _centerX + (cosAngle * 2 * l) / 15 - sinAngle * w * 1.5,
+          _centerY + (sinAngle * 2 * l) / 15 + cosAngle * w * 1.5,
+        ],
+        [
+          _centerX + (cosAngle * 10 * l) / 15 - sinAngle * w * 1.5,
+          _centerY + (sinAngle * 10 * l) / 15 + cosAngle * w * 1.5,
+        ],
+        [
+          _centerX + (cosAngle * 11 * l) / 15 - sinAngle * w * 0.5,
+          _centerY + (sinAngle * 11 * l) / 15 + cosAngle * w * 0.5,
+        ],
+        [
+          _centerX + cosAngle * l - sinAngle * w * 0.5,
+          _centerY + sinAngle * l + cosAngle * w * 0.5,
+        ],
+        [
+          _centerX + cosAngle * l + sinAngle * w * 0.5,
+          _centerY + sinAngle * l - cosAngle * w * 0.5,
+        ],
+        [
+          _centerX + (cosAngle * 11 * l) / 15 + sinAngle * w * 0.5,
+          _centerY + (sinAngle * 11 * l) / 15 - cosAngle * w * 0.5,
+        ],
+        [
+          _centerX + (cosAngle * 10 * l) / 15 + sinAngle * w * 1.5,
+          _centerY + (sinAngle * 10 * l) / 15 - cosAngle * w * 1.5,
+        ],
+        [
+          _centerX + (cosAngle * 2 * l) / 15 + sinAngle * w * 1.5,
+          _centerY + (sinAngle * 2 * l) / 15 - cosAngle * w * 1.5,
+        ],
+        [
+          _centerX + (cosAngle * l) / 15 + sinAngle * w * 0.5,
+          _centerY + (sinAngle * l) / 15 - cosAngle * w * 0.5,
+        ],
+        [_centerX + sinAngle * w * 0.5, _centerY - cosAngle * w * 0.5],
+        [_centerX, _centerY],
+      ];
 
-    dc.setColor(_handbgcolor, Graphics.COLOR_TRANSPARENT);
-    dc.fillPolygon(points);
+      dc.setColor(_handbgcolor, Graphics.COLOR_TRANSPARENT);
+      dc.fillPolygon(points);
+    }
 
-    // Inside line hand
-    var innerPoints = [
-      [_centerX + (cosAngle * 2 * l) / 15, _centerY + (sinAngle * 2 * l) / 15],
-      [
-        _centerX + (cosAngle * 2.8 * l) / 15 - sinAngle * w * 0.8,
-        _centerY + (sinAngle * 2.8 * l) / 15 + cosAngle * w * 0.8,
-      ],
-      [
-        _centerX + (cosAngle * 9.2 * l) / 15 - sinAngle * w * 0.8,
-        _centerY + (sinAngle * 9.2 * l) / 15 + cosAngle * w * 0.8,
-      ],
-      [
-        _centerX + (cosAngle * 10.2 * l) / 15,
-        _centerY + (sinAngle * 10.2 * l) / 15,
-      ],
-      [
-        _centerX + (cosAngle * 9.2 * l) / 15 + sinAngle * w * 0.8,
-        _centerY + (sinAngle * 9.2 * l) / 15 - cosAngle * w * 0.8,
-      ],
-      [
-        _centerX + (cosAngle * 2.8 * l) / 15 + sinAngle * w * 0.8,
-        _centerY + (sinAngle * 2.8 * l) / 15 - cosAngle * w * 0.8,
-      ],
-      [_centerX + (cosAngle * 2 * l) / 15, _centerY + (sinAngle * 2 * l) / 15],
-    ];
+    if (_handfgcolor != _handbgcolor) {
+      // Inside line hand
+      var innerPoints = [
+        [
+          _centerX + (cosAngle * 2 * l) / 15, _centerY + (sinAngle * 2 * l) / 15
+        ],
+        [
+          _centerX + (cosAngle * 2.8 * l) / 15 - sinAngle * w * 0.8,
+          _centerY + (sinAngle * 2.8 * l) / 15 + cosAngle * w * 0.8,
+        ],
+        [
+          _centerX + (cosAngle * 9.2 * l) / 15 - sinAngle * w * 0.8,
+          _centerY + (sinAngle * 9.2 * l) / 15 + cosAngle * w * 0.8,
+        ],
+        [
+          _centerX + (cosAngle * 10.2 * l) / 15,
+          _centerY + (sinAngle * 10.2 * l) / 15,
+        ],
+        [
+          _centerX + (cosAngle * 9.2 * l) / 15 + sinAngle * w * 0.8,
+          _centerY + (sinAngle * 9.2 * l) / 15 - cosAngle * w * 0.8,
+        ],
+        [
+          _centerX + (cosAngle * 2.8 * l) / 15 + sinAngle * w * 0.8,
+          _centerY + (sinAngle * 2.8 * l) / 15 - cosAngle * w * 0.8,
+        ],
+        [
+          _centerX + (cosAngle * 2 * l) / 15, _centerY + (sinAngle * 2 * l) / 15
+        ],
+      ];
 
-    dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
-    dc.fillPolygon(innerPoints);
+      dc.setColor(_handfgcolor, Graphics.COLOR_TRANSPARENT);
+      dc.fillPolygon(innerPoints);
+    }
   }
 
   private function drawDataField(dc, x, y, dataFieldType) as Void {
@@ -1070,17 +1101,19 @@ class AnalogView extends WatchUi
       tekst = Lang.format("$1$ $2$", [value, label]);
     }
 
-    // Draw the data field
-    dc.setColor(_numbercolor, Graphics.COLOR_TRANSPARENT);
+    if (_numbercolor != _facebgcolor) {
+      // Draw the data field
+      dc.setColor(_numbercolor, Graphics.COLOR_TRANSPARENT);
 
-    // Draw value
-    dc.drawText(x, y, font, tekst,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+      // Draw value
+      dc.drawText(x, y, font, tekst,
+                  Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-    // Draw label below value
-    // dc.drawText(x, y + 12, Graphics.FONT_XTINY, label,
-    //             Graphics.TEXT_JUSTIFY_CENTER |
-    //             Graphics.TEXT_JUSTIFY_VCENTER);
+      // Draw label below value
+      // dc.drawText(x, y + 12, Graphics.FONT_XTINY, label,
+      //             Graphics.TEXT_JUSTIFY_CENTER |
+      //             Graphics.TEXT_JUSTIFY_VCENTER);
+    }
   }
 
   function onEnterSleep() {
