@@ -296,6 +296,12 @@ De volgende symbolen opgenomen
 # Colors
 
 
+! name      |  color |
+|-----------|--------|
+| black     | <span style="color:#000000">   </span> |
+| jet black | <span style="color:#253237">   </span> |
+| rich mahogany | <span style="color:#2d080a">   </span> |
+
 ## Neutrals
 - `#000000` **black**
 - `#253237` **jet black**
