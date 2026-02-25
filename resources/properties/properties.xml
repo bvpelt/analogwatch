@@ -1,10 +1,5 @@
 <properties>
-    <!-- 
-    0: Clock
-    1: AnalogClock
-    -->
-    <property id="ViewMode" type="number">0</property>
-
+ 
     <!-- DebugLevels     
     LEVEL_TRACE = 0,
     LEVEL_DEBUG = 1,
@@ -12,7 +7,7 @@
     LEVEL_WARN = 3,
     LEVEL_ERROR = 4,
     -->
-    <property id="MinimalDebugLevel" type="number">1</property>
+    <property id="MinimalDebugLevel" type="number">3</property>
 
     <!-- Profile selector -->
     <property id="ColorProfile" type="number">0</property>
@@ -42,5 +37,7 @@
     <property id="BatteryFullColor" type="number">0x26a924</property>
     <property id="BatteryEmptyColor" type="number">0xff0000</property>
     <property id="DataFieldColor" type="number">0xff0000</property>
+    <property id="BlueToothActiveColor" type="number">0x00ff00</property>
+    <property id="BlueToothInActiveColor" type="number">0xff0000</property>
 
 </properties>

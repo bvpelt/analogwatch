@@ -42,6 +42,9 @@ class AnalogView extends WatchUi
   private var _batteryempty;   // = 0xff0000 red
   private var _datafieldcolor; // = 0xff0000
 
+  private var _bluethootactivecolor;   // = 0x00ff00
+  private var _bluethootinactivecolor; // = 0xff0000
+
   private var _updateEverySecond = true; // default value
   private var _useOuterCircle = true;    // default to showing outer circle
 
@@ -283,7 +286,7 @@ class AnalogView extends WatchUi
     _secondfgcolor = _handbgcolor;
     _facebgcolor = _handfgcolor;
     _facebordercolor = _facebgcolor;
-    _handcentercolor = 0x000000; // {"black", "#000000" },
+    _handcentercolor = _handbgcolor;
     _daybgcolor = _handfgcolor;
     _daynamecolor = _handbgcolor;
     _daynumbercolor = _handbgcolor;
@@ -294,12 +297,15 @@ class AnalogView extends WatchUi
     _batteryfull = _handbgcolor;
     _batteryempty = _handfgcolor;
     _datafieldcolor = _handcentercolor;
+    _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
+    _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
     savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
                        _facebordercolor, _handcentercolor, _daybgcolor,
                        _daynamecolor, _daynumbercolor, _dayoutlinecolor,
                        _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor);
+                       _batteryfull, _batteryempty, _datafieldcolor,
+                       _bluethootactivecolor, _bluethootinactivecolor);
   }
 
   private function applyBlueSteelProfile() {
@@ -309,7 +315,7 @@ class AnalogView extends WatchUi
     _secondfgcolor = 0xff0000; // {"red", "#ff0000" },
     _facebgcolor = _handfgcolor;
     _facebordercolor = _facebgcolor;
-    _handcentercolor = _secondfgcolor;
+    _handcentercolor = _handbgcolor;
     _daybgcolor = _handfgcolor;
     _daynamecolor = _handbgcolor;
     _daynumbercolor = _handbgcolor;
@@ -320,12 +326,15 @@ class AnalogView extends WatchUi
     _batteryfull = 0x26a924;  // {"green" , "#26a924" },
     _batteryempty = 0xff0000; // {"red", "#ff0000" },
     _datafieldcolor = _batteryfull;
+    _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
+    _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
     savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
                        _facebordercolor, _handcentercolor, _daybgcolor,
                        _daynamecolor, _daynumbercolor, _dayoutlinecolor,
                        _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor);
+                       _batteryfull, _batteryempty, _datafieldcolor,
+                       _bluethootactivecolor, _bluethootinactivecolor);
   }
 
   private function applyBlueProfile() {
@@ -346,12 +355,15 @@ class AnalogView extends WatchUi
     _batteryfull = 0x26a924;  // {"green" , "#26a924" },
     _batteryempty = 0xff0000; // {"red", "#ff0000" },
     _datafieldcolor = _batteryfull;
+    _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
+    _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
     savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
                        _facebordercolor, _handcentercolor, _daybgcolor,
                        _daynamecolor, _daynumbercolor, _dayoutlinecolor,
                        _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor);
+                       _batteryfull, _batteryempty, _datafieldcolor,
+                       _bluethootactivecolor, _bluethootinactivecolor);
   }
 
   private function applyOrangeProfile() {
@@ -361,7 +373,7 @@ class AnalogView extends WatchUi
     _secondfgcolor = _handbgcolor;
     _facebgcolor = _handfgcolor;
     _facebordercolor = _facebgcolor;
-    _handcentercolor = _handfgcolor;
+    _handcentercolor = _handbgcolor;
     _daybgcolor = _handfgcolor;
     _daynamecolor = _handbgcolor;
     _daynumbercolor = _handbgcolor;
@@ -372,12 +384,15 @@ class AnalogView extends WatchUi
     _batteryfull = 0x26a924; // {"green" , "#26a924" },
     _batteryempty = _handbgcolor;
     _datafieldcolor = _batteryfull;
+    _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
+    _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
     savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
                        _facebordercolor, _handcentercolor, _daybgcolor,
                        _daynamecolor, _daynumbercolor, _dayoutlinecolor,
                        _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor);
+                       _batteryfull, _batteryempty, _datafieldcolor,
+                       _bluethootactivecolor, _bluethootinactivecolor);
   }
 
   private function applyWhiteProfile() {
@@ -398,12 +413,15 @@ class AnalogView extends WatchUi
     _batteryfull = 0x26a924;  // {"green" , "#26a924" },
     _batteryempty = 0xff0000; // {"red", "#ff0000" },
     _datafieldcolor = _batteryfull;
+    _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
+    _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
     savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
                        _facebordercolor, _handcentercolor, _daybgcolor,
                        _daynamecolor, _daynumbercolor, _dayoutlinecolor,
                        _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor);
+                       _batteryfull, _batteryempty, _datafieldcolor,
+                       _bluethootactivecolor, _bluethootinactivecolor);
   }
 
   private function applyBlackProfile() {
@@ -424,12 +442,15 @@ class AnalogView extends WatchUi
     _batteryfull = 0x26a924;  // {"green" , "#26a924" },
     _batteryempty = 0xff0000; // {"red", "#ff0000" },
     _datafieldcolor = _batteryfull;
+    _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
+    _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
     savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
                        _facebordercolor, _handcentercolor, _daybgcolor,
                        _daynamecolor, _daynumbercolor, _dayoutlinecolor,
                        _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor);
+                       _batteryfull, _batteryempty, _datafieldcolor,
+                       _bluethootactivecolor, _bluethootinactivecolor);
   }
 
   private function loadCustomColors() {
@@ -464,13 +485,18 @@ class AnalogView extends WatchUi
         _propertieUtility.getPropertyNumber("BatteryEmptyColor", 0xff0000);
     _datafieldcolor =
         _propertieUtility.getPropertyNumber("DataFieldColor", 0xff0000);
+    _bluethootactivecolor =
+        _propertieUtility.getPropertyNumber("BlueToothActiveColor", 0x00ff00);
+    _bluethootinactivecolor =
+        _propertieUtility.getPropertyNumber("BlueToothInActiveColor", 0xff0000);
   }
 
   private function savePropertyValues(
       _handBgColor, _handFgColor, _secondFgColor, _faceBgColor,
       _faceBorderColor, _handCenterColor, _dayBgColor, _dayNameColor,
       _dayNumberColor, _dayOutlineColor, _hourMarkerColor, _minuteTickColor,
-      _numberColor, _batteryFullColor, _batteryEmptyColor, _datafieldcolor) {
+      _numberColor, _batteryFullColor, _batteryEmptyColor, _datafieldcolor,
+      _bluethootactivecolor, _bluethootinactivecolor) {
     _logger.debug("AnalogView", "=== Set propertie values from variables ===");
     // Load each color from properties
     _propertieUtility.setProperty("HandBgColor", _handBgColor);
@@ -489,6 +515,10 @@ class AnalogView extends WatchUi
     _propertieUtility.setProperty("BatteryFullColor", _batteryFullColor);
     _propertieUtility.setProperty("BatteryEmptyColor", _batteryEmptyColor);
     _propertieUtility.setProperty("DataFieldColor", _datafieldcolor);
+    _propertieUtility.setProperty("BlueToothActiveColor",
+                                  _bluethootactivecolor);
+    _propertieUtility.setProperty("BlueToothInActiveColor",
+                                  _bluethootinactivecolor);
   }
 
   function onLayout(dc) {
@@ -635,10 +665,10 @@ class AnalogView extends WatchUi
 
     // South position (bottom of watch face)
     _dataFieldSouthX = _centerX.toNumber();
-    _dataFieldSouthY = (_centerY + _radius * 0.65).toNumber();
+    _dataFieldSouthY = (_centerY + _radius * 0.55).toNumber();
 
     // West position (left side of watch face)
-    _dataFieldWestX = (_centerX - _radius * 0.55).toNumber();
+    _dataFieldWestX = (_centerX - _radius * 0.45).toNumber();
     _dataFieldWestY = _centerY.toNumber();
 
     // Initialize the off-screen buffer - skip on memory-constrained devices
@@ -775,10 +805,13 @@ class AnalogView extends WatchUi
     var phoneConnection = getPhoneConnection();
     var status = phoneConnection.getConnectionStatus();
 
+    var color =
+        ((status == true) ? _bluethootactivecolor : _bluethootinactivecolor);
+
     _logger.trace("AnalogView", "Draw bluetooth status: " + status + " at x: " +
                                     _bluetoothx + " y: " + _bluetoothy);
 
-    ViewUtil.drawBlueTooth(dc, _bluetoothx, _bluetoothy, _iconFont, status);
+    ViewUtil.drawBlueTooth(dc, _bluetoothx, _bluetoothy, _iconFont, color);
   }
 
   private function drawFace(dc) {

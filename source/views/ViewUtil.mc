@@ -6,19 +6,8 @@ using Toybox.System;
 module ViewUtil {
   var _logger = getLogger();
 
-  public function getColor(status as Lang.Boolean) {
-    var color;
-    if (status) {
-      color = Graphics.COLOR_GREEN;
-    } else {
-      color = Graphics.COLOR_RED;
-    }
-
-    return color;
-  }
-
-  public function drawBlueTooth(dc as Graphics.Dc, x, y, font, status) as Void {
-    dc.setColor(getColor(status), Graphics.COLOR_TRANSPARENT);
+  public function drawBlueTooth(dc as Graphics.Dc, x, y, font, color) as Void {
+    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
     var bluetoothIcon = "\ue904";
     // var bluetoothIcon = "\uF000";
     dc.drawText(x, y, font, bluetoothIcon,

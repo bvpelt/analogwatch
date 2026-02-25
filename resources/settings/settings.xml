@@ -57,13 +57,6 @@
 ]>
 <settings>
 
-    <setting propertyKey="@Properties.ViewMode" title="@Strings.ViewModeTitle">
-        <settingConfig type="list">
-            <listEntry value="0">@Strings.ViewModeClock</listEntry>
-            <listEntry value="1">@Strings.ViewModeAnalogClock</listEntry>
-        </settingConfig>
-    </setting>
-
     <setting propertyKey="@Properties.ColorProfile" title="@Strings.ColorProfileTitle">
         <settingConfig type="list">
             <listEntry value="0">@Strings.ProfileClassic</listEntry>
@@ -214,6 +207,27 @@
     </setting>
 
     <setting propertyKey="@Properties.BatteryEmptyColor" title="@Strings.BatteryEmptyTitle">
+        <settingConfig type="list">
+            &colorList;
+        </settingConfig>
+    </setting>
+
+
+    <setting propertyKey="@Properties.BatteryEmptyColor" title="@Strings.BatteryEmptyTitle">
+        <settingConfig type="list">
+            &colorList;
+        </settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.BlueToothActiveColor"
+        title="@Strings.BlueToothActiveColorTitle">
+        <settingConfig type="list">
+            &colorList;
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.BlueToothInActiveColor"
+        title="@Strings.BlueToothInActiveColorTitle">
         <settingConfig type="list">
             &colorList;
         </settingConfig>

@@ -10,11 +10,6 @@
     <string id="Connected">Connected</string>
     <string id="Disconnected">Disconnected</string>
 
-    <!-- Settings -->
-    <string id="ViewModeTitle">Default View</string>
-    <string id="ViewModeClock">Clock</string>
-    <string id="ViewModeAnalogClock">Analog Clock</string>
-
     <!-- Profile names -->
     <string id="ColorProfileTitle">Color Profile</string>
     <string id="ProfileClassic">Red</string>
@@ -28,11 +23,11 @@
     <string id="UpdateSecondsTitle">Update Every Second</string>
     <string id="UseOuterCircleTitle">Show Outer Circle</string>
 
-     <!-- Data field titles -->
+    <!-- Data field titles -->
     <string id="DataFieldNorthTitle">North Data Field</string>
     <string id="DataFieldSouthTitle">South Data Field</string>
     <string id="DataFieldWestTitle">West Data Field</string>
-    
+
     <!-- Data field options -->
     <string id="DataFieldNone">None</string>
     <string id="DataFieldSteps">Steps</string>
@@ -63,6 +58,8 @@
     <string id="BatteryEmptyTitle">Battery Empty</string>
     <string id="DataFieldColorTitle">Data Field</string>
 
+    <string id="BlueToothActiveColorTitle">Bluetooth Active</string>
+    <string id="BlueToothInActiveColorTitle">Bluetooth InActive</string>
 
     <string id="GroupHandsTitle">Hands Settings</string>
     <string id="GroupHandsDesc">Customize the appearance of the watch hands.</string>
