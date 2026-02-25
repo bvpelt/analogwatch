@@ -123,6 +123,12 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.DataFieldColor" title="@Strings.DataFieldColorTitle">
+        <settingConfig type="list">
+            &colorList;
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.HandFgColor" title="@Strings.HandFgColorTitle">
         <settingConfig type="list">
             &colorList;

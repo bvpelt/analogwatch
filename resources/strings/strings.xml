@@ -61,6 +61,7 @@
     <string id="NumberColorTitle">Number</string>
     <string id="BatteryFullTitle">Battery Full</string>
     <string id="BatteryEmptyTitle">Battery Empty</string>
+    <string id="DataFieldColorTitle">Data Field</string>
 
 
     <string id="GroupHandsTitle">Hands Settings</string>

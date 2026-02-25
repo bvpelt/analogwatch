@@ -3,8 +3,6 @@ using Toybox.Lang;
 class PhoneConnection {
   private static var _instance as PhoneConnection?;
 
-  var _deviceSettings = null;
-
   // Get singleton instance
   static function getInstance() as PhoneConnection {
     if (_instance == null) {
@@ -14,16 +12,10 @@ class PhoneConnection {
   }
 
   // Private constructor
-  private function initialize() {
-    _deviceSettings = System.getDeviceSettings();
-  }
+  private function initialize() {}
 
   function getConnectionStatus() {
-    if (_deviceSettings == null) {
-      return false;
-    }
-
-    return _deviceSettings.phoneConnected;
+    return System.getDeviceSettings().phoneConnected;
   }
 }
 

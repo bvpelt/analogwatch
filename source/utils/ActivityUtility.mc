@@ -138,6 +138,29 @@ class ActivityUtility {
     var info = ActivityMonitor.getInfo();
     return info.stepGoal;
   }
+
+  function getHartRate() {
+    // get a HeartRateIterator object; oldest sample first
+    var hrIterator = ActivityMonitor.getHeartRateHistory(null, false);
+    var previous = hrIterator.next(); // get the previous HR
+    // var lastSampleTime = null;        // get the last
+    var sample = null;
+    while (true) {
+      sample = hrIterator.next();
+      if (null != sample) { // null check
+        if (sample.heartRate !=
+                ActivityMonitor.INVALID_HR_SAMPLE // check for invalid samples
+            && previous.heartRate != ActivityMonitor.INVALID_HR_SAMPLE) {
+          //    lastSampleTime = sample.when;
+          System.println("Previous: " +
+                         previous.heartRate); // print the previous sample
+          System.println("Sample: " +
+                         sample.heartRate); // print the current sample
+        }
+      }
+    }
+    return sample.heartRate != null ? sample.heartRate : 0;
+  }
 }
 
 function getActivityUtility() as ActivityUtility {

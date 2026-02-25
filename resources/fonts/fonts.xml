@@ -1,3 +1,7 @@
 <resources>
     <font id="IconFont" filename="icons.fnt" antialias="true" />
+    <font id="AnalogFont" filename="analog-32.fnt" antialias="true" />
+    <font id="AnalogFontSmall" filename="analog-24.fnt" antialias="true" />
+    <font id="AnalogFontTiny" filename="analog-20.fnt" antialias="true" />
+    <font id="AnalogFontXTiny" filename="analog-18.fnt" antialias="true" />
 </resources>

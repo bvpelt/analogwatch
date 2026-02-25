@@ -41,5 +41,6 @@
     <property id="NumberColor" type="number">0xffffff</property>
     <property id="BatteryFullColor" type="number">0x26a924</property>
     <property id="BatteryEmptyColor" type="number">0xff0000</property>
+    <property id="DataFieldColor" type="number">0xff0000</property>
 
 </properties>
