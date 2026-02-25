@@ -270,28 +270,26 @@ This is where most developers fail. Go to Options > Export Settings.
 # Symbolen
 
 De volgende symbolen opgenomen
-- active U+F013 ![active](./extern/active.svg)
-- active html <img src="./extern/active.svg" alt="active" width="32"/>
-- path distance U+F012 ![path distance](./extern/path-distance.svg)
-- line distance U+F011 ![line distance](./extern/line-distance.svg)
-- hart beat U+F010 ![hart beat](./extern/heart-beat.svg)
-- hart U+F00F ![hart](./extern/hart.svg)
-- stairs U+F00E ![stairs](./extern/stairs-32x32.svg)
-- battery U+F00D ![battery empty](./extern/battery0-4-32x32.svg)
-- battery U+F00C ![battery 1/4](./extern/battery-1-4-32x32.svg)
-- battery U+F00B ![battery 2/4](./extern/battery-2-4-32x32.svg)
-- battery U+F00A ![battery 3/4](./extern/battery-3-4-32x32.svg)
-- battery U+F009 ![battery 4/4](./extern/battery-4-4-32x32.svg)
-- calories U+F008 ![calories](./extern/burn-32x32.svg)
-
-- email U+F007 ![calories](./extern/email-32x32.svg)
-- steps U+F006 ![calories](./extern/foot-32x32.svg)
-- search U+F005 ![calories](./extern/search-32x32.svg)
-- wait U+F004 ![wait 1](./extern/wait-1-32x32.svg)
-- wait U+F003 ![wait](./extern/wait-32x32.svg)
-- documents U+F002 ![documents](./extern/documents-32x32.svg)
-- file U+F001 ![file](./extern/file-32x32.svg)
-- bluetooth U+F000 ![bluetooth](./extern/bluetooth-32x32.svg)
+- active U+F013 <img src="./extern/active.svg" alt="active" width="32"/>
+- path distance U+F012 <img src="./extern/path-distance.svg" alt="path distance" width="32"/> 
+- line distance U+F011 <img src="./extern/line-distance.svg" alt="line-distance" width="32"/>
+- hart beat U+F010 <img src="./extern/heart-beat.svg" alt="heart-beat" width="32"/>
+- hart U+F00F <img src="./extern/hart.svg" alt="hart" width="32"/> 
+- stairs U+F00E <img src="./extern/stairs-32x32.svg" alt="stairs" width="32"/> 
+- battery empty U+F00D <img src="./extern/battery0-4-32x32.svg" alt="battery empty" width="32"/>
+- battery 1/4 U+F00C <img src="./extern/battery-1-4-32x32.svg" alt="battery 1/4" width="32"/> 
+- battery 2/4 U+F00B <img src="./extern/battery-2-4-32x32.svg" alt="battery 2/4" width="32"/> 
+- battery 3/4 U+F00A <img src="./extern/battery-3-4-32x32.svg" alt="battery 3/4" width="32"/> 
+- battery 4/4 U+F009 <img src="./extern/battery-4-4-32x32.svg" alt="battery 4/4" width="32"/> 
+- calories U+F008 <img src="./extern/burn-32x32.svg" alt="calories" width="32"/>
+- email U+F007 <img src="./extern/email-32x32.svg" alt="email" width="32"/>
+- steps U+F006 <img src="./extern/foot-32x32.svg" alt="steps" width="32"/> 
+- search U+F005 <img src="./extern/search-32x32.svg" alt="search" width="32"/>
+- wait U+F004 <img src="./extern/wait-1-32x32.svg" alt="wait 1" width="32"/>
+- wait U+F003 <img src="./extern/wait-32x32.svg" alt="wait" width="32"/> 
+- documents U+F002 <img src="./extern/documents-32x32.svg" alt="documents" width="32"/> 
+- file U+F001 <img src="./extern/file-32x32.svg" alt="file" width="32"/> 
+- bluetooth U+F000 <img src="./extern/bluetooth-32x32.svg" alt="bluetooth" width="32"/>
 
 # Colors
 
