@@ -21,12 +21,14 @@ class ActivityUtility {
     var response = "";
     if (activity != null) {
       // Always convert to strings or use 0 for null values
-      var moderate = activity.moderate != null ? activity.moderate : 0;
+      //      var moderate = activity.moderate != null ? activity.moderate : 0;
       var total = activity.total != null ? activity.total : 0;
-      var vigorous = activity.vigorous != null ? activity.vigorous : 0;
-
-      response = Lang.format("moderate: $1$ total: $2$ vigorous: $3$",
-                             [moderate, total, vigorous]);
+      //      var vigorous = activity.vigorous != null ? activity.vigorous : 0;
+      /*
+            response = Lang.format("moderate: $1$ total: $2$ vigorous: $3$",
+                                   [moderate, total, vigorous]);
+      */
+      response = total;
     }
     return response;
   }

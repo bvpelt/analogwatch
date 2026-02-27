@@ -28,6 +28,7 @@ The standard profiles use the colors stored with the profile.
 ## Orange Profile
 
 ![Orange](./images/analog-orange.png)
+![Approach orange](./images/analog-approach-orange.png)
 
 ## White Profile
 
@@ -36,8 +37,10 @@ The standard profiles use the colors stored with the profile.
 ## Black Profile
 
 ![Black](./images/analog-black.png)
+![Black fenix](./images/analog-fenix843-black.png)
 
 ## Custom Profile
 
 ![Custom](./images/analog-custom.png)
 
+![Color parameters](./images/analog-manual.png)

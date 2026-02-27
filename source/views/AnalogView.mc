@@ -64,8 +64,9 @@ class AnalogView extends WatchUi
   private const PROFILE_BLUE = 2;
   private const PROFILE_ORANGE = 3;
   private const PROFILE_WHITE = 4;
-  private const PROFILE_BLACK = 5;
-  private const PROFILE_CUSTOM = 6;
+  private const PROFILE_WHITISH = 5;
+  private const PROFILE_BLACK = 6;
+  private const PROFILE_CUSTOM = 7;
 
   // New variables for Partial Updates
   private var _backgroundBuffer as Graphics.BufferedBitmap ? ;
@@ -265,6 +266,8 @@ class AnalogView extends WatchUi
       applyOrangeProfile();
     } else if (profile == PROFILE_WHITE) {
       applyWhiteProfile();
+    } else if (profile == PROFILE_WHITISH) {
+      applyWhitishProfile();
     } else if (profile == PROFILE_BLACK) {
       applyBlackProfile();
     } else if (profile == PROFILE_CUSTOM) {
@@ -300,12 +303,34 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
-                       _facebordercolor, _handcentercolor, _daybgcolor,
-                       _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                       _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor,
-                       _bluethootactivecolor, _bluethootinactivecolor);
+    /*
+        savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
+       _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
+                           _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                           _hourmarkercolor, _minutetickcolor, _numbercolor,
+                           _batteryfull, _batteryempty, _datafieldcolor,
+                           _bluethootactivecolor, _bluethootinactivecolor);
+    */
+    var colors = { "HandBgColor" => _handbgcolor,
+                   "HandFgColor" => _handfgcolor,
+                   "SecondFgColor" => _secondfgcolor,
+                   "FaceBgColor" => _facebgcolor,
+                   "FaceBorderColor" => _facebordercolor,
+                   "HandCenterColor" => _handcentercolor,
+                   "DayBgColor" => _daybgcolor,
+                   "DayNameColor" => _daynamecolor,
+                   "DayNumberColor" => _daynumbercolor,
+                   "DayOutlineColor" => _dayoutlinecolor,
+                   "HourMarkerColor" => _hourmarkercolor,
+                   "MinuteTickColor" => _minutetickcolor,
+                   "NumberColor" => _numbercolor,
+                   "BatteryFullColor" => _batteryfull,
+                   "BatteryEmptyColor" => _batteryempty,
+                   "DataFieldColor" => _datafieldcolor,
+                   "BlueToothActiveColor" => _bluethootactivecolor,
+                   "BlueToothInActiveColor" => _bluethootinactivecolor };
+
+    savePropertyValues(colors);
   }
 
   private function applyBlueSteelProfile() {
@@ -329,12 +354,34 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
-                       _facebordercolor, _handcentercolor, _daybgcolor,
-                       _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                       _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor,
-                       _bluethootactivecolor, _bluethootinactivecolor);
+    /*
+       savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
+      _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
+                          _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                          _hourmarkercolor, _minutetickcolor, _numbercolor,
+                          _batteryfull, _batteryempty, _datafieldcolor,
+                          _bluethootactivecolor, _bluethootinactivecolor);
+   */
+    var colors = { "HandBgColor" => _handbgcolor,
+                   "HandFgColor" => _handfgcolor,
+                   "SecondFgColor" => _secondfgcolor,
+                   "FaceBgColor" => _facebgcolor,
+                   "FaceBorderColor" => _facebordercolor,
+                   "HandCenterColor" => _handcentercolor,
+                   "DayBgColor" => _daybgcolor,
+                   "DayNameColor" => _daynamecolor,
+                   "DayNumberColor" => _daynumbercolor,
+                   "DayOutlineColor" => _dayoutlinecolor,
+                   "HourMarkerColor" => _hourmarkercolor,
+                   "MinuteTickColor" => _minutetickcolor,
+                   "NumberColor" => _numbercolor,
+                   "BatteryFullColor" => _batteryfull,
+                   "BatteryEmptyColor" => _batteryempty,
+                   "DataFieldColor" => _datafieldcolor,
+                   "BlueToothActiveColor" => _bluethootactivecolor,
+                   "BlueToothInActiveColor" => _bluethootinactivecolor };
+
+    savePropertyValues(colors);
   }
 
   private function applyBlueProfile() {
@@ -358,12 +405,34 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
-                       _facebordercolor, _handcentercolor, _daybgcolor,
-                       _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                       _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor,
-                       _bluethootactivecolor, _bluethootinactivecolor);
+    /*
+       savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
+      _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
+                          _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                          _hourmarkercolor, _minutetickcolor, _numbercolor,
+                          _batteryfull, _batteryempty, _datafieldcolor,
+                          _bluethootactivecolor, _bluethootinactivecolor);
+   */
+    var colors = { "HandBgColor" => _handbgcolor,
+                   "HandFgColor" => _handfgcolor,
+                   "SecondFgColor" => _secondfgcolor,
+                   "FaceBgColor" => _facebgcolor,
+                   "FaceBorderColor" => _facebordercolor,
+                   "HandCenterColor" => _handcentercolor,
+                   "DayBgColor" => _daybgcolor,
+                   "DayNameColor" => _daynamecolor,
+                   "DayNumberColor" => _daynumbercolor,
+                   "DayOutlineColor" => _dayoutlinecolor,
+                   "HourMarkerColor" => _hourmarkercolor,
+                   "MinuteTickColor" => _minutetickcolor,
+                   "NumberColor" => _numbercolor,
+                   "BatteryFullColor" => _batteryfull,
+                   "BatteryEmptyColor" => _batteryempty,
+                   "DataFieldColor" => _datafieldcolor,
+                   "BlueToothActiveColor" => _bluethootactivecolor,
+                   "BlueToothInActiveColor" => _bluethootinactivecolor };
+
+    savePropertyValues(colors);
   }
 
   private function applyOrangeProfile() {
@@ -387,12 +456,34 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
-                       _facebordercolor, _handcentercolor, _daybgcolor,
-                       _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                       _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor,
-                       _bluethootactivecolor, _bluethootinactivecolor);
+    /*
+        savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
+       _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
+                           _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                           _hourmarkercolor, _minutetickcolor, _numbercolor,
+                           _batteryfull, _batteryempty, _datafieldcolor,
+                           _bluethootactivecolor, _bluethootinactivecolor);
+    */
+    var colors = { "HandBgColor" => _handbgcolor,
+                   "HandFgColor" => _handfgcolor,
+                   "SecondFgColor" => _secondfgcolor,
+                   "FaceBgColor" => _facebgcolor,
+                   "FaceBorderColor" => _facebordercolor,
+                   "HandCenterColor" => _handcentercolor,
+                   "DayBgColor" => _daybgcolor,
+                   "DayNameColor" => _daynamecolor,
+                   "DayNumberColor" => _daynumbercolor,
+                   "DayOutlineColor" => _dayoutlinecolor,
+                   "HourMarkerColor" => _hourmarkercolor,
+                   "MinuteTickColor" => _minutetickcolor,
+                   "NumberColor" => _numbercolor,
+                   "BatteryFullColor" => _batteryfull,
+                   "BatteryEmptyColor" => _batteryempty,
+                   "DataFieldColor" => _datafieldcolor,
+                   "BlueToothActiveColor" => _bluethootactivecolor,
+                   "BlueToothInActiveColor" => _bluethootinactivecolor };
+
+    savePropertyValues(colors);
   }
 
   private function applyWhiteProfile() {
@@ -416,12 +507,85 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
-                       _facebordercolor, _handcentercolor, _daybgcolor,
-                       _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                       _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor,
-                       _bluethootactivecolor, _bluethootinactivecolor);
+    /*
+       savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
+      _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
+                          _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                          _hourmarkercolor, _minutetickcolor, _numbercolor,
+                          _batteryfull, _batteryempty, _datafieldcolor,
+                          _bluethootactivecolor, _bluethootinactivecolor);
+   */
+    var colors = { "HandBgColor" => _handbgcolor,
+                   "HandFgColor" => _handfgcolor,
+                   "SecondFgColor" => _secondfgcolor,
+                   "FaceBgColor" => _facebgcolor,
+                   "FaceBorderColor" => _facebordercolor,
+                   "HandCenterColor" => _handcentercolor,
+                   "DayBgColor" => _daybgcolor,
+                   "DayNameColor" => _daynamecolor,
+                   "DayNumberColor" => _daynumbercolor,
+                   "DayOutlineColor" => _dayoutlinecolor,
+                   "HourMarkerColor" => _hourmarkercolor,
+                   "MinuteTickColor" => _minutetickcolor,
+                   "NumberColor" => _numbercolor,
+                   "BatteryFullColor" => _batteryfull,
+                   "BatteryEmptyColor" => _batteryempty,
+                   "DataFieldColor" => _datafieldcolor,
+                   "BlueToothActiveColor" => _bluethootactivecolor,
+                   "BlueToothInActiveColor" => _bluethootinactivecolor };
+
+    savePropertyValues(colors);
+  }
+
+  private function applyWhitishProfile() {
+    _logger.debug("AnalogView", "=== Applying Whitish Profile ===");
+    _handbgcolor = 0x000000; // {"black", "#000000" }
+    _handfgcolor = 0xffffff; // {"white", "#ffffff" },
+    _secondfgcolor = _handbgcolor;
+    _facebgcolor = 0xe2f3e4; // {"dewdrop", "#e2f3e4"}
+    _facebordercolor = _handbgcolor;
+    _handcentercolor = _handbgcolor;
+    _daybgcolor = _facebgcolor;
+    _daynamecolor = _handbgcolor;
+    _daynumbercolor = _handbgcolor;
+    _dayoutlinecolor = _facebgcolor;
+    _hourmarkercolor = 0x061a40; // "prusian blue", "#061a40"}
+    _minutetickcolor = _handbgcolor;
+    _numbercolor = _handbgcolor;
+    _batteryfull = 0x26a924;            // {"green" , "#26a924" },
+    _batteryempty = 0xff0000;           // {"red", "#ff0000" },
+    _datafieldcolor = 0xb20a1b;         // "mahogany red", "#b20a1b" }
+    _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
+    _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
+
+    /*
+        savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
+       _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
+                           _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                           _hourmarkercolor, _minutetickcolor, _numbercolor,
+                           _batteryfull, _batteryempty, _datafieldcolor,
+                           _bluethootactivecolor, _bluethootinactivecolor);
+    */
+    var colors = { "HandBgColor" => _handbgcolor,
+                   "HandFgColor" => _handfgcolor,
+                   "SecondFgColor" => _secondfgcolor,
+                   "FaceBgColor" => _facebgcolor,
+                   "FaceBorderColor" => _facebordercolor,
+                   "HandCenterColor" => _handcentercolor,
+                   "DayBgColor" => _daybgcolor,
+                   "DayNameColor" => _daynamecolor,
+                   "DayNumberColor" => _daynumbercolor,
+                   "DayOutlineColor" => _dayoutlinecolor,
+                   "HourMarkerColor" => _hourmarkercolor,
+                   "MinuteTickColor" => _minutetickcolor,
+                   "NumberColor" => _numbercolor,
+                   "BatteryFullColor" => _batteryfull,
+                   "BatteryEmptyColor" => _batteryempty,
+                   "DataFieldColor" => _datafieldcolor,
+                   "BlueToothActiveColor" => _bluethootactivecolor,
+                   "BlueToothInActiveColor" => _bluethootinactivecolor };
+
+    savePropertyValues(colors);
   }
 
   private function applyBlackProfile() {
@@ -445,12 +609,34 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor, _facebgcolor,
-                       _facebordercolor, _handcentercolor, _daybgcolor,
-                       _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                       _hourmarkercolor, _minutetickcolor, _numbercolor,
-                       _batteryfull, _batteryempty, _datafieldcolor,
-                       _bluethootactivecolor, _bluethootinactivecolor);
+    /*
+       savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
+      _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
+                          _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                          _hourmarkercolor, _minutetickcolor, _numbercolor,
+                          _batteryfull, _batteryempty, _datafieldcolor,
+                          _bluethootactivecolor, _bluethootinactivecolor);
+   */
+    var colors = { "HandBgColor" => _handbgcolor,
+                   "HandFgColor" => _handfgcolor,
+                   "SecondFgColor" => _secondfgcolor,
+                   "FaceBgColor" => _facebgcolor,
+                   "FaceBorderColor" => _facebordercolor,
+                   "HandCenterColor" => _handcentercolor,
+                   "DayBgColor" => _daybgcolor,
+                   "DayNameColor" => _daynamecolor,
+                   "DayNumberColor" => _daynumbercolor,
+                   "DayOutlineColor" => _dayoutlinecolor,
+                   "HourMarkerColor" => _hourmarkercolor,
+                   "MinuteTickColor" => _minutetickcolor,
+                   "NumberColor" => _numbercolor,
+                   "BatteryFullColor" => _batteryfull,
+                   "BatteryEmptyColor" => _batteryempty,
+                   "DataFieldColor" => _datafieldcolor,
+                   "BlueToothActiveColor" => _bluethootactivecolor,
+                   "BlueToothInActiveColor" => _bluethootinactivecolor };
+
+    savePropertyValues(colors);
   }
 
   private function loadCustomColors() {
@@ -489,8 +675,51 @@ class AnalogView extends WatchUi
         _propertieUtility.getPropertyNumber("BlueToothActiveColor", 0x00ff00);
     _bluethootinactivecolor =
         _propertieUtility.getPropertyNumber("BlueToothInActiveColor", 0xff0000);
+
+    /*
+           savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
+          _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
+                              _daynamecolor, _daynumbercolor, _dayoutlinecolor,
+                              _hourmarkercolor, _minutetickcolor, _numbercolor,
+                              _batteryfull, _batteryempty, _datafieldcolor,
+                              _bluethootactivecolor, _bluethootinactivecolor);
+       */
+    var colors = { "HandBgColor" => _handbgcolor,
+                   "HandFgColor" => _handfgcolor,
+                   "SecondFgColor" => _secondfgcolor,
+                   "FaceBgColor" => _facebgcolor,
+                   "FaceBorderColor" => _facebordercolor,
+                   "HandCenterColor" => _handcentercolor,
+                   "DayBgColor" => _daybgcolor,
+                   "DayNameColor" => _daynamecolor,
+                   "DayNumberColor" => _daynumbercolor,
+                   "DayOutlineColor" => _dayoutlinecolor,
+                   "HourMarkerColor" => _hourmarkercolor,
+                   "MinuteTickColor" => _minutetickcolor,
+                   "NumberColor" => _numbercolor,
+                   "BatteryFullColor" => _batteryfull,
+                   "BatteryEmptyColor" => _batteryempty,
+                   "DataFieldColor" => _datafieldcolor,
+                   "BlueToothActiveColor" => _bluethootactivecolor,
+                   "BlueToothInActiveColor" => _bluethootinactivecolor };
+
+    savePropertyValues(colors);
   }
 
+  private function savePropertyValues(colorDict as Lang.Dictionary) {
+    _logger.debug("AnalogView", "=== Saving property values ===");
+
+    var keys = colorDict.keys();
+    for (var i = 0; i < keys.size(); i++) {
+      var key = keys[i] as Lang.String;
+      var value = colorDict[key] as Lang.Number;
+      _propertieUtility.setProperty(key, value);
+    }
+
+    _logger.debug("AnalogView", "=== Properties saved ===");
+  }
+
+  /*
   private function savePropertyValues(
       _handBgColor, _handFgColor, _secondFgColor, _faceBgColor,
       _faceBorderColor, _handCenterColor, _dayBgColor, _dayNameColor,
@@ -520,6 +749,7 @@ class AnalogView extends WatchUi
     _propertieUtility.setProperty("BlueToothInActiveColor",
                                   _bluethootinactivecolor);
   }
+  */
 
   function onLayout(dc) {
     _logger.debug("AnalogView", "=== Layout AnalogView ===");
@@ -1136,9 +1366,10 @@ class AnalogView extends WatchUi
       var activeMin = _activityUtility.getActiveMinutesDay();
       // Parse the formatted string to get just total
       // Or modify ActivityUtility to return just the total
-      value = activeMin;
-      //      label = "active";
-      //      tekst = Lang.format("$1$ $2$", [value, label]);
+      value = activeMin != null ? activeMin.toString() : "--";
+      // value = activeMin;
+      //       label = "active";
+      //       tekst = Lang.format("$1$ $2$", [value, label]);
       symbolChar = "\uF013";
     } else if (dataFieldType == DATAFIELD_BATTERY) {
       var battery = System.getSystemStats().battery;

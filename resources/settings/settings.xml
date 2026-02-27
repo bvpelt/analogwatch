@@ -64,8 +64,9 @@
             <listEntry value="2">@Strings.ProfileBlue</listEntry>
             <listEntry value="3">@Strings.ProfileOrange</listEntry>
             <listEntry value="4">@Strings.ProfileWhite</listEntry>
-            <listEntry value="5">@Strings.ProfileBlack</listEntry>
-            <listEntry value="6">@Strings.ProfileCustom</listEntry>
+            <listEntry value="5">@Strings.ProfileWhitish</listEntry>
+            <listEntry value="6">@Strings.ProfileBlack</listEntry>
+            <listEntry value="7">@Strings.ProfileCustom</listEntry>
         </settingConfig>
     </setting>
 
@@ -218,7 +219,7 @@
             &colorList;
         </settingConfig>
     </setting>
-    
+
     <setting propertyKey="@Properties.BlueToothActiveColor"
         title="@Strings.BlueToothActiveColorTitle">
         <settingConfig type="list">

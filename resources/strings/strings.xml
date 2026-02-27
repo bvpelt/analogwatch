@@ -17,6 +17,7 @@
     <string id="ProfileBlue">Blue</string>
     <string id="ProfileOrange">Orange</string>
     <string id="ProfileWhite">White</string>
+    <string id="ProfileWhitish">Whitish</string>
     <string id="ProfileBlack">Black</string>
     <string id="ProfileCustom">Custom</string>
 
@@ -41,7 +42,7 @@
     <string id="HandFgColorTitle">Hand Foreground</string>
     <string id="HandBgColorTitle">Hand Background</string>
     <string id="HandCenterColorTitle">Hand Center</string>
-    <string id="SecondFgColorTitle">Second Foreground</string>
+    <string id="SecondFgColorTitle">Second Hand</string>
 
     <string id="FaceBgColorTitle">Face Background</string>
     <string id="FaceBorderColorTitle">Face Border</string>
