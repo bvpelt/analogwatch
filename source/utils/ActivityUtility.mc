@@ -159,6 +159,8 @@ class ActivityUtility {
           System.println("Sample: " +
                          sample.heartRate); // print the current sample
         }
+      } else {
+        break;
       }
     }
     return sample.heartRate != null ? sample.heartRate : 0;
