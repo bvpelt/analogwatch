@@ -303,14 +303,6 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    /*
-        savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
-       _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
-                           _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                           _hourmarkercolor, _minutetickcolor, _numbercolor,
-                           _batteryfull, _batteryempty, _datafieldcolor,
-                           _bluethootactivecolor, _bluethootinactivecolor);
-    */
     var colors = { "HandBgColor" => _handbgcolor,
                    "HandFgColor" => _handfgcolor,
                    "SecondFgColor" => _secondfgcolor,
@@ -354,14 +346,6 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    /*
-       savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
-      _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
-                          _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                          _hourmarkercolor, _minutetickcolor, _numbercolor,
-                          _batteryfull, _batteryempty, _datafieldcolor,
-                          _bluethootactivecolor, _bluethootinactivecolor);
-   */
     var colors = { "HandBgColor" => _handbgcolor,
                    "HandFgColor" => _handfgcolor,
                    "SecondFgColor" => _secondfgcolor,
@@ -405,14 +389,6 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    /*
-       savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
-      _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
-                          _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                          _hourmarkercolor, _minutetickcolor, _numbercolor,
-                          _batteryfull, _batteryempty, _datafieldcolor,
-                          _bluethootactivecolor, _bluethootinactivecolor);
-   */
     var colors = { "HandBgColor" => _handbgcolor,
                    "HandFgColor" => _handfgcolor,
                    "SecondFgColor" => _secondfgcolor,
@@ -456,14 +432,6 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    /*
-        savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
-       _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
-                           _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                           _hourmarkercolor, _minutetickcolor, _numbercolor,
-                           _batteryfull, _batteryempty, _datafieldcolor,
-                           _bluethootactivecolor, _bluethootinactivecolor);
-    */
     var colors = { "HandBgColor" => _handbgcolor,
                    "HandFgColor" => _handfgcolor,
                    "SecondFgColor" => _secondfgcolor,
@@ -507,14 +475,6 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    /*
-       savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
-      _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
-                          _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                          _hourmarkercolor, _minutetickcolor, _numbercolor,
-                          _batteryfull, _batteryempty, _datafieldcolor,
-                          _bluethootactivecolor, _bluethootinactivecolor);
-   */
     var colors = { "HandBgColor" => _handbgcolor,
                    "HandFgColor" => _handfgcolor,
                    "SecondFgColor" => _secondfgcolor,
@@ -558,14 +518,6 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    /*
-        savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
-       _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
-                           _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                           _hourmarkercolor, _minutetickcolor, _numbercolor,
-                           _batteryfull, _batteryempty, _datafieldcolor,
-                           _bluethootactivecolor, _bluethootinactivecolor);
-    */
     var colors = { "HandBgColor" => _handbgcolor,
                    "HandFgColor" => _handfgcolor,
                    "SecondFgColor" => _secondfgcolor,
@@ -609,14 +561,6 @@ class AnalogView extends WatchUi
     _bluethootactivecolor = 0x00ff00;   // { "green", "#00ff00"}
     _bluethootinactivecolor = 0xff0000; // "red", "#ff0000"}
 
-    /*
-       savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
-      _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
-                          _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                          _hourmarkercolor, _minutetickcolor, _numbercolor,
-                          _batteryfull, _batteryempty, _datafieldcolor,
-                          _bluethootactivecolor, _bluethootinactivecolor);
-   */
     var colors = { "HandBgColor" => _handbgcolor,
                    "HandFgColor" => _handfgcolor,
                    "SecondFgColor" => _secondfgcolor,
@@ -676,14 +620,6 @@ class AnalogView extends WatchUi
     _bluethootinactivecolor =
         _propertieUtility.getPropertyNumber("BlueToothInActiveColor", 0xff0000);
 
-    /*
-           savePropertyValues(_handbgcolor, _handfgcolor, _secondfgcolor,
-          _facebgcolor, _facebordercolor, _handcentercolor, _daybgcolor,
-                              _daynamecolor, _daynumbercolor, _dayoutlinecolor,
-                              _hourmarkercolor, _minutetickcolor, _numbercolor,
-                              _batteryfull, _batteryempty, _datafieldcolor,
-                              _bluethootactivecolor, _bluethootinactivecolor);
-       */
     var colors = { "HandBgColor" => _handbgcolor,
                    "HandFgColor" => _handfgcolor,
                    "SecondFgColor" => _secondfgcolor,
@@ -718,38 +654,6 @@ class AnalogView extends WatchUi
 
     _logger.debug("AnalogView", "=== Properties saved ===");
   }
-
-  /*
-  private function savePropertyValues(
-      _handBgColor, _handFgColor, _secondFgColor, _faceBgColor,
-      _faceBorderColor, _handCenterColor, _dayBgColor, _dayNameColor,
-      _dayNumberColor, _dayOutlineColor, _hourMarkerColor, _minuteTickColor,
-      _numberColor, _batteryFullColor, _batteryEmptyColor, _datafieldcolor,
-      _bluethootactivecolor, _bluethootinactivecolor) {
-    _logger.debug("AnalogView", "=== Set propertie values from variables ===");
-    // Load each color from properties
-    _propertieUtility.setProperty("HandBgColor", _handBgColor);
-    _propertieUtility.setProperty("HandFgColor", _handFgColor);
-    _propertieUtility.setProperty("SecondFgColor", _secondFgColor);
-    _propertieUtility.setProperty("FaceBgColor", _faceBgColor);
-    _propertieUtility.setProperty("FaceBorderColor", _faceBorderColor);
-    _propertieUtility.setProperty("HandCenterColor", _handCenterColor);
-    _propertieUtility.setProperty("DayBgColor", _dayBgColor);
-    _propertieUtility.setProperty("DayNameColor", _dayNameColor);
-    _propertieUtility.setProperty("DayNumberColor", _dayNumberColor);
-    _propertieUtility.setProperty("DayOutlineColor", _dayOutlineColor);
-    _propertieUtility.setProperty("HourMarkerColor", _hourMarkerColor);
-    _propertieUtility.setProperty("MinuteTickColor", _minuteTickColor);
-    _propertieUtility.setProperty("NumberColor", _numberColor);
-    _propertieUtility.setProperty("BatteryFullColor", _batteryFullColor);
-    _propertieUtility.setProperty("BatteryEmptyColor", _batteryEmptyColor);
-    _propertieUtility.setProperty("DataFieldColor", _datafieldcolor);
-    _propertieUtility.setProperty("BlueToothActiveColor",
-                                  _bluethootactivecolor);
-    _propertieUtility.setProperty("BlueToothInActiveColor",
-                                  _bluethootinactivecolor);
-  }
-  */
 
   function onLayout(dc) {
     _logger.debug("AnalogView", "=== Layout AnalogView ===");
