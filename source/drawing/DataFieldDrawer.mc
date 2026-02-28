@@ -81,7 +81,8 @@ class DataFieldDrawer {
       value = battery.format("%.0f") + "%";
       symbol = getBatterySymbol(battery);
     } else if (dataFieldType == DATAFIELD_HEART_RATE) {
-      value = "--";
+      var hr = _activityUtility.getHeartRate();
+      value = hr != null ? hr.toString() : "--";
       symbol = "\uF010";
     }
 

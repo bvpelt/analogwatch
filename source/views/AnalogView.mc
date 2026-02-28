@@ -124,13 +124,13 @@ class AnalogView extends WatchUi
     _analogFont = WatchUi.loadResource(Rez.Fonts.AnalogFontSmall);
 
     // Create buffer if possible
-    createBufferedBitmap(dc);
+    getBufferedBitmap(dc);
 
     _layoutCalculated = true;
     _logger.debug("AnalogView", "Layout complete");
   }
 
-  private function createBufferedBitmap(dc) as Void {
+  private function getBufferedBitmap(dc) as Void {
     _backgroundBuffer = null;
 
     var deviceSettings = System.getDeviceSettings();

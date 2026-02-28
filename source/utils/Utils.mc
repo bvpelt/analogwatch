@@ -1,4 +1,6 @@
 using Toybox.System;
+using Toybox.Time;
+using Toybox.Lang;
 
 // global convenience function
 // Rename function to avoid symbol collision with the property 'isSimulator'
@@ -32,4 +34,17 @@ function checkIsSimulator() {
     
     System.print("checkIsSimulator Not in simulator");
     return false;
+}
+
+function formatISO(moment as Time.Moment) as Lang.String {
+    var info = Time.Gregorian.info(moment, Time.FORMAT_SHORT);
+    
+    return Lang.format("$1$-$2$-$3$ $4$:$5$:$6$", [
+        info.year,
+        info.month.format("%02d"),
+        info.day.format("%02d"),
+        info.hour.format("%02d"),
+        info.min.format("%02d"),
+        info.sec.format("%02d")
+    ]);
 }

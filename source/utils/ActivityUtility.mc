@@ -3,10 +3,14 @@ using Toybox.Lang;
 
 class ActivityUtility {
   private static var _instance as ActivityUtility?;
+  private var _logger;
+  private var _lastHartSampleTime;
 
   // Private constructor
   private function initialize() {
     // Don't store _info here - fetch it fresh each time
+    _logger = getLogger();
+    _lastHartSampleTime = null;
   }
 
   // Get singleton instance
@@ -141,29 +145,30 @@ class ActivityUtility {
     return info.stepGoal;
   }
 
-  function getHartRate() {
+  function getHeartRate() {
     // get a HeartRateIterator object; oldest sample first
     var hrIterator = ActivityMonitor.getHeartRateHistory(null, false);
     var previous = hrIterator.next(); // get the previous HR
-    // var lastSampleTime = null;        // get the last
-    var sample = null;
+                                      // get the last
+    var lastHartRate = null;
+
     while (true) {
-      sample = hrIterator.next();
+      var sample = hrIterator.next();
       if (null != sample) { // null check
         if (sample.heartRate !=
                 ActivityMonitor.INVALID_HR_SAMPLE // check for invalid samples
             && previous.heartRate != ActivityMonitor.INVALID_HR_SAMPLE) {
-          //    lastSampleTime = sample.when;
-          System.println("Previous: " +
-                         previous.heartRate); // print the previous sample
-          System.println("Sample: " +
-                         sample.heartRate); // print the current sample
+          _lastHartSampleTime = sample.when;
+          lastHartRate = sample.heartRate;
+          _logger.trace("ActivityUtility", "lastHartSampleTime: " +
+                                               formatISO(_lastHartSampleTime) +
+                                               " hartrate: " + lastHartRate);
         }
-      } else {
-        break;
       }
+      break;
     }
-    return sample.heartRate != null ? sample.heartRate : 0;
+
+    return lastHartRate;
   }
 }
 

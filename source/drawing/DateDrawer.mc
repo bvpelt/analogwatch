@@ -4,6 +4,7 @@ using Toybox.Time.Gregorian;
 using Toybox.Lang;
 
 class DateDrawer {
+
   function drawDateInfo(dc, centerY, dateBoxMaxlen, dateBoxY, dateBoxHeight,
                         dateBoxSpacing, dateBoxOutlinePenWidth,
                         profile) as Void {
