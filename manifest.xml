@@ -103,6 +103,9 @@
             <iq:uses-permission id="SensorHistory"/>
         </iq:permissions>
         -->
+        <iq:permissions>
+            <iq:uses-permission id="SensorHistory" />
+        </iq:permissions>
         <iq:languages>
             <iq:language>dut</iq:language>
             <iq:language>eng</iq:language>

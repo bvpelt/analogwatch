@@ -1,4 +1,5 @@
 using Toybox.ActivityMonitor;
+// using Toybox.Activity;
 using Toybox.Lang;
 
 class ActivityUtility {
@@ -144,6 +145,24 @@ class ActivityUtility {
     var info = ActivityMonitor.getInfo();
     return info.stepGoal;
   }
+
+  /*
+    function getHeartRatex() as Lang.Number or Null {
+      var activityInfo = null;
+      var hartrate = null;
+
+      if (Activity has: getActivityInfo) {
+        activityInfo = Activity.getActivityInfo();
+
+        if (activityInfo != null && activityInfo.currentHeartRate != null) {
+          hartrate = activityInfo.currentHeartRate; // Returns BPM as Integer
+        }
+      }
+
+      _logger.trace("ActivityUtility", "getHeartRate : " + hartrate);
+      return hartrate; // No HR data available
+    }
+  */
 
   function getHeartRate() {
     // get a HeartRateIterator object; oldest sample first
