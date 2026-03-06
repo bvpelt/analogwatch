@@ -194,12 +194,7 @@ class AnalogView extends WatchUi
   }
 
   private function drawStaticElements(dc) as Void {
-    /*
-    _faceDrawer.drawFace(dc, _layout["centerX"], _layout["centerY"],
-                         _layout["r097"], _layout["r090"], _layout["r004"],
-                         _currentProfile, _useOuterCircle,
-                         _layout["outerPenWidth"], _layout["innerPenWidth"]);
-*/
+
     _faceDrawer.drawFace(dc, _layout, _currentProfile, _useOuterCircle);
 
     _faceDrawer.drawHourMarkers(dc, _layout["hourMarkerPoints"],
@@ -221,12 +216,7 @@ class AnalogView extends WatchUi
         _layout["dateBoxOutlinePenWidth"], _currentProfile);
 
     var clockTime = System.getClockTime();
-    /*
-    _handDrawer.drawHands(dc, clockTime, _layout["centerX"], _layout["centerY"],
-                          _layout["radius"], _layout["r055"], _layout["r070"],
-                          _layout["r035"], _layout["r025"], _currentProfile,
-                          _updateEverySecond, SECOND_PEN_WIDTH);
-*/
+
     _handDrawer.drawHands(dc, clockTime, _layout, _currentProfile,
                           _updateEverySecond, SECOND_PEN_WIDTH);
     // Data fields

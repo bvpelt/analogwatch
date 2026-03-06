@@ -45,14 +45,26 @@ class FaceDrawer {
     var loadPercentage = System.getSystemStats().battery;
     var sweepAngle = (loadPercentage / 100.0) * 360;
 
-    dc.setColor(profile.batteryfull, Graphics.COLOR_TRANSPARENT);
-    dc.setPenWidth(loadPenWidth);
-    dc.drawArc(centerX, centerY, arcRadius, Graphics.ARC_CLOCKWISE, startAngle,
-               startAngle - sweepAngle);
+    _logger.trace("AnalogWatch",
+                  "FraceDrawer drawBattery loadPercentage: " + loadPercentage +
+                      " sweepAngle: " + sweepAngle);
 
-    dc.setColor(profile.batteryempty, Graphics.COLOR_TRANSPARENT);
-    dc.drawArc(centerX, centerY, arcRadius, Graphics.ARC_CLOCKWISE,
-               startAngle - sweepAngle, startAngle);
+    /*
+    To prevent overdrawing at sweep angle 360 or 0 only allow empty or full to
+    draw
+    */
+    if (sweepAngle < 359.9) {
+      dc.setColor(profile.batteryempty, Graphics.COLOR_TRANSPARENT);
+      dc.drawArc(centerX, centerY, arcRadius, Graphics.ARC_CLOCKWISE,
+                 startAngle - sweepAngle, startAngle);
+    }
+
+    if (sweepAngle > 0.1) {
+      dc.setColor(profile.batteryfull, Graphics.COLOR_TRANSPARENT);
+      dc.setPenWidth(loadPenWidth);
+      dc.drawArc(centerX, centerY, arcRadius, Graphics.ARC_CLOCKWISE,
+                 startAngle, startAngle - sweepAngle);
+    }
   }
 
   function drawHourMarkers(dc, hourMarkerPoints as Lang.Array?,

@@ -1,5 +1,167 @@
 # Documentation
 
+# Git
+See https://www.youtube.com/watch?v=mAFoROnOfHs
+
+## Course
+
+### Create local repository
+From a newly created folder tell git this is the working directory 
+```bash
+git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint: 
+hint: 	git config --global init.defaultBranch <name>
+hint: 
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint: 
+hint: 	git branch -m <name>
+Initialized empty Git repository in /home/bvpelt/Develop/git-one/.git/
+```
+
+The working directory is created and stored in a .git directory
+```bash
+ls -la
+total 24
+drwxrwxr-x  4 bvpelt bvpelt 4096 Mar  4 18:47 .
+drwxrwxr-x 28 bvpelt bvpelt 4096 Mar  4 18:43 ..
+drwxrwxr-x  7 bvpelt bvpelt 4096 Mar  4 18:47 .git
+drwxrwxr-x  2 bvpelt bvpelt 4096 Mar  4 18:45 myFolder
+-rw-rw-r--  1 bvpelt bvpelt    4 Mar  4 18:45 one.txt
+-rw-rw-r--  1 bvpelt bvpelt    4 Mar  4 18:45 two.txt
+```
+
+### Create remote repository
+In github create new repository with name git-journey and add two files one.txt with content one and two.txt with content two.
+
+Clone repository to get content local
+
+```bash
+git clone git@github.com:bvpelt/git-journey.git
+```
+
+### Check changes
+In the git-journey directory add 1 on a new line in the one.txt file.
+To check if git noticed any changes type
+
+```bash
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   one.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Also change two.txt add 2 on a new line. Check the modification status
+
+```bash
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   one.txt
+	modified:   two.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Moving changes from working directory to staging area
+
+```bash
+git add .
+```
+
+Create new directy myFolder with in that folder a file three.txt and content three. Go back to the project directory and check the changes
+
+```bash
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   one.txt
+	modified:   two.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	myFolder/
+```
+
+Add all changes from local working directory to staging area
+
+```bash
+git add --all
+```
+
+Check current status
+
+```bash
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   myFolder/three.txt
+	modified:   one.txt
+	modified:   two.txt
+```
+
+Go back to previous state
+```bash
+ git reset
+Unstaged changes after reset:
+M	one.txt
+M	two.txt
+```
+Check current state
+
+```bash
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   one.txt
+	modified:   two.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	myFolder/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+```
+
+Add all changes ```git add --all``` or ```git add -A```
+
+```bash
+git add -A
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   myFolder/three.txt
+	modified:   one.txt
+	modified:   two.txt
+```
+
 # Development environment
 
 Libraries
