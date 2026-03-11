@@ -7,10 +7,6 @@ class HandDrawer {
 
   function initialize() { /* _logger = getLogger(); */ }
 
-  /*
-    function drawHands(dc, clockTime, centerX, centerY, radius, r055, r070,
-    r035, r025, profile, updateEverySecond, secondPenWidth) as Void {
-                       */
   function drawHands(dc, clockTime, layout as Lang.Dictionary, profile,
                      updateEverySecond, secondPenWidth) as Void {
     var hour = clockTime.hour % 12;

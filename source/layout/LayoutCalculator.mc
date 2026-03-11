@@ -72,6 +72,9 @@ class LayoutCalculator {
     layout["numberY"] = numberData[1];
     layout["numberText"] = numberData[2];
 
+    layout["heartRateX"] = centerX;
+    layout["heartRateY"] = centerY + (radius * 0.45).toNumber(); // below center
+
     return layout;
   }
 

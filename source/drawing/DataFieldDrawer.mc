@@ -3,8 +3,9 @@ using Toybox.System;
 using Toybox.Lang;
 
 class DataFieldDrawer {
-  //  private var _logger;
+  private var _logger;
   private var _activityUtility;
+  private var _heartRateReader;
 
   const DATAFIELD_NONE = 0;
   const DATAFIELD_STEPS = 1;
@@ -16,8 +17,9 @@ class DataFieldDrawer {
   const DATAFIELD_HEART_RATE = 7;
 
   function initialize() {
-    //  _logger = getLogger();
+    _logger = getLogger();
     _activityUtility = getActivityUtility();
+    _heartRateReader = new HeartRateReader();
   }
 
   function drawDataField(dc, x, y, dataFieldType, analogFont, profile) as Void {
@@ -57,7 +59,9 @@ class DataFieldDrawer {
     var symbol = "";
 
     if (dataFieldType == DATAFIELD_STEPS) {
-      var steps = _activityUtility.getSteps();
+      // var steps = _activityUtility.getSteps();
+      var stepReader = new StepReader();
+      var steps = stepReader.getSteps();
       value = steps != null ? steps.toString() : "--";
       symbol = "\uF006";
     } else if (dataFieldType == DATAFIELD_CALORIES) {
@@ -81,8 +85,19 @@ class DataFieldDrawer {
       value = battery.format("%.0f") + "%";
       symbol = getBatterySymbol(battery);
     } else if (dataFieldType == DATAFIELD_HEART_RATE) {
-      var hr = _activityUtility.getHeartRate();
-      value = hr != null ? hr.toString() : "--";
+      var info = _heartRateReader.getHeartRateInfo();
+      _logger.trace("DataFieldDrawer", "info: " + info.toString());
+
+      if (!info.hasData) {
+        // No reading available at all
+        value = "--";
+      } else if (info.inActivity) {
+        // Live workout HR — show in red
+        value = (info.heartRate as Lang.Number).toString();
+      } else {
+        // Resting HR — show in white/default
+        value = (info.heartRate as Lang.Number).toString();
+      }
       symbol = "\uF010";
     }
 

@@ -6,10 +6,6 @@ class FaceDrawer {
 
   function initialize() { _logger = getLogger(); }
 
-  /*
-    function drawFace(dc, centerX, centerY, r097, r090, r004, profile,
-                      useOuterCircle, outerPenWidth, innerPenWidth) as Void {
-  */
   function drawFace(dc, layout as Lang.Dictionary, profile,
                     useOuterCircle) as Void {
     _logger.trace("FaceDrawer", "Drawing face");

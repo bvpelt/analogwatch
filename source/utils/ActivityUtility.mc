@@ -131,11 +131,12 @@ class ActivityUtility {
   /*
   steps as Lang.Number or Null
   The number of steps taken for the current day.
-  */
+
   function getSteps() as Lang.Number or Null {
     var info = ActivityMonitor.getInfo();
     return info.steps;
   }
+  */
 
   /*
   stepGoal as Lang.Number or Null
@@ -162,8 +163,8 @@ class ActivityUtility {
       _logger.trace("ActivityUtility", "getHeartRate : " + hartrate);
       return hartrate; // No HR data available
     }
-  */
 
+  */
   function getHeartRate() {
     // get a HeartRateIterator object; oldest sample first
     var hrIterator = ActivityMonitor.getHeartRateHistory(null, false);
@@ -179,14 +180,13 @@ class ActivityUtility {
             && previous.heartRate != ActivityMonitor.INVALID_HR_SAMPLE) {
           _lastHartSampleTime = sample.when;
           lastHartRate = sample.heartRate;
-          _logger.trace("ActivityUtility", "lastHartSampleTime: " +
-                                               formatISO(_lastHartSampleTime) +
-                                               " hartrate: " + lastHartRate);
         }
       }
       break;
     }
-
+    _logger.debug("ActivityUtility",
+                  "lastHartSampleTime: " + formatISO(_lastHartSampleTime) +
+                      " hartrate: " + lastHartRate);
     return lastHartRate;
   }
 }

@@ -1,7 +1,9 @@
 using Toybox.WatchUi;
+using Toybox.Application;
 using Toybox.Graphics;
 using Toybox.System;
 using Toybox.Lang;
+using Toybox.Timer;
 
 class AnalogView extends WatchUi
 .WatchFace {
@@ -15,11 +17,16 @@ class AnalogView extends WatchUi
   private var _dateDrawer;
   private var _dataFieldDrawer;
   private var _layoutCalculator;
+  // private var _heartRateReader as HeartRateReader;
 
   // Current state
   private var _currentProfile as ColorProfile;
   private var _layout as Lang.Dictionary = {};
   private var _layoutCalculated as Lang.Boolean = false;
+
+  // Track if buffer needs redrawing
+  private var _bufferDirty as Lang.Boolean = true;
+  private var _secondTimer as Timer.Timer or Null;
 
   // Settings
   private var _updateEverySecond = true;
@@ -32,6 +39,7 @@ class AnalogView extends WatchUi
   private var _iconFont;
   private var _analogFont;
   private var _backgroundBuffer as Graphics.BufferedBitmap ? ;
+  private var _backgroundImage as Graphics.BitmapReference or Null;
 
   // Constants
   private const SECOND_PEN_WIDTH = 3;
@@ -42,6 +50,7 @@ class AnalogView extends WatchUi
     WatchFace.initialize();
     _logger = getLogger();
     _propertieUtility = getPropertieUtility();
+    //   _heartRateReader = new HeartRateReader();
 
     // Initialize drawers
     _faceDrawer = new FaceDrawer();
@@ -65,13 +74,25 @@ class AnalogView extends WatchUi
     return _instance;
   }
 
-  function onUpdateHeartbeat() { WatchUi.requestUpdate(); }
+  function onUpdateHeartbeat() as Void { WatchUi.requestUpdate(); }
 
   function onShow() as Void {
     _logger.debug("AnalogView", "=== AnalogView onShow ===");
+
+    if (_updateEverySecond) {
+      _secondTimer = new Timer.Timer();
+      _secondTimer.start(method(: onUpdateHeartbeat), 1000,
+                         true); // true = repeat
+    }
   }
 
-  function onHide() { _logger.debug("AnalogView", "=== AnalogView onHide"); }
+  function onHide() {
+    _logger.debug("AnalogView", "=== AnalogView onHide");
+    if (_secondTimer != null) {
+      _secondTimer.stop();
+      _secondTimer = null;
+    }
+  }
 
   public function updateSettings() {
     _logger.debug("AnalogView", "==== updateSettings ====");
@@ -94,6 +115,7 @@ class AnalogView extends WatchUi
     saveProfileToProperties();
 
     _layoutCalculated = false;
+    _bufferDirty = true; // <-- add this
     WatchUi.requestUpdate();
   }
 
@@ -123,10 +145,16 @@ class AnalogView extends WatchUi
     _iconFont = WatchUi.loadResource(Rez.Fonts.IconFont);
     _analogFont = WatchUi.loadResource(Rez.Fonts.AnalogFontSmall);
 
+    // Load icons
+    _backgroundImage =
+        Application.loadResource(Rez.Drawables.VAVLogo)
+            as Graphics.BitmapReference;
+
     // Create buffer if possible
     getBufferedBitmap(dc);
 
     _layoutCalculated = true;
+    _bufferDirty = true; // <-- buffer must be redrawn after layout
     _logger.debug("AnalogView", "Layout complete");
   }
 
@@ -153,27 +181,17 @@ class AnalogView extends WatchUi
     }
   }
 
-  function onUpdate(dc) {
+  function onUpdate(dc as Graphics.Dc) as Void {
     _logger.trace("AnalogView", "=== onUpdate ===");
 
     if (!_layoutCalculated || _layout == null) {
       onLayout(dc);
     }
 
-    // Draw static elements to buffer
-    var targetDc = _backgroundBuffer != null ? _backgroundBuffer.getDc() : dc;
-
-    if (targetDc has: setAntiAlias) {
-      targetDc.setAntiAlias(true);
-    }
-
-    targetDc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-    targetDc.clear();
-
-    drawStaticElements(targetDc);
-
-    if (targetDc has: setAntiAlias) {
-      targetDc.setAntiAlias(false);
+    // Only redraw static buffer when dirty (settings changed, first draw, etc.)
+    if (_bufferDirty) {
+      drawStaticToBuffer(dc);
+      _bufferDirty = false;
     }
 
     // Copy buffer to screen
@@ -181,7 +199,7 @@ class AnalogView extends WatchUi
       dc.drawBitmap(0, 0, _backgroundBuffer);
     }
 
-    // Draw dynamic elements
+    // Draw dynamic elements on top
     if (dc has: setAntiAlias) {
       dc.setAntiAlias(true);
     }
@@ -190,6 +208,42 @@ class AnalogView extends WatchUi
 
     if (dc has: setAntiAlias) {
       dc.setAntiAlias(false);
+    }
+  }
+
+  // Renamed and fixed — draws background image + static elements into buffer
+  private function drawStaticToBuffer(dc as Graphics.Dc) as Void {
+    var targetDc = (_backgroundBuffer != null) ? _backgroundBuffer.getDc() : dc;
+
+    if (targetDc has: setAntiAlias) {
+      targetDc.setAntiAlias(true);
+    }
+
+    // 1. Clear
+    targetDc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+    targetDc.clear();
+
+    // 2. Draw background image FIRST (bottom layer)
+    if (_backgroundImage != null) {
+      var w = targetDc.getWidth();
+      var h = targetDc.getHeight();
+
+      if (targetDc has: drawScaledBitmap) {
+        _logger.debug("AnalogView", "Drawing background with drawScaledBitmap");
+        targetDc.drawScaledBitmap(0, 0, w, h, _backgroundImage);
+      } else {
+        // Fallback: draw unscaled, centered
+        _logger.debug("AnalogView",
+                      "Fallback: drawBitmap (no drawScaledBitmap support)");
+        targetDc.drawBitmap(0, 0, _backgroundImage);
+      }
+    }
+
+    // 3. Draw static watch elements on top of background
+    drawStaticElements(targetDc);
+
+    if (targetDc has: setAntiAlias) {
+      targetDc.setAntiAlias(false);
     }
   }
 
@@ -236,7 +290,22 @@ class AnalogView extends WatchUi
     _dataFieldDrawer.drawDataField(dc, _layout["dataFieldWestX"],
                                    _layout["dataFieldWestY"], _dataFieldWest,
                                    _analogFont, _currentProfile);
+
+    // Heart rate — always drawn fresh each update
+    // drawHeartRate(dc);
   }
+
+  /*
+    private function drawHeartRate(dc as Graphics.Dc) as Void {
+      var hr = _heartRateReader.getHeartRate();
+      var hrText = (hr != null) ? hr.toString() : "--";
+      var hrDisplay = hrText + " bpm";
+
+      dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+      dc.drawText(_layout["heartRateX"], _layout["heartRateY"], _analogFont,
+                  hrDisplay, Graphics.TEXT_JUSTIFY_CENTER);
+    }
+  */
 
   function onEnterSleep() {
     _logger.debug("AnalogView", "=== Enter sleep ===");
