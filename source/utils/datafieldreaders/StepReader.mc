@@ -17,7 +17,7 @@ class StepReader extends Reader {
   private function getMonitorSteps() as Lang.Number or Null {
     var monitorInfo = ActivityMonitor.getInfo();
     if (monitorInfo != null && monitorInfo.steps != null) {
-      _logger.debug("StepReader", "steps from monitor: " + monitorInfo.steps +
+      _logger.trace("StepReader", "steps from monitor: " + monitorInfo.steps +
                                       " info: " + monitorInfo.toString());
       return monitorInfo.steps;
     }

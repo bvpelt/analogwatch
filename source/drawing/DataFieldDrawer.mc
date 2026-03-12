@@ -4,7 +4,6 @@ using Toybox.Lang;
 
 class DataFieldDrawer {
   private var _logger;
-  private var _activityUtility;
   private var _heartRateReader;
 
   const DATAFIELD_NONE = 0;
@@ -18,7 +17,6 @@ class DataFieldDrawer {
 
   function initialize() {
     _logger = getLogger();
-    _activityUtility = getActivityUtility();
     _heartRateReader = new HeartRateReader();
   }
 
@@ -59,25 +57,29 @@ class DataFieldDrawer {
     var symbol = "";
 
     if (dataFieldType == DATAFIELD_STEPS) {
-      // var steps = _activityUtility.getSteps();
       var stepReader = new StepReader();
       var steps = stepReader.getSteps();
       value = steps != null ? steps.toString() : "--";
       symbol = "\uF006";
     } else if (dataFieldType == DATAFIELD_CALORIES) {
-      var calories = _activityUtility.getCalories();
+      var calorieReader = new CalorieReader();
+      var calories = calorieReader.getCalories();
       value = calories != null ? calories.toString() : "--";
       symbol = "\uF008";
     } else if (dataFieldType == DATAFIELD_DISTANCE) {
-      var distance = _activityUtility.getDistance();
+      var distanceReader = new DistanceReader();
+      var distance = distanceReader.getDistance();
       value = distance != null ? (distance / 100000.0).format("%.2f") : "--";
       symbol = "\uF011";
     } else if (dataFieldType == DATAFIELD_FLOORS) {
-      var floors = _activityUtility.getFloorsClimbed();
+      var floorsReader = new FloorsReader();
+      var floors = floorsReader.getFloorsClimbed();
       value = floors != null ? floors.toString() : "--";
       symbol = "\uF00E";
     } else if (dataFieldType == DATAFIELD_ACTIVE_MINUTES) {
-      var activeMin = _activityUtility.getActiveMinutesDay();
+      //      var activeMin = _activityUtility.getActiveMinutesDay();
+      var activeMinutesReader = new ActiveMinutesReader();
+      var activeMin = activeMinutesReader.getTotalActiveMinutes();
       value = activeMin != null ? activeMin.toString() : "--";
       symbol = "\uF013";
     } else if (dataFieldType == DATAFIELD_BATTERY) {
@@ -87,7 +89,6 @@ class DataFieldDrawer {
     } else if (dataFieldType == DATAFIELD_HEART_RATE) {
       var info = _heartRateReader.getHeartRateInfo();
       _logger.trace("DataFieldDrawer", "info: " + info.toString());
-
       if (!info.hasData) {
         // No reading available at all
         value = "--";

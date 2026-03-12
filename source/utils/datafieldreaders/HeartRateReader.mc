@@ -1,4 +1,3 @@
-
 using Toybox.Activity;
 using Toybox.SensorHistory;
 using Toybox.Lang;
