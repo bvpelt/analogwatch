@@ -21,7 +21,6 @@ class ClassicProfile extends ColorProfile {
     datafieldcolor = handcentercolor;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
-    logo = VAVLogoClassic;
   }
 
   function getName() as Lang.String { return "Classic"; }
@@ -48,7 +47,6 @@ class BlueSteelProfile extends ColorProfile {
     datafieldcolor = batteryfull;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
-    logo = VAVLogoGray;
   }
 
   function getName() as Lang.String { return "Blue Steel"; }
@@ -75,7 +73,6 @@ class BlueProfile extends ColorProfile {
     datafieldcolor = batteryfull;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
-    logo = VAVLogoGray;
   }
 
   function getName() as Lang.String { return "Blue"; }
@@ -102,7 +99,6 @@ class OrangeProfile extends ColorProfile {
     datafieldcolor = batteryfull;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
-    logo = VAVLogoClassic;
   }
 
   function getName() as Lang.String { return "Orange"; }
@@ -129,7 +125,6 @@ class WhiteProfile extends ColorProfile {
     datafieldcolor = batteryfull;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
-    logo = VAVLogoGray;
   }
 
   function getName() as Lang.String { return "White"; }
@@ -156,7 +151,6 @@ class WhitishProfile extends ColorProfile {
     datafieldcolor = 0xb20a1b;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
-    logo = VAVLogoGray;
   }
 
   function getName() as Lang.String { return "Whitish"; }
@@ -183,7 +177,6 @@ class BlackProfile extends ColorProfile {
     datafieldcolor = batteryfull;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
-    logo = VAVLogoGray;
   }
 
   function getName() as Lang.String { return "Black"; }
@@ -230,7 +223,6 @@ class CustomProfile extends ColorProfile {
         _propertieUtility.getPropertyNumber("BlueToothActiveColor", 0x00ff00);
     bluethootinactivecolor =
         _propertieUtility.getPropertyNumber("BlueToothInActiveColor", 0xff0000);
-    logo = _propertieUtility.getProperty("Logo", VAVLogo);
   }
 
   function getName() as Lang.String { return "Custom"; }

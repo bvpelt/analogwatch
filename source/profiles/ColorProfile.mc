@@ -25,7 +25,6 @@ class ColorProfile {
   public var datafieldcolor as Lang.Number;
   public var bluethootactivecolor as Lang.Number;
   public var bluethootinactivecolor as Lang.Number;
-  public var logo as Lang.String;
 
   function initialize() {
     // Default values
@@ -47,31 +46,31 @@ class ColorProfile {
     datafieldcolor = 0xffffff;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
-    logo = VAVLogo;
   }
 
   function getName() as Lang.String { return "Base"; }
 
   function toDictionary() as Lang.Dictionary {
-    return { "HandBgColor" => handbgcolor,
-             "HandFgColor" => handfgcolor,
-             "SecondFgColor" => secondfgcolor,
-             "FaceBgColor" => facebgcolor,
-             "FaceBorderColor" => facebordercolor,
-             "HandCenterColor" => handcentercolor,
-             "DayBgColor" => daybgcolor,
-             "DayNameColor" => daynamecolor,
-             "DayNumberColor" => daynumbercolor,
-             "DayOutlineColor" => dayoutlinecolor,
-             "HourMarkerColor" => hourmarkercolor,
-             "MinuteTickColor" => minutetickcolor,
-             "NumberColor" => numbercolor,
-             "BatteryFullColor" => batteryfull,
-             "BatteryEmptyColor" => batteryempty,
-             "DataFieldColor" => datafieldcolor,
-             "BlueToothActiveColor" => bluethootactivecolor,
-             "BlueToothInActiveColor" => bluethootinactivecolor,
-             "Logo" => logo };
+    return {
+      "HandBgColor" => handbgcolor,
+      "HandFgColor" => handfgcolor,
+      "SecondFgColor" => secondfgcolor,
+      "FaceBgColor" => facebgcolor,
+      "FaceBorderColor" => facebordercolor,
+      "HandCenterColor" => handcentercolor,
+      "DayBgColor" => daybgcolor,
+      "DayNameColor" => daynamecolor,
+      "DayNumberColor" => daynumbercolor,
+      "DayOutlineColor" => dayoutlinecolor,
+      "HourMarkerColor" => hourmarkercolor,
+      "MinuteTickColor" => minutetickcolor,
+      "NumberColor" => numbercolor,
+      "BatteryFullColor" => batteryfull,
+      "BatteryEmptyColor" => batteryempty,
+      "DataFieldColor" => datafieldcolor,
+      "BlueToothActiveColor" => bluethootactivecolor,
+      "BlueToothInActiveColor" => bluethootinactivecolor,
+    };
   }
 
   function applyFromDictionary(dict as Lang.Dictionary) as Void {
@@ -93,6 +92,5 @@ class ColorProfile {
     datafieldcolor = dict.get("DataFieldColor") as Lang.Number;
     bluethootactivecolor = dict.get("BlueToothActiveColor") as Lang.Number;
     bluethootinactivecolor = dict.get("BlueToothInActiveColor") as Lang.Number;
-    logo = dict.get("Logo") as Lang.String;
   }
 }

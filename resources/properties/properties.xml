@@ -16,7 +16,7 @@
     <property id="IsCustomProfile" type="boolean">false</property>
     <property id="UpdateSeconds" type="boolean">true</property>
     <property id="UseOuterCircle" type="boolean">false</property>
-    <property id="ShowBackgroundImage" type="boolean">true</property>
+    <property id="ShowBackgroundImage" type="boolean">false</property>
 
     <property id="DataFieldNorth" type="number">0</property>
     <property id="DataFieldSouth" type="number">1</property>

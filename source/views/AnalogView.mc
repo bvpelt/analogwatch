@@ -35,6 +35,7 @@ class AnalogView extends WatchUi
   private var _dataFieldNorth = 0;
   private var _dataFieldSouth = 1;
   private var _dataFieldWest = 2;
+  private var _logoName = 0;
 
   // Resources
   private var _iconFont;
@@ -109,6 +110,7 @@ class AnalogView extends WatchUi
     _dataFieldNorth = _propertieUtility.getPropertyNumber("DataFieldNorth", 0);
     _dataFieldSouth = _propertieUtility.getPropertyNumber("DataFieldSouth", 1);
     _dataFieldWest = _propertieUtility.getPropertyNumber("DataFieldWest", 2);
+    _logoName = _propertieUtility.getPropertyNumber("LogoName", 0);
 
     // Load profile
     _currentProfile = ProfileFactory.createProfile(profileId);
@@ -129,6 +131,8 @@ class AnalogView extends WatchUi
     for (var i = 0; i < keys.size(); i++) {
       var key = keys[i] as Lang.String;
       var value = colorDict[key] as Lang.Number;
+      _logger.debug("AnalogView",
+                    "saveProfileToProperties key: " + key + " value: " + value);
       _propertieUtility.setProperty(key, value);
     }
   }
@@ -148,15 +152,26 @@ class AnalogView extends WatchUi
     _iconFont = WatchUi.loadResource(Rez.Fonts.IconFont);
     _analogFont = WatchUi.loadResource(Rez.Fonts.AnalogFontSmall);
 
-    // Load image
-    _backgroundImage =
-        Application.loadResource(Rez.Drawables.VAVLogo)
-            as Graphics.BitmapReference;
-
     if (_showBackgroundImage) {
-      // Create buffer if possible
-      getBufferedBitmap(dc);
+
+      // Load image
+      if (_logoName == 0) {
+        _backgroundImage =
+            Application.loadResource(Rez.Drawables.VAVLogo)
+                as Graphics.BitmapReference;
+      } else if (_logoName == 1) { // VAVLogoClassic
+        _backgroundImage =
+            Application.loadResource(Rez.Drawables.VAVLogoClassic)
+                as Graphics.BitmapReference;
+      } else if (_logoName == 2) { // VAVLogoGray
+        _backgroundImage =
+            Application.loadResource(Rez.Drawables.VAVLogoGray)
+                as Graphics.BitmapReference;
+      }
     }
+
+    // Create buffer if possible
+    getBufferedBitmap(dc);
 
     _layoutCalculated = true;
     _bufferDirty = true; // <-- buffer must be redrawn after layout
@@ -201,7 +216,14 @@ class AnalogView extends WatchUi
 
     // Copy buffer to screen
     if (_backgroundBuffer != null) {
+      // Buffer exists — copy it to screen, this clears previous hands
       dc.drawBitmap(0, 0, _backgroundBuffer);
+    } else {
+      // No buffer — must clear and redraw static elements every frame
+      // otherwise old hands accumulate on screen
+      dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+      dc.clear();
+      drawStaticElements(dc);
     }
 
     // Draw dynamic elements on top
@@ -264,8 +286,8 @@ class AnalogView extends WatchUi
       var scaleY = screenH.toFloat() / imageH.toFloat();
       var scale = scaleX < scaleY ? scaleX : scaleY; // min()
 
-      drawW = (imageW * scale).toNumber();
-      drawH = (imageH * scale).toNumber();
+      drawW = (imageW * scale * 0.8).toNumber();
+      drawH = (imageH * scale * 0.8).toNumber();
       drawX = (screenW - drawW) / 2;
       drawY = (screenH - drawH) / 2;
 
@@ -333,22 +355,7 @@ class AnalogView extends WatchUi
     _dataFieldDrawer.drawDataField(dc, _layout["dataFieldWestX"],
                                    _layout["dataFieldWestY"], _dataFieldWest,
                                    _analogFont, _currentProfile);
-
-    // Heart rate — always drawn fresh each update
-    // drawHeartRate(dc);
   }
-
-  /*
-    private function drawHeartRate(dc as Graphics.Dc) as Void {
-      var hr = _heartRateReader.getHeartRate();
-      var hrText = (hr != null) ? hr.toString() : "--";
-      var hrDisplay = hrText + " bpm";
-
-      dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
-      dc.drawText(_layout["heartRateX"], _layout["heartRateY"], _analogFont,
-                  hrDisplay, Graphics.TEXT_JUSTIFY_CENTER);
-    }
-  */
 
   function onEnterSleep() {
     _logger.debug("AnalogView", "=== Enter sleep ===");
