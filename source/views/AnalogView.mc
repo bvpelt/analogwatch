@@ -31,6 +31,7 @@ class AnalogView extends WatchUi
   // Settings
   private var _updateEverySecond = true;
   private var _useOuterCircle = true;
+  private var _showBackgroundImage = true;
   private var _dataFieldNorth = 0;
   private var _dataFieldSouth = 1;
   private var _dataFieldWest = 2;
@@ -103,6 +104,8 @@ class AnalogView extends WatchUi
         _propertieUtility.getPropertyBoolean("UpdateSeconds", true);
     _useOuterCircle =
         _propertieUtility.getPropertyBoolean("UseOuterCircle", true);
+    _showBackgroundImage =
+        _propertieUtility.getPropertyBoolean("ShowBackgroundImage", false);
     _dataFieldNorth = _propertieUtility.getPropertyNumber("DataFieldNorth", 0);
     _dataFieldSouth = _propertieUtility.getPropertyNumber("DataFieldSouth", 1);
     _dataFieldWest = _propertieUtility.getPropertyNumber("DataFieldWest", 2);
@@ -145,13 +148,15 @@ class AnalogView extends WatchUi
     _iconFont = WatchUi.loadResource(Rez.Fonts.IconFont);
     _analogFont = WatchUi.loadResource(Rez.Fonts.AnalogFontSmall);
 
-    // Load icons
+    // Load image
     _backgroundImage =
         Application.loadResource(Rez.Drawables.VAVLogo)
             as Graphics.BitmapReference;
 
-    // Create buffer if possible
-    getBufferedBitmap(dc);
+    if (_showBackgroundImage) {
+      // Create buffer if possible
+      getBufferedBitmap(dc);
+    }
 
     _layoutCalculated = true;
     _bufferDirty = true; // <-- buffer must be redrawn after layout
@@ -223,27 +228,61 @@ class AnalogView extends WatchUi
     targetDc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
     targetDc.clear();
 
-    // 2. Draw background image FIRST (bottom layer)
-    if (_backgroundImage != null) {
-      var w = targetDc.getWidth();
-      var h = targetDc.getHeight();
-
-      if (targetDc has: drawScaledBitmap) {
-        _logger.debug("AnalogView", "Drawing background with drawScaledBitmap");
-        targetDc.drawScaledBitmap(0, 0, w, h, _backgroundImage);
-      } else {
-        // Fallback: draw unscaled, centered
-        _logger.debug("AnalogView",
-                      "Fallback: drawBitmap (no drawScaledBitmap support)");
-        targetDc.drawBitmap(0, 0, _backgroundImage);
-      }
-    }
-
-    // 3. Draw static watch elements on top of background
+    // 2. Draw static watch elements on top of background
     drawStaticElements(targetDc);
 
     if (targetDc has: setAntiAlias) {
       targetDc.setAntiAlias(false);
+    }
+  }
+
+  private function drawBitMap(targetDc as Graphics.Dc,
+                              image as Graphics.BitmapReference) as Void {
+
+    var screenW = targetDc.getWidth();
+    var screenH = targetDc.getHeight();
+
+    // Get original image dimensions
+    var imageW = image.getWidth();  // original pixel width
+    var imageH = image.getHeight(); // original pixel height
+
+    if (imageW <= 0 || imageH <= 0) {
+      _logger.debug("AnalogView", "Invalid image dimensions");
+      return;
+    }
+
+    var drawX;
+    var drawY;
+    var drawW;
+    var drawH;
+
+    targetDc.setColor(_currentProfile.handfgcolor, Graphics.COLOR_TRANSPARENT);
+
+    if (targetDc has: drawScaledBitmap) {
+      // Calculate scale to fit while preserving aspect ratio
+      var scaleX = screenW.toFloat() / imageW.toFloat();
+      var scaleY = screenH.toFloat() / imageH.toFloat();
+      var scale = scaleX < scaleY ? scaleX : scaleY; // min()
+
+      drawW = (imageW * scale).toNumber();
+      drawH = (imageH * scale).toNumber();
+      drawX = (screenW - drawW) / 2;
+      drawY = (screenH - drawH) / 2;
+
+      _logger.debug("AnalogView", "drawScaledBitmap: " + drawX + "," + drawY +
+                                      " size: " + drawW + "x" + drawH);
+
+      targetDc.drawScaledBitmap(drawX, drawY, drawW, drawH, image);
+
+    } else {
+      // Fallback for older devices — draw unscaled, just center it
+      drawX = (screenW - imageW) / 2;
+      drawY = (screenH - imageH) / 2;
+
+      _logger.debug("AnalogView",
+                    "drawBitmap fallback: " + drawX + "," + drawY);
+
+      targetDc.drawBitmap(drawX, drawY, image);
     }
   }
 
@@ -257,6 +296,10 @@ class AnalogView extends WatchUi
                                 MINUTE_TICK_PEN_WIDTH, _currentProfile);
     _faceDrawer.drawNumbers(dc, _layout["numberX"], _layout["numberY"],
                             _layout["numberText"], _currentProfile);
+
+    if (_showBackgroundImage) {
+      drawBitMap(dc, _backgroundImage);
+    }
   }
 
   private function drawDynamicElements(dc) as Void {

@@ -78,6 +78,19 @@
         <settingConfig type="boolean" />
     </setting>
 
+
+    <setting propertyKey="@Properties.ShowBackgroundImage" title="@Strings.ShowBackgroundImageTitle">
+        <settingConfig type="boolean" />
+    </setting>
+
+    <setting propertyKey="@Properties.LogoName" title="@Strings.LogoNameTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.VAVLogo</listEntry>
+            <listEntry value="1">@Strings.VAVLogoClassic</listEntry>
+            <listEntry value="2">@Strings.VAVLogoGray</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.DataFieldNorth" title="@Strings.DataFieldNorthTitle">
         <settingConfig type="list">
             <listEntry value="0">@Strings.DataFieldNone</listEntry>

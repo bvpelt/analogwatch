@@ -2,6 +2,11 @@ using Toybox.Lang;
 
 // Base class for all color profiles
 class ColorProfile {
+
+  public const VAVLogo = "VAVLogo";
+  public const VAVLogoClassic = "VAVLogoClassic";
+  public const VAVLogoGray = "VAVLogoGray";
+
   public var handbgcolor as Lang.Number;
   public var handfgcolor as Lang.Number;
   public var handcentercolor as Lang.Number;
@@ -20,6 +25,7 @@ class ColorProfile {
   public var datafieldcolor as Lang.Number;
   public var bluethootactivecolor as Lang.Number;
   public var bluethootinactivecolor as Lang.Number;
+  public var logo as Lang.String;
 
   function initialize() {
     // Default values
@@ -41,6 +47,7 @@ class ColorProfile {
     datafieldcolor = 0xffffff;
     bluethootactivecolor = 0x00ff00;
     bluethootinactivecolor = 0xff0000;
+    logo = VAVLogo;
   }
 
   function getName() as Lang.String { return "Base"; }
@@ -63,7 +70,8 @@ class ColorProfile {
              "BatteryEmptyColor" => batteryempty,
              "DataFieldColor" => datafieldcolor,
              "BlueToothActiveColor" => bluethootactivecolor,
-             "BlueToothInActiveColor" => bluethootinactivecolor };
+             "BlueToothInActiveColor" => bluethootinactivecolor,
+             "Logo" => logo };
   }
 
   function applyFromDictionary(dict as Lang.Dictionary) as Void {
@@ -85,5 +93,6 @@ class ColorProfile {
     datafieldcolor = dict.get("DataFieldColor") as Lang.Number;
     bluethootactivecolor = dict.get("BlueToothActiveColor") as Lang.Number;
     bluethootinactivecolor = dict.get("BlueToothInActiveColor") as Lang.Number;
+    logo = dict.get("Logo") as Lang.String;
   }
 }

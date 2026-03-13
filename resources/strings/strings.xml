@@ -23,7 +23,13 @@
 
     <string id="UpdateSecondsTitle">Update Every Second</string>
     <string id="UseOuterCircleTitle">Show Outer Circle</string>
+    <string id="ShowBackgroundImageTitle">Show background image</string>
+    <string id="LogoNameTitle">Logo name</string>
 
+    <string id="VAVLogo">VAVLogo</string>
+    <string id="VAVLogoClassic">VAVLogoClassic</string>
+    <string id="VAVLogoGray">VAVLogoGray</string>
+    
     <!-- Data field titles -->
     <string id="DataFieldNorthTitle">North Data Field</string>
     <string id="DataFieldSouthTitle">South Data Field</string>

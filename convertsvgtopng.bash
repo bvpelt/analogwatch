@@ -29,8 +29,15 @@ mkdir -p icon-va3m/drawables
 
 # Move your correctly sized icons into them (assuming you have them or can resize them)
 # Then copy the drawables.xml to each so the compiler sees the resource definition
-find . -maxdepth 1 -name "icon-*" -exec cp resources/drawables/drawables.xml {}/drawables/ \;
-cp resources/drawables/drawables.xml icon-va3m/drawables
+for dir in icon-{30,35,36,40,54,56,60,61,65,70,80,va3m}/drawables icon-va3m/drawables; do
+    cat > "${PROJECT_ROOT}/${dir}/drawables.xml" << 'EOF'
+<drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+</drawables>
+EOF
+done
+
 
 # 5. Check if the file exists
 if [ ! -f "$INPUT_FILE" ]; then
@@ -48,6 +55,19 @@ for size in 30 35 36 40 54 56 60 61 65 70 80; do
     --export-height=$size \
     --export-filename="$OUTPUT_NAME" 2> /dev/null
 done
+
+echo "Processing logo's"
+
+# Black
+cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#000000;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-black.svg;export-do'
+
+# Classic
+cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#ffcd22;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-classic.svg;export-do'
+
+# Blue Steel, Blue, Orange, White, Whiteish, Black
+cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#a5a5a5;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-gray.svg;export-do'
+
+
 
 echo "Success! Icons generated. Distributing to device folders..."
 
@@ -73,3 +93,4 @@ inkscape "$INPUT_FILE" \
 mv $OUTPUT_NAME "${PROJECT_ROOT}/icon-va3m/drawables/launcher_icon.png"
 
 echo "Distribution complete. Cleaned up temporary files."
+
