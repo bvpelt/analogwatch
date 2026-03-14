@@ -56,19 +56,6 @@ for size in 30 35 36 40 54 56 60 61 65 70 80; do
     --export-filename="$OUTPUT_NAME" 2> /dev/null
 done
 
-echo "Processing logo's"
-
-# Black
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#000000;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-black.svg;export-do'
-
-# Classic
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#ffcd22;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-classic.svg;export-do'
-
-# Blue Steel, Blue, Orange, White, Whiteish, Black
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#a5a5a5;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-gray.svg;export-do'
-
-
-
 echo "Success! Icons generated. Distributing to device folders..."
 
 # Move into the base drawables directory to start copying

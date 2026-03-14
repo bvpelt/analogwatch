@@ -114,3 +114,58 @@ git push origin v1.0-reactive-feature
 Use Monkey C: Export to create a .iq file for all supported devices
 
 Submit file using [link](https://apps.garmin.com/en-US/developer/upload)
+
+# Picture to SVG
+Inkscape is suited to convert a raster image to a scaleble vector image (.svg)
+
+1. Import and Prepare
+First, get your image onto the canvas.
+
+Go to File > Import and select your image.
+
+When the dialog pops up, choose "Embed" rather than "Link" to ensure the file stays inside your SVG.
+
+2. Open the Trace Bitmap Tool
+With your image selected, navigate to:
+Path > Trace Bitmap... (or press Shift + Alt + B).
+
+A panel will appear on the right. This is where the magic happens. You have two main ways to trace:
+
+Option A: Single Scan (Black & White)
+Best for logos, line art, or signatures.
+
+Brightness Cutoff: The most common mode. It creates a black-and-white silhouette.
+
+Threshold: Adjust this value. A higher threshold makes the vector "heavier" (includes more dark areas), while a lower value makes it "thinner."
+
+Option B: Multi-color Scan
+Best for colored illustrations or photos you want to turn into "pop art."
+
+Multiple Scans: Select Colors or Grays.
+
+Scans: Choose the number of colors you want the final vector to have. More scans mean more detail but a more complex (and heavy) file.
+
+Stack: Keep this checked to avoid tiny gaps between colors.
+
+3. Refine and Execute
+Before you hit "Apply," look at these settings to save yourself some cleanup work later:
+
+Speckles: Removes tiny "dust" spots from your original image.
+
+Smooth Corners: Rounds out jagged pixel edges.
+
+Optimize: Simplifies the final path by reducing the number of nodes.
+
+Click Apply. Inkscape will place the new vector directly on top of your original image. Move the vector to the side to see the difference!
+
+4. Post-Trace Cleanup
+Since you're an aspiring pro, you won't just leave it as-is.
+
+Delete the Original: Click the background photo and hit Delete.
+
+Edit Nodes: Press N to enter the Node Tool. You can now click on the lines and drag them or delete individual points to perfect the curves.
+
+Simplify: If there are too many dots (nodes), go to Path > Simplify (Ctrl + L) to make the lines smoother.
+
+Pro Tip: Contrast is King
+The "Trace Bitmap" tool looks for contrast. If your source image is blurry or has low contrast, use a photo editor first to crank up the brightness and contrast. The cleaner the input, the sharper the output.
