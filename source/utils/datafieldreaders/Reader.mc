@@ -15,7 +15,7 @@ class Reader {
     var _activityInfo = Activity.getActivityInfo();
 
     if (_activityInfo == null) {
-      _logger.debug("Reader", "activityInfo: " + _activityInfo +
+      _logger.trace("Reader", "activityInfo: " + _activityInfo +
                                   " + isInActivity: false");
       return false;
     }
@@ -24,7 +24,7 @@ class Reader {
     // ON or PAUSED both mean an activity has been started
     var state = _activityInfo.timerState;
     var result = (state == TIMER_STATE_ON || state == TIMER_STATE_PAUSED);
-    _logger.debug("Reader", "activityInfo: " + _activityInfo +
+    _logger.trace("Reader", "activityInfo: " + _activityInfo +
                                 " + isInActivity: " + result);
     return result;
   }

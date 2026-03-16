@@ -29,7 +29,13 @@
     <string id="VAVLogo">VAVLogo</string>
     <string id="VAVLogoClassic">VAVLogoClassic</string>
     <string id="VAVLogoGray">VAVLogoGray</string>
-    
+
+    <string id="VAVLogoBlue">VAVLogoBlue</string>
+    <string id="VAVLogoBlueSteel">VAVLogoBlueSteel</string>
+    <string id="VAVLogoBlack">VAVLogoBlack</string>
+    <string id="VAVLogoOrange">VAVLogoOrange</string>
+    <string id="VAVLogoWhiteish">VAVLogoWhiteish</string>
+
     <!-- Data field titles -->
     <string id="DataFieldNorthTitle">North Data Field</string>
     <string id="DataFieldSouthTitle">South Data Field</string>

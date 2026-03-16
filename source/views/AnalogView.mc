@@ -131,7 +131,7 @@ class AnalogView extends WatchUi
     for (var i = 0; i < keys.size(); i++) {
       var key = keys[i] as Lang.String;
       var value = colorDict[key] as Lang.Number;
-      _logger.debug("AnalogView",
+      _logger.trace("AnalogView",
                     "saveProfileToProperties key: " + key + " value: " + value);
       _propertieUtility.setProperty(key, value);
     }
@@ -166,6 +166,26 @@ class AnalogView extends WatchUi
       } else if (_logoName == 2) { // VAVLogoGray
         _backgroundImage =
             Application.loadResource(Rez.Drawables.VAVLogoGray)
+                as Graphics.BitmapReference;
+      } else if (_logoName == 3) { // VAVLogoBlue
+        _backgroundImage =
+            Application.loadResource(Rez.Drawables.VAVLogoBlue)
+                as Graphics.BitmapReference;
+      } else if (_logoName == 4) { // VAVLogoBlueSteel
+        _backgroundImage =
+            Application.loadResource(Rez.Drawables.VAVLogoBlueSteel)
+                as Graphics.BitmapReference;
+      } else if (_logoName == 5) { // VAVLogoBlack
+        _backgroundImage =
+            Application.loadResource(Rez.Drawables.VAVLogoBlack)
+                as Graphics.BitmapReference;
+      } else if (_logoName == 6) { // VAVLogoOrange
+        _backgroundImage =
+            Application.loadResource(Rez.Drawables.VAVLogoOrange)
+                as Graphics.BitmapReference;
+      } else if (_logoName == 7) { // VAVLogoWhiteish
+        _backgroundImage =
+            Application.loadResource(Rez.Drawables.VAVLogoWhiteish)
                 as Graphics.BitmapReference;
       }
     }
@@ -216,9 +236,12 @@ class AnalogView extends WatchUi
 
     // Copy buffer to screen
     if (_backgroundBuffer != null) {
+      _logger.trace("AnalogView", "=== onUpdate, draw from buffer ===");
       // Buffer exists — copy it to screen, this clears previous hands
       dc.drawBitmap(0, 0, _backgroundBuffer);
     } else {
+      _logger.trace("AnalogView",
+                    "=== onUpdate, drawStaticElements - not from buffer ===");
       // No buffer — must clear and redraw static elements every frame
       // otherwise old hands accumulate on screen
       dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
@@ -241,6 +264,7 @@ class AnalogView extends WatchUi
   // Renamed and fixed — draws background image + static elements into buffer
   private function drawStaticToBuffer(dc as Graphics.Dc) as Void {
     var targetDc = (_backgroundBuffer != null) ? _backgroundBuffer.getDc() : dc;
+    _logger.debug("AnalogView", "drawStaticToBuffer");
 
     if (targetDc has: setAntiAlias) {
       targetDc.setAntiAlias(true);
@@ -261,6 +285,7 @@ class AnalogView extends WatchUi
   private function drawBitMap(targetDc as Graphics.Dc,
                               image as Graphics.BitmapReference) as Void {
 
+    _logger.debug("AnalogView", "drawBitMap");
     var screenW = targetDc.getWidth();
     var screenH = targetDc.getHeight();
 

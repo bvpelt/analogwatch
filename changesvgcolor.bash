@@ -13,5 +13,15 @@ cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-el
 
 
 
+# BlueSteelProfile
+cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#33df40;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-bluesteel.svg;export-do'
 
 
+# BlueProfile
+cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#0353a4;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-blue.svg;export-do'
+
+# OrangeProfile
+cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#ffb400;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-orange.svg;export-do'
+
+# WhitishProfile
+cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#f179f1;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-whiteish.svg;export-do'

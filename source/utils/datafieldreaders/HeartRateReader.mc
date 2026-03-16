@@ -51,7 +51,7 @@ class HeartRateReader extends Reader {
     var inActivity = isInActivity();
     var hr = inActivity ? getActivityHeartRate() : getRestingHeartRate();
     var hrinfo = new HeartRateInfo(hr, inActivity, hr != null);
-    _logger.debug("HeartRateRader", "info: " + hrinfo.toString());
+    _logger.trace("HeartRateRader", "info: " + hrinfo.toString());
 
     return hrinfo;
   }

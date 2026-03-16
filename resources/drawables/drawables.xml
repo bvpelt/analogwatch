@@ -3,4 +3,9 @@
     <bitmap id="VAVLogo" filename="vav-logo.svg" />
     <bitmap id="VAVLogoClassic" filename="vav-logo-classic.svg" />
     <bitmap id="VAVLogoGray" filename="vav-logo-gray.svg" />
+     <bitmap id="VAVLogoBlue" filename="vav-logo-blue.svg" />
+     <bitmap id="VAVLogoBlueSteel" filename="vav-logo-bluesteel.svg" />
+     <bitmap id="VAVLogoBlack" filename="vav-logo-black.svg" />
+     <bitmap id="VAVLogoOrange" filename="vav-logo-orange.svg" />
+     <bitmap id="VAVLogoWhiteish" filename="vav-logo-whiteish.svg" />
 </drawables>

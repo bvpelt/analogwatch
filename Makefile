@@ -31,7 +31,7 @@ help: ## Show this help message
 	@echo "  make clean-icons            # remove generated icons"
 	@echo "  make clean-logos            # remove generated colored logos"
 	@echo "  make clean-all              # Remove everything — artifacts, storage, icons and logos"
-	@echo "  make icons                  # Generate launcher icons from SVG (skipped if SVG unchanged)
+	@echo "  make icons                  # Generate launcher icons from SVG (skipped if SVG unchanged)"
 	@echo "  make logos                  # Generate colored logo SVGs (skipped if logo SVG unchanged)"
 	@echo "  make build                  # Build the watch face for DEVICE (default: $(DEVICE))"
 	@echo "  make run                    # Build and run in the simulator for DEVICE (default: $(DEVICE))"

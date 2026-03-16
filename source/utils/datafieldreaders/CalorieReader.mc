@@ -21,11 +21,11 @@ class CalorieReader extends Reader {
 
   public function getCalories() as Lang.Number or Null {
     if (isInActivity()) {
-      _logger.debug("CalorieReader",
+      _logger.trace("CalorieReader",
                     "isInactivity calories: " + getInActivityCalories());
       return getInActivityCalories();
     }
-    _logger.debug("CalorieReader",
+    _logger.trace("CalorieReader",
                   "Not isInactivity calories: " + getNotInActivityCalories());
     return getNotInActivityCalories();
   }
