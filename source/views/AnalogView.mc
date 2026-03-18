@@ -153,41 +153,9 @@ class AnalogView extends WatchUi
     _analogFont = WatchUi.loadResource(Rez.Fonts.AnalogFontSmall);
 
     if (_showBackgroundImage) {
-
-      // Load image
-      if (_logoName == 0) {
-        _backgroundImage =
-            Application.loadResource(Rez.Drawables.VAVLogo)
-                as Graphics.BitmapReference;
-      } else if (_logoName == 1) { // VAVLogoClassic
-        _backgroundImage =
-            Application.loadResource(Rez.Drawables.VAVLogoClassic)
-                as Graphics.BitmapReference;
-      } else if (_logoName == 2) { // VAVLogoGray
-        _backgroundImage =
-            Application.loadResource(Rez.Drawables.VAVLogoGray)
-                as Graphics.BitmapReference;
-      } else if (_logoName == 3) { // VAVLogoBlue
-        _backgroundImage =
-            Application.loadResource(Rez.Drawables.VAVLogoBlue)
-                as Graphics.BitmapReference;
-      } else if (_logoName == 4) { // VAVLogoBlueSteel
-        _backgroundImage =
-            Application.loadResource(Rez.Drawables.VAVLogoBlueSteel)
-                as Graphics.BitmapReference;
-      } else if (_logoName == 5) { // VAVLogoBlack
-        _backgroundImage =
-            Application.loadResource(Rez.Drawables.VAVLogoBlack)
-                as Graphics.BitmapReference;
-      } else if (_logoName == 6) { // VAVLogoOrange
-        _backgroundImage =
-            Application.loadResource(Rez.Drawables.VAVLogoOrange)
-                as Graphics.BitmapReference;
-      } else if (_logoName == 7) { // VAVLogoWhiteish
-        _backgroundImage =
-            Application.loadResource(Rez.Drawables.VAVLogoWhiteish)
-                as Graphics.BitmapReference;
-      }
+      _backgroundImage = loadLogoForCurrentProfile();
+    } else {
+      _backgroundImage = null;
     }
 
     // Create buffer if possible
@@ -219,6 +187,57 @@ class AnalogView extends WatchUi
       _logger.debug("AnalogView",
                     "Buffer created: " + (_backgroundBuffer != null));
     }
+  }
+
+  private function loadLogoForCurrentProfile()
+      as Graphics.BitmapReference or Null {
+    // Non-custom profiles own their logo
+    var resourceId = _currentProfile.getLogoResourceId();
+
+    // Custom profile (or base returns null) — fall back to manual setting
+    if (resourceId == null) {
+      resourceId = getLogoResourceIdFromSetting(_logoName);
+    }
+
+    if (resourceId == null) {
+      return null;
+    }
+
+    return Application.loadResource(resourceId as Lang.ResourceId)
+        as Graphics.BitmapReference;
+  }
+
+  // Manual logo selection — only used for CustomProfile
+  private function getLogoResourceIdFromSetting(logoName as Lang.Number)
+      as Lang.Object or Null {
+    if (logoName == 0) {
+      return Rez.Drawables.VAVLogo;
+    }
+    if (logoName == 1) {
+      return Rez.Drawables.VAVLogoBlack;
+    }
+    if (logoName == 2) {
+      return Rez.Drawables.VAVLogoBlue;
+    }
+    if (logoName == 3) {
+      return Rez.Drawables.VAVLogoBlueSteel;
+    }
+    if (logoName == 4) {
+      return Rez.Drawables.VAVLogoClassic;
+    }
+    if (logoName == 5) {
+      return Rez.Drawables.VAVLogoGray;
+    }
+    if (logoName == 6) {
+      return Rez.Drawables.VAVLogoOrange;
+    }
+    if (logoName == 7) {
+      return Rez.Drawables.VAVLogoWhite;
+    }
+    if (logoName == 8) {
+      return Rez.Drawables.VAVLogoWhiteish;
+    }
+    return null;
   }
 
   function onUpdate(dc as Graphics.Dc) as Void {

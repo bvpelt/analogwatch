@@ -12,7 +12,7 @@
 
     <!-- Profile names -->
     <string id="ColorProfileTitle">Color Profile</string>
-    <string id="ProfileClassic">Red</string>
+    <string id="ProfileClassic">Classic</string>
     <string id="ProfileBlueSteel">Blue Steel</string>
     <string id="ProfileBlue">Blue</string>
     <string id="ProfileOrange">Orange</string>
@@ -27,13 +27,13 @@
     <string id="LogoNameTitle">Logo name</string>
 
     <string id="VAVLogo">VAVLogo</string>
-    <string id="VAVLogoClassic">VAVLogoClassic</string>
-    <string id="VAVLogoGray">VAVLogoGray</string>
-
+    <string id="VAVLogoBlack">VAVLogoBlack</string>
     <string id="VAVLogoBlue">VAVLogoBlue</string>
     <string id="VAVLogoBlueSteel">VAVLogoBlueSteel</string>
-    <string id="VAVLogoBlack">VAVLogoBlack</string>
+    <string id="VAVLogoClassic">VAVLogoClassic</string>
+    <string id="VAVLogoGray">VAVLogoGray</string>
     <string id="VAVLogoOrange">VAVLogoOrange</string>
+    <string id="VAVLogoWhite">VAVLogoWhite</string>
     <string id="VAVLogoWhiteish">VAVLogoWhiteish</string>
 
     <!-- Data field titles -->

@@ -86,13 +86,14 @@
     <setting propertyKey="@Properties.LogoName" title="@Strings.LogoNameTitle">
         <settingConfig type="list">
             <listEntry value="0">@Strings.VAVLogo</listEntry>
-            <listEntry value="1">@Strings.VAVLogoClassic</listEntry>
-            <listEntry value="2">@Strings.VAVLogoGray</listEntry>
-            <listEntry value="3">@Strings.VAVLogoBlue</listEntry>
-            <listEntry value="4">@Strings.VAVLogoBlueSteel</listEntry>
-            <listEntry value="5">@Strings.VAVLogoBlack</listEntry>
+            <listEntry value="1">@Strings.VAVLogoBlack</listEntry>
+            <listEntry value="2">@Strings.VAVLogoBlue</listEntry>
+            <listEntry value="3">@Strings.VAVLogoBlueSteel</listEntry>
+            <listEntry value="4">@Strings.VAVLogoClassic</listEntry>
+            <listEntry value="5">@Strings.VAVLogoGray</listEntry>
             <listEntry value="6">@Strings.VAVLogoOrange</listEntry>
-            <listEntry value="7">@Strings.VAVLogoWhiteish</listEntry>
+            <listEntry value="7">@Strings.VAVLogoWhite</listEntry>
+            <listEntry value="8">@Strings.VAVLogoWhiteish</listEntry>
         </settingConfig>
     </setting>
 

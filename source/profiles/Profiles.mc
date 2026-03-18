@@ -24,6 +24,10 @@ class ClassicProfile extends ColorProfile {
   }
 
   function getName() as Lang.String { return "Classic"; }
+
+  function getLogoResourceId() as Lang.Object or Null {
+    return Rez.Drawables.VAVLogoClassic;
+  }
 }
 
 class BlueSteelProfile extends ColorProfile {
@@ -50,6 +54,10 @@ class BlueSteelProfile extends ColorProfile {
   }
 
   function getName() as Lang.String { return "Blue Steel"; }
+
+  function getLogoResourceId() as Lang.Object or Null {
+    return Rez.Drawables.VAVLogoBlueSteel;
+  }
 }
 
 class BlueProfile extends ColorProfile {
@@ -76,6 +84,10 @@ class BlueProfile extends ColorProfile {
   }
 
   function getName() as Lang.String { return "Blue"; }
+
+  function getLogoResourceId() as Lang.Object or Null {
+    return Rez.Drawables.VAVLogoBlue;
+  }
 }
 
 class OrangeProfile extends ColorProfile {
@@ -102,6 +114,10 @@ class OrangeProfile extends ColorProfile {
   }
 
   function getName() as Lang.String { return "Orange"; }
+
+  function getLogoResourceId() as Lang.Object or Null {
+    return Rez.Drawables.VAVLogoOrange;
+  }
 }
 
 class WhiteProfile extends ColorProfile {
@@ -128,6 +144,10 @@ class WhiteProfile extends ColorProfile {
   }
 
   function getName() as Lang.String { return "White"; }
+
+  function getLogoResourceId() as Lang.Object or Null {
+    return Rez.Drawables.VAVLogoWhite;
+  }
 }
 
 class WhitishProfile extends ColorProfile {
@@ -154,6 +174,10 @@ class WhitishProfile extends ColorProfile {
   }
 
   function getName() as Lang.String { return "Whitish"; }
+
+  function getLogoResourceId() as Lang.Object or Null {
+    return Rez.Drawables.VAVLogoWhiteish;
+  }
 }
 
 class BlackProfile extends ColorProfile {
@@ -180,6 +204,10 @@ class BlackProfile extends ColorProfile {
   }
 
   function getName() as Lang.String { return "Black"; }
+
+  function getLogoResourceId() as Lang.Object or Null {
+    return Rez.Drawables.VAVLogoBlack;
+  }
 }
 
 class CustomProfile extends ColorProfile {
@@ -226,4 +254,8 @@ class CustomProfile extends ColorProfile {
   }
 
   function getName() as Lang.String { return "Custom"; }
+
+  function getLogoResourceId() as Lang.Object or Null {
+    return null; // custom profile respects the manual LogoName setting
+  }
 }
