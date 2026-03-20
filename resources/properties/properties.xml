@@ -40,6 +40,6 @@
     <property id="DataFieldColor" type="number">0xff0000</property>
     <property id="BlueToothActiveColor" type="number">0x00ff00</property>
     <property id="BlueToothInActiveColor" type="number">0xff0000</property>
-    <property id="LogoName" type="number">0</property>
+    <property id="LogoName" type="number">4</property>
 
 </properties>

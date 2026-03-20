@@ -209,10 +209,7 @@ class AnalogView extends WatchUi
 
   // Manual logo selection — only used for CustomProfile
   private function getLogoResourceIdFromSetting(logoName as Lang.Number)
-      as Lang.Object or Null {
-    if (logoName == 0) {
-      return Rez.Drawables.VAVLogo;
-    }
+      as Lang.ResourceId or Null {
     if (logoName == 1) {
       return Rez.Drawables.VAVLogoBlack;
     }
@@ -236,6 +233,30 @@ class AnalogView extends WatchUi
     }
     if (logoName == 8) {
       return Rez.Drawables.VAVLogoWhiteish;
+    }
+    if (logoName == 9) {
+      return Rez.Drawables.BETHELLogoBlack;
+    }
+    if (logoName == 10) {
+      return Rez.Drawables.BETHELLogoBlue;
+    }
+    if (logoName == 11) {
+      return Rez.Drawables.BETHELLogoBlueSteel;
+    }
+    if (logoName == 12) {
+      return Rez.Drawables.BETHELLogoClassic;
+    }
+    if (logoName == 13) {
+      return Rez.Drawables.BETHELLogoGray;
+    }
+    if (logoName == 14) {
+      return Rez.Drawables.BETHELLogoOrange;
+    }
+    if (logoName == 15) {
+      return Rez.Drawables.BETHELLogoWhite;
+    }
+    if (logoName == 16) {
+      return Rez.Drawables.BETHELLogoWhiteish;
     }
     return null;
   }

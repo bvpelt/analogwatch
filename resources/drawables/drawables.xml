@@ -1,13 +1,11 @@
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
-    <bitmap id="VAVLogo" filename="vav-logo.svg" />
     <bitmap id="VAVLogoBlack"
         filename="vav-logo-black.svg" />
     <bitmap
         id="VAVLogoBlue" filename="vav-logo-blue.svg" />
     <bitmap id="VAVLogoBlueSteel"
         filename="vav-logo-bluesteel.svg" />
-
     <bitmap
         id="VAVLogoClassic"
         filename="vav-logo-classic.svg" />
@@ -18,4 +16,23 @@
         filename="vav-logo-white.svg" />
     <bitmap id="VAVLogoWhiteish"
         filename="vav-logo-whiteish.svg" />
+
+    <bitmap id="BETHELLogoBlack"
+        filename="bethel-logo-black.svg" />
+    <bitmap
+        id="BETHELLogoBlue" filename="bethel-logo-blue.svg" />
+    <bitmap id="BETHELLogoBlueSteel"
+        filename="bethel-logo-bluesteel.svg" />
+    <bitmap
+        id="BETHELLogoClassic"
+        filename="bethel-logo-classic.svg" />
+    <bitmap id="BETHELLogoGray"
+        filename="bethel-logo-gray.svg" />
+    <bitmap
+        id="BETHELLogoOrange" filename="bethel-logo-orange.svg" />
+    <bitmap id="BETHELLogoWhite"
+        filename="bethel-logo-white.svg" />
+    <bitmap id="BETHELLogoWhiteish"
+        filename="bethel-logo-whiteish.svg" />
+
 </drawables>

@@ -85,7 +85,6 @@
 
     <setting propertyKey="@Properties.LogoName" title="@Strings.LogoNameTitle">
         <settingConfig type="list">
-            <listEntry value="0">@Strings.VAVLogo</listEntry>
             <listEntry value="1">@Strings.VAVLogoBlack</listEntry>
             <listEntry value="2">@Strings.VAVLogoBlue</listEntry>
             <listEntry value="3">@Strings.VAVLogoBlueSteel</listEntry>
@@ -94,6 +93,14 @@
             <listEntry value="6">@Strings.VAVLogoOrange</listEntry>
             <listEntry value="7">@Strings.VAVLogoWhite</listEntry>
             <listEntry value="8">@Strings.VAVLogoWhiteish</listEntry>
+            <listEntry value="9">@Strings.BETHELLogoBlack</listEntry>
+            <listEntry value="10">@Strings.BETHELLogoBlue</listEntry>
+            <listEntry value="11">@Strings.BETHELLogoBlueSteel</listEntry>
+            <listEntry value="12">@Strings.BETHELLogoClassic</listEntry>
+            <listEntry value="13">@Strings.BETHELLogoGray</listEntry>
+            <listEntry value="14">@Strings.BETHELLogoOrange</listEntry>
+            <listEntry value="15">@Strings.BETHELLogoWhite</listEntry>
+            <listEntry value="16">@Strings.BETHELLogoWhiteish</listEntry>
         </settingConfig>
     </setting>
 

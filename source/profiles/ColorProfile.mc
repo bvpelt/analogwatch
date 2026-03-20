@@ -50,7 +50,7 @@ class ColorProfile {
 
   function getName() as Lang.String { return "Base"; }
 
-  function getLogoResourceId() as Lang.Object or Null { return null; }
+  function getLogoResourceId() as Lang.ResourceId or Null { return null; }
 
   function toDictionary() as Lang.Dictionary {
     return {

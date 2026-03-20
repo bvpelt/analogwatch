@@ -35,6 +35,14 @@
     <string id="VAVLogoOrange">VAVLogoOrange</string>
     <string id="VAVLogoWhite">VAVLogoWhite</string>
     <string id="VAVLogoWhiteish">VAVLogoWhiteish</string>
+    <string id="BETHELLogoBlack">BETHELLogoBlack</string>
+    <string id="BETHELLogoBlue">BETHELLogoBlue</string>
+    <string id="BETHELLogoBlueSteel">BETHELLogoBlueSteel</string>
+    <string id="BETHELLogoClassic">BETHELLogoClassic</string>
+    <string id="BETHELLogoGray">BETHELLogoGray</string>
+    <string id="BETHELLogoOrange">BETHELLogoOrange</string>
+    <string id="BETHELLogoWhite">BETHELLogoWhite</string>
+    <string id="BETHELLogoWhiteish">BETHELLogoWhiteish</string>
 
     <!-- Data field titles -->
     <string id="DataFieldNorthTitle">North Data Field</string>
