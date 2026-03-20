@@ -1,54 +1,53 @@
-#!/bin/bash -xv
+#!/bin/bash
 
-echo "Processing logo's"
+# --- Variables ---
+BASE_DIR="/home/bvpelt/Develop/analogwatch/resources/drawables"
+INPUT_DIR="./resources/drawables"
 
-# Black
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#434343;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-black.svg;export-do'
+# Define colors and their labels in an associative array (requires Bash 4+)
+declare -A COLORS=(
+    ["black"]="#434343"
+    ["classic"]="#b80200"
+    ["gray"]="#7f7f7f"
+    ["bluesteel"]="#838da0"
+    ["blue"]="#81a9d1"
+    ["orange"]="#ffca52"
+    ["whiteish"]="#a4f3ae"
+    ["white"]="#e9e9e9"
+)
 
-# Classic
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#b80200;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-classic.svg;export-do'
+# --- Function ---
+process_logo() {
+    local logo_name=$1  # e.g., "vav-logo" or "bethel-logo"
+    local selectors=$2  # e.g., "path" or "path;select-by-element:ellipse"
 
-# White
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#7f7f7f;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-gray.svg;export-do'
+    echo "Processing variants for: $logo_name"
 
-# BlueSteelProfile
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#838da0;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-bluesteel.svg;export-do'
+    for label in "${!COLORS[@]}"; do
+        local hex=${COLORS[$label]}
+        local input_file="$INPUT_DIR/$logo_name.svg"
+        local output_file="$BASE_DIR/$logo_name-$label.svg"
 
-# BlueProfile
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#81a9d1;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-blue.svg;export-do'
+        # Build the action string dynamically based on selectors
+        # We split the selectors by semicolon to apply the color to each element type
+        local actions=""
+        IFS=';' read -ra ADDR <<< "$selectors"
+        for sel in "${ADDR[@]}"; do
+            actions+="select-by-element:$sel;object-set-property:fill,$hex;"
+        done
+        actions+="export-filename:$output_file;export-do"
 
-# OrangeProfile
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#ffca52;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-orange.svg;export-do'
+        cat "$input_file" | inkscape --pipe --actions="$actions"
+    done
+}
 
-# WhitishProfile
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#a4f3ae;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-whiteish.svg;export-do'
+# --- Execution ---
+echo "Starting logo processing..."
 
-# White  
-cat ./resources/drawables/vav-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#e9e9e9;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/vav-logo-white.svg;export-do'
+# VAV Logos only target 'path'
+process_logo "vav-logo" "path"
 
-## Bethel Logos
+# Bethel Logos target 'path' and 'ellipse'
+process_logo "bethel-logo" "path;ellipse"
 
-
-# Black
-cat ./resources/drawables/bethel-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#434343;select-by-element:ellipse;object-set-property:fill,#434343;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/bethel-logo-black.svg;export-do'
-
-# Classic
-cat ./resources/drawables/bethel-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#b80200;select-by-element:ellipse;object-set-property:fill,#b80200;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/bethel-logo-classic.svg;export-do'
-
-# White
-cat ./resources/drawables/bethel-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#7f7f7f;select-by-element:ellipse;object-set-property:fill,#7f7f7f;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/bethel-logo-gray.svg;export-do'
-
-# BlueSteelProfile
-cat ./resources/drawables/bethel-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#838da0;select-by-element:ellipse;object-set-property:fill,#838da0;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/bethel-logo-bluesteel.svg;export-do'
-
-# BlueProfile
-cat ./resources/drawables/bethel-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#81a9d1;select-by-element:ellipse;object-set-property:fill,#81a9d1;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/bethel-logo-blue.svg;export-do'
-
-# OrangeProfile
-cat ./resources/drawables/bethel-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#ffca52;select-by-element:ellipse;object-set-property:fill,#ffca52;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/bethel-logo-orange.svg;export-do'
-
-# WhitishProfile
-cat ./resources/drawables/bethel-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#a4f3ae;select-by-element:ellipse;object-set-property:fill,#a4f3ae;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/bethel-logo-whiteish.svg;export-do'
-
-# White  
-cat ./resources/drawables/bethel-logo.svg | inkscape --pipe --actions='select-by-element:path;object-set-property:fill,#e9e9e9;select-by-element:ellipse;object-set-property:fill,#e9e9e9;export-filename:/home/bvpelt/Develop/analogwatch/resources/drawables/bethel-logo-white.svg;export-do'
+echo "Done!"
