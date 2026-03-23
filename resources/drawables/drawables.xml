@@ -35,4 +35,21 @@
     <bitmap id="BETHELLogoWhiteish"
         filename="bethel-logo-whiteish.svg" />
 
+    <bitmap id="KRUISLogoBlack"
+        filename="kruis-black.svg" />
+    <bitmap
+        id="KRUISLogoBlue" filename="kruis-blue.svg" />
+    <bitmap id="KRUISLogoBlueSteel"
+        filename="kruis-bluesteel.svg" />
+    <bitmap
+        id="KRUISLogoClassic"
+        filename="kruis-classic.svg" />
+    <bitmap id="KRUISLogoGray"
+        filename="kruis-gray.svg" />
+    <bitmap
+        id="KRUISLogoOrange" filename="kruis-orange.svg" />
+    <bitmap id="KRUISLogoWhite"
+        filename="kruis-white.svg" />
+    <bitmap id="KRUISLogoWhiteish"
+        filename="kruis-whiteish.svg" />
 </drawables>

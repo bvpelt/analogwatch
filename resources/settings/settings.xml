@@ -101,6 +101,14 @@
             <listEntry value="14">@Strings.BETHELLogoOrange</listEntry>
             <listEntry value="15">@Strings.BETHELLogoWhite</listEntry>
             <listEntry value="16">@Strings.BETHELLogoWhiteish</listEntry>
+            <listEntry value="17">@Strings.KRUISLogoBlack</listEntry>
+            <listEntry value="18">@Strings.KRUISLogoBlue</listEntry>
+            <listEntry value="19">@Strings.KRUISLogoBlueSteel</listEntry>
+            <listEntry value="20">@Strings.KRUISLogoClassic</listEntry>
+            <listEntry value="21">@Strings.KRUISLogoGray</listEntry>
+            <listEntry value="22">@Strings.KRUISLogoOrange</listEntry>
+            <listEntry value="23">@Strings.KRUISLogoWhite</listEntry>
+            <listEntry value="24">@Strings.KRUISLogoWhiteish</listEntry>
         </settingConfig>
     </setting>
 

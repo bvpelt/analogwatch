@@ -43,6 +43,14 @@
     <string id="BETHELLogoOrange">BETHELLogoOrange</string>
     <string id="BETHELLogoWhite">BETHELLogoWhite</string>
     <string id="BETHELLogoWhiteish">BETHELLogoWhiteish</string>
+    <string id="KRUISLogoBlack">KRUISLogoBlack</string>
+    <string id="KRUISLogoBlue">KRUISLogoBlue</string>
+    <string id="KRUISLogoBlueSteel">KRUISLogoBlueSteel</string>
+    <string id="KRUISLogoClassic">KRUISLogoClassic</string>
+    <string id="KRUISLogoGray">KRUISLogoGray</string>
+    <string id="KRUISLogoOrange">KRUISLogoOrange</string>
+    <string id="KRUISLogoWhite">KRUISLogoWhite</string>
+    <string id="KRUISLogoWhiteish">KRUISLogoWhiteish</string>
 
     <!-- Data field titles -->
     <string id="DataFieldNorthTitle">North Data Field</string>

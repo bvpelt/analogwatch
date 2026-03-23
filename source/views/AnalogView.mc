@@ -258,6 +258,31 @@ class AnalogView extends WatchUi
     if (logoName == 16) {
       return Rez.Drawables.BETHELLogoWhiteish;
     }
+
+    if (logoName == 17) {
+      return Rez.Drawables.KRUISLogoBlack;
+    }
+    if (logoName == 18) {
+      return Rez.Drawables.KRUISLogoBlue;
+    }
+    if (logoName == 19) {
+      return Rez.Drawables.KRUISLogoBlueSteel;
+    }
+    if (logoName == 20) {
+      return Rez.Drawables.KRUISLogoClassic;
+    }
+    if (logoName == 21) {
+      return Rez.Drawables.KRUISLogoGray;
+    }
+    if (logoName == 22) {
+      return Rez.Drawables.KRUISLogoOrange;
+    }
+    if (logoName == 23) {
+      return Rez.Drawables.KRUISLogoWhite;
+    }
+    if (logoName == 23) {
+      return Rez.Drawables.KRUISLogoWhiteish;
+    }
     return null;
   }
 
