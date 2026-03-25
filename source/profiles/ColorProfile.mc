@@ -3,10 +3,6 @@ using Toybox.Lang;
 // Base class for all color profiles
 class ColorProfile {
 
-  // public const VAVLogo = "VAVLogo";
-  // public const VAVLogoClassic = "VAVLogoClassic";
-  // public const VAVLogoGray = "VAVLogoGray";
-
   public var handbgcolor as Lang.Number;
   public var handfgcolor as Lang.Number;
   public var handcentercolor as Lang.Number;

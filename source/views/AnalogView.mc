@@ -115,6 +115,10 @@ class AnalogView extends WatchUi
     // Load profile
     _currentProfile = ProfileFactory.createProfile(profileId);
     _logger.debug("AnalogView", "Loaded profile: " + _currentProfile.getName());
+    if (_currentProfile.getName().equals("Custom")) {
+      var logoNumber = _propertieUtility.getPropertyNumber("LogoName", 4);
+      _backgroundImage = getLogoResourceIdFromSetting(logoNumber);
+    }
 
     // Save profile colors for custom profile use
     saveProfileToProperties();
@@ -280,7 +284,7 @@ class AnalogView extends WatchUi
     if (logoName == 23) {
       return Rez.Drawables.KRUISLogoWhite;
     }
-    if (logoName == 23) {
+    if (logoName == 24) {
       return Rez.Drawables.KRUISLogoWhiteish;
     }
     return null;
@@ -350,7 +354,7 @@ class AnalogView extends WatchUi
   private function drawBitMap(targetDc as Graphics.Dc,
                               image as Graphics.BitmapReference) as Void {
 
-    _logger.debug("AnalogView", "drawBitMap");
+    _logger.trace("AnalogView", "drawBitMap");
     var screenW = targetDc.getWidth();
     var screenH = targetDc.getHeight();
 
@@ -359,7 +363,7 @@ class AnalogView extends WatchUi
     var imageH = image.getHeight(); // original pixel height
 
     if (imageW <= 0 || imageH <= 0) {
-      _logger.debug("AnalogView", "Invalid image dimensions");
+      _logger.trace("AnalogView", "Invalid image dimensions");
       return;
     }
 
@@ -381,7 +385,7 @@ class AnalogView extends WatchUi
       drawX = (screenW - drawW) / 2;
       drawY = (screenH - drawH) / 2;
 
-      _logger.debug("AnalogView", "drawScaledBitmap: " + drawX + "," + drawY +
+      _logger.trace("AnalogView", "drawScaledBitmap: " + drawX + "," + drawY +
                                       " size: " + drawW + "x" + drawH);
 
       targetDc.drawScaledBitmap(drawX, drawY, drawW, drawH, image);
@@ -391,7 +395,7 @@ class AnalogView extends WatchUi
       drawX = (screenW - imageW) / 2;
       drawY = (screenH - imageH) / 2;
 
-      _logger.debug("AnalogView",
+      _logger.trace("AnalogView",
                     "drawBitmap fallback: " + drawX + "," + drawY);
 
       targetDc.drawBitmap(drawX, drawY, image);

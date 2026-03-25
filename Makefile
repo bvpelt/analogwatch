@@ -7,7 +7,7 @@ OUTPUT_EXT = prg
 BIN_DIR = ~/.Garmin/ConnectIQ/Sdks/connectiq-sdk-lin-8.4.0-2025-12-03-5122605dc/bin
 
 SVG_SOURCE = ./images/analogview.svg
-LOGOSVG_SOURCE = ./resources/drawables/vav-logo.svg
+LOGOSVG_SOURCE = ./resources/drawables/vav-logo.svg ./resources/drawables/kruis.svg
 
 # Sentinel files — no inline comments allowed on these lines
 ICON_STAMP = .icons_generated
@@ -60,7 +60,7 @@ icons: $(ICON_STAMP) ## Generate launcher icons from SVG (skipped if SVG unchang
 
 $(LOGO_STAMP): $(LOGOSVG_SOURCE)
 	@echo "Logo SVG changed — regenerating colored logos..."
-	rm -f ./resources/drawables/vav-logo-*.svg
+	rm -f ./resources/drawables/vav-logo-*.svg ./resources/drawables/kruis-*.svg
 	./changesvgcolor.bash $(LOGOSVG_SOURCE)
 	touch $(LOGO_STAMP)
 
@@ -105,7 +105,7 @@ clean-icons: ## Remove generated icons and stamp — forces regeneration on next
 
 clean-logos: ## Remove generated colored logos and stamp — forces regeneration on next build
 	@echo "Cleaning logos..."
-	rm -f ./resources/drawables/vav-logo-*.svg
+	rm -f ./resources/drawables/vav-logo-*.svg ./resources/drawables/kruis-*.svg
 	rm -f $(LOGO_STAMP)
 
 clean-all: clean-storage clean-icons clean-logos ## Remove everything — artifacts, storage, icons and logos
