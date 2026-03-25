@@ -85,30 +85,23 @@
 
     <setting propertyKey="@Properties.LogoName" title="@Strings.LogoNameTitle">
         <settingConfig type="list">
-            <listEntry value="1">@Strings.VAVLogoBlack</listEntry>
-            <listEntry value="2">@Strings.VAVLogoBlue</listEntry>
-            <listEntry value="3">@Strings.VAVLogoBlueSteel</listEntry>
-            <listEntry value="4">@Strings.VAVLogoClassic</listEntry>
-            <listEntry value="5">@Strings.VAVLogoGray</listEntry>
-            <listEntry value="6">@Strings.VAVLogoOrange</listEntry>
-            <listEntry value="7">@Strings.VAVLogoWhite</listEntry>
-            <listEntry value="8">@Strings.VAVLogoWhiteish</listEntry>
-            <listEntry value="9">@Strings.BETHELLogoBlack</listEntry>
-            <listEntry value="10">@Strings.BETHELLogoBlue</listEntry>
-            <listEntry value="11">@Strings.BETHELLogoBlueSteel</listEntry>
-            <listEntry value="12">@Strings.BETHELLogoClassic</listEntry>
-            <listEntry value="13">@Strings.BETHELLogoGray</listEntry>
-            <listEntry value="14">@Strings.BETHELLogoOrange</listEntry>
-            <listEntry value="15">@Strings.BETHELLogoWhite</listEntry>
-            <listEntry value="16">@Strings.BETHELLogoWhiteish</listEntry>
-            <listEntry value="17">@Strings.KRUISLogoBlack</listEntry>
-            <listEntry value="18">@Strings.KRUISLogoBlue</listEntry>
-            <listEntry value="19">@Strings.KRUISLogoBlueSteel</listEntry>
-            <listEntry value="20">@Strings.KRUISLogoClassic</listEntry>
-            <listEntry value="21">@Strings.KRUISLogoGray</listEntry>
-            <listEntry value="22">@Strings.KRUISLogoOrange</listEntry>
-            <listEntry value="23">@Strings.KRUISLogoWhite</listEntry>
-            <listEntry value="24">@Strings.KRUISLogoWhiteish</listEntry>
+            <listEntry value="0">@Strings.LogoNone</listEntry>
+            <listEntry value="1">@Strings.LogoVAV</listEntry>
+            <listEntry value="2">@Strings.LogoBETHEL</listEntry>
+            <listEntry value="3">@Strings.LogoKRUIS</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.LogoVariant" title="@Strings.LogoVariantTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.VariantBlack</listEntry>
+            <listEntry value="1">@Strings.VariantBlue</listEntry>
+            <listEntry value="2">@Strings.VariantBlueSteel</listEntry>
+            <listEntry value="3">@Strings.VariantClassic</listEntry>
+            <listEntry value="4">@Strings.VariantGray</listEntry>
+            <listEntry value="5">@Strings.VariantOrange</listEntry>
+            <listEntry value="6">@Strings.VariantWhite</listEntry>
+            <listEntry value="7">@Strings.VariantWhiteish</listEntry>
         </settingConfig>
     </setting>
 

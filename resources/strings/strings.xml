@@ -26,31 +26,20 @@
     <string id="ShowBackgroundImageTitle">Show background image</string>
     <string id="LogoNameTitle">Logo name</string>
 
-    <string id="VAVLogo">VAVLogo</string>
-    <string id="VAVLogoBlack">VAVLogoBlack</string>
-    <string id="VAVLogoBlue">VAVLogoBlue</string>
-    <string id="VAVLogoBlueSteel">VAVLogoBlueSteel</string>
-    <string id="VAVLogoClassic">VAVLogoClassic</string>
-    <string id="VAVLogoGray">VAVLogoGray</string>
-    <string id="VAVLogoOrange">VAVLogoOrange</string>
-    <string id="VAVLogoWhite">VAVLogoWhite</string>
-    <string id="VAVLogoWhiteish">VAVLogoWhiteish</string>
-    <string id="BETHELLogoBlack">BETHELLogoBlack</string>
-    <string id="BETHELLogoBlue">BETHELLogoBlue</string>
-    <string id="BETHELLogoBlueSteel">BETHELLogoBlueSteel</string>
-    <string id="BETHELLogoClassic">BETHELLogoClassic</string>
-    <string id="BETHELLogoGray">BETHELLogoGray</string>
-    <string id="BETHELLogoOrange">BETHELLogoOrange</string>
-    <string id="BETHELLogoWhite">BETHELLogoWhite</string>
-    <string id="BETHELLogoWhiteish">BETHELLogoWhiteish</string>
-    <string id="KRUISLogoBlack">KRUISLogoBlack</string>
-    <string id="KRUISLogoBlue">KRUISLogoBlue</string>
-    <string id="KRUISLogoBlueSteel">KRUISLogoBlueSteel</string>
-    <string id="KRUISLogoClassic">KRUISLogoClassic</string>
-    <string id="KRUISLogoGray">KRUISLogoGray</string>
-    <string id="KRUISLogoOrange">KRUISLogoOrange</string>
-    <string id="KRUISLogoWhite">KRUISLogoWhite</string>
-    <string id="KRUISLogoWhiteish">KRUISLogoWhiteish</string>
+    <string id="LogoNone">No logo</string>
+    <string id="LogoVAV">VAV logo</string>
+    <string id="LogoBETHEL">Bethel logo</string>
+    <string id="LogoKRUIS">Kruis logo</string>
+    <string id="LogoVariantTitle">Logo variant</string>
+
+    <string id="VariantBlack">Black</string>
+    <string id="VariantBlue">Blue</string>
+    <string id="VariantBlueSteel">Blue steel</string>
+    <string id="VariantClassic">Classic</string>
+    <string id="VariantGray">Gray</string>
+    <string id="VariantOrange">Orange</string>
+    <string id="VariantWhite">White</string>
+    <string id="VariantWhiteish">Whiteish</string>
 
     <!-- Data field titles -->
     <string id="DataFieldNorthTitle">North Data Field</string>
@@ -98,7 +87,6 @@
     <string id="DayFaceDesc">Customize the appearance for day of the watch face.</string>
     <string id="MarkerFaceTitle">Marker Settings</string>
     <string id="MarkerFaceDesc">Customize the appearance for markers on the watch face.</string>
-
 
     <string id="ColorBlack">Black</string>
     <string id="ColorJetBlack">Jet Black</string>

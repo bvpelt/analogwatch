@@ -1,5 +1,15 @@
 using Toybox.Lang;
 
+// Module-level constants — accessible anywhere without an instance
+const VARIANT_BLACK = 0;
+const VARIANT_BLUE = 1;
+const VARIANT_BLUE_STEEL = 2;
+const VARIANT_CLASSIC = 3;
+const VARIANT_GRAY = 4;
+const VARIANT_ORANGE = 5;
+const VARIANT_WHITE = 6;
+const VARIANT_WHITISH = 7;
+
 // Base class for all color profiles
 class ColorProfile {
 
@@ -46,7 +56,10 @@ class ColorProfile {
 
   function getName() as Lang.String { return "Base"; }
 
-  function getLogoResourceId() as Lang.ResourceId or Null { return null; }
+  // Override in subclasses to return matching color variant
+  function getColorVariant() as Lang.Number {
+    return VARIANT_CLASSIC; // safe default
+  }
 
   function toDictionary() as Lang.Dictionary {
     return {

@@ -48,6 +48,14 @@ class AnalogView extends WatchUi
   private const MINUTE_TICK_PEN_WIDTH = 2;
   private const START_ANGLE = 90;
 
+  // Logo family constants
+  private const LOGO_NONE = 0;
+  private const LOGO_VAV = 1;
+  private const LOGO_BETHEL = 2;
+  private const LOGO_KRUIS = 3;
+
+  private var _logoVariant = LOGO_KRUIS; // only used for CustomProfile
+
   private function initialize() {
     WatchFace.initialize();
     _logger = getLogger();
@@ -110,7 +118,8 @@ class AnalogView extends WatchUi
     _dataFieldNorth = _propertieUtility.getPropertyNumber("DataFieldNorth", 0);
     _dataFieldSouth = _propertieUtility.getPropertyNumber("DataFieldSouth", 1);
     _dataFieldWest = _propertieUtility.getPropertyNumber("DataFieldWest", 2);
-    _logoName = _propertieUtility.getPropertyNumber("LogoName", 0);
+    _logoName = _propertieUtility.getPropertyNumber("LogoName", 1);
+    _logoVariant = _propertieUtility.getPropertyNumber("LogoVariant", 3);
 
     // Load profile
     _currentProfile = ProfileFactory.createProfile(profileId);
@@ -193,22 +202,135 @@ class AnalogView extends WatchUi
     }
   }
 
+  /*
+    private function loadLogoForCurrentProfilexx()
+        as Graphics.BitmapReference or Null {
+      // Non-custom profiles own their logo
+      var resourceId = _currentProfile.getLogoResourceId();
+
+      // Custom profile (or base returns null) — fall back to manual setting
+      if (resourceId == null) {
+        resourceId = getLogoResourceIdFromSetting(_logoName);
+      }
+
+      if (resourceId == null) {
+        return null;
+      }
+
+      return Application.loadResource(resourceId as Lang.ResourceId)
+          as Graphics.BitmapReference;
+    }
+    */
+
   private function loadLogoForCurrentProfile()
       as Graphics.BitmapReference or Null {
-    // Non-custom profiles own their logo
-    var resourceId = _currentProfile.getLogoResourceId();
-
-    // Custom profile (or base returns null) — fall back to manual setting
-    if (resourceId == null) {
-      resourceId = getLogoResourceIdFromSetting(_logoName);
+    if (_logoName == LOGO_NONE) {
+      return null;
     }
 
+    // Non-custom profiles auto-select their color variant
+    // Custom profile uses the manually selected variant
+    var variant = _currentProfile.getName().equals("Custom")
+                      ? _logoVariant
+                      : _currentProfile.getColorVariant();
+
+    var resourceId = resolveLogoResource(_logoName, variant);
     if (resourceId == null) {
       return null;
     }
 
-    return Application.loadResource(resourceId as Lang.ResourceId)
-        as Graphics.BitmapReference;
+    return Application.loadResource(resourceId) as Graphics.BitmapReference;
+  }
+
+  private function resolveLogoResource(family as Lang.Number,
+                                       variant as Lang.Number)
+      as Lang.ResourceId or Null {
+
+    // VAV family
+    if (family == LOGO_VAV) {
+      if (variant == VARIANT_BLACK) {
+        return Rez.Drawables.VAVLogoBlack;
+      }
+      if (variant == VARIANT_BLUE) {
+        return Rez.Drawables.VAVLogoBlue;
+      }
+      if (variant == VARIANT_BLUE_STEEL) {
+        return Rez.Drawables.VAVLogoBlueSteel;
+      }
+      if (variant == VARIANT_CLASSIC) {
+        return Rez.Drawables.VAVLogoClassic;
+      }
+      if (variant == VARIANT_GRAY) {
+        return Rez.Drawables.VAVLogoGray;
+      }
+      if (variant == VARIANT_ORANGE) {
+        return Rez.Drawables.VAVLogoOrange;
+      }
+      if (variant == VARIANT_WHITE) {
+        return Rez.Drawables.VAVLogoWhite;
+      }
+      if (variant == VARIANT_WHITISH) {
+        return Rez.Drawables.VAVLogoWhiteish;
+      }
+    }
+
+    // BETHEL family
+    if (family == LOGO_BETHEL) {
+      if (variant == VARIANT_BLACK) {
+        return Rez.Drawables.BETHELLogoBlack;
+      }
+      if (variant == VARIANT_BLUE) {
+        return Rez.Drawables.BETHELLogoBlue;
+      }
+      if (variant == VARIANT_BLUE_STEEL) {
+        return Rez.Drawables.BETHELLogoBlueSteel;
+      }
+      if (variant == VARIANT_CLASSIC) {
+        return Rez.Drawables.BETHELLogoClassic;
+      }
+      if (variant == VARIANT_GRAY) {
+        return Rez.Drawables.BETHELLogoGray;
+      }
+      if (variant == VARIANT_ORANGE) {
+        return Rez.Drawables.BETHELLogoOrange;
+      }
+      if (variant == VARIANT_WHITE) {
+        return Rez.Drawables.BETHELLogoWhite;
+      }
+      if (variant == VARIANT_WHITISH) {
+        return Rez.Drawables.BETHELLogoWhiteish;
+      }
+    }
+
+    // KRUIS family
+    if (family == LOGO_KRUIS) {
+      if (variant == VARIANT_BLACK) {
+        return Rez.Drawables.KRUISLogoBlack;
+      }
+      if (variant == VARIANT_BLUE) {
+        return Rez.Drawables.KRUISLogoBlue;
+      }
+      if (variant == VARIANT_BLUE_STEEL) {
+        return Rez.Drawables.KRUISLogoBlueSteel;
+      }
+      if (variant == VARIANT_CLASSIC) {
+        return Rez.Drawables.KRUISLogoClassic;
+      }
+      if (variant == VARIANT_GRAY) {
+        return Rez.Drawables.KRUISLogoGray;
+      }
+      if (variant == VARIANT_ORANGE) {
+        return Rez.Drawables.KRUISLogoOrange;
+      }
+      if (variant == VARIANT_WHITE) {
+        return Rez.Drawables.KRUISLogoWhite;
+      }
+      if (variant == VARIANT_WHITISH) {
+        return Rez.Drawables.KRUISLogoWhiteish;
+      }
+    }
+
+    return null;
   }
 
   // Manual logo selection — only used for CustomProfile
