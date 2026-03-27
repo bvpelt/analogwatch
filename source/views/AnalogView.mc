@@ -41,7 +41,8 @@ class AnalogView extends WatchUi
   private var _iconFont;
   private var _analogFont;
   private var _backgroundBuffer as Graphics.BufferedBitmap ? ;
-  private var _backgroundImage as Graphics.BitmapReference or Null;
+  private var _backgroundImage as WatchUi.BitmapResource or
+      Graphics.BitmapReference or Null;
 
   // Constants
   private const SECOND_PEN_WIDTH = 3;
@@ -60,7 +61,6 @@ class AnalogView extends WatchUi
     WatchFace.initialize();
     _logger = getLogger();
     _propertieUtility = getPropertieUtility();
-    //   _heartRateReader = new HeartRateReader();
 
     // Initialize drawers
     _faceDrawer = new FaceDrawer();
@@ -124,10 +124,6 @@ class AnalogView extends WatchUi
     // Load profile
     _currentProfile = ProfileFactory.createProfile(profileId);
     _logger.debug("AnalogView", "Loaded profile: " + _currentProfile.getName());
-    if (_currentProfile.getName().equals("Custom")) {
-      var logoNumber = _propertieUtility.getPropertyNumber("LogoName", 4);
-      _backgroundImage = getLogoResourceIdFromSetting(logoNumber);
-    }
 
     // Save profile colors for custom profile use
     saveProfileToProperties();
@@ -167,6 +163,8 @@ class AnalogView extends WatchUi
 
     if (_showBackgroundImage) {
       _backgroundImage = loadLogoForCurrentProfile();
+      _logger.debug("AnalogView",
+                    "Loaded logo image _backgroundImage: " + _backgroundImage);
     } else {
       _backgroundImage = null;
     }
@@ -201,26 +199,6 @@ class AnalogView extends WatchUi
                     "Buffer created: " + (_backgroundBuffer != null));
     }
   }
-
-  /*
-    private function loadLogoForCurrentProfilexx()
-        as Graphics.BitmapReference or Null {
-      // Non-custom profiles own their logo
-      var resourceId = _currentProfile.getLogoResourceId();
-
-      // Custom profile (or base returns null) — fall back to manual setting
-      if (resourceId == null) {
-        resourceId = getLogoResourceIdFromSetting(_logoName);
-      }
-
-      if (resourceId == null) {
-        return null;
-      }
-
-      return Application.loadResource(resourceId as Lang.ResourceId)
-          as Graphics.BitmapReference;
-    }
-    */
 
   private function loadLogoForCurrentProfile()
       as Graphics.BitmapReference or Null {
@@ -336,6 +314,8 @@ class AnalogView extends WatchUi
   // Manual logo selection — only used for CustomProfile
   private function getLogoResourceIdFromSetting(logoName as Lang.Number)
       as Lang.ResourceId or Null {
+    _logger.debug("AnalogView",
+                  "getLogoResourceIdFromSetting logoName: " + logoName);
     if (logoName == 1) {
       return Rez.Drawables.VAVLogoBlack;
     }
@@ -419,22 +399,15 @@ class AnalogView extends WatchUi
       onLayout(dc);
     }
 
-    // Only redraw static buffer when dirty (settings changed, first draw, etc.)
-    if (_bufferDirty) {
-      drawStaticToBuffer(dc);
-      _bufferDirty = false;
-    }
-
-    // Copy buffer to screen
     if (_backgroundBuffer != null) {
-      _logger.trace("AnalogView", "=== onUpdate, draw from buffer ===");
-      // Buffer exists — copy it to screen, this clears previous hands
+      // API 4+ Devices: Use the buffer
+      if (_bufferDirty) {
+        drawStaticToBuffer(dc);
+        _bufferDirty = false;
+      }
       dc.drawBitmap(0, 0, _backgroundBuffer);
     } else {
-      _logger.trace("AnalogView",
-                    "=== onUpdate, drawStaticElements - not from buffer ===");
-      // No buffer — must clear and redraw static elements every frame
-      // otherwise old hands accumulate on screen
+      // API 3.x Devices (like FR55): Redraw static elements directly to screen
       dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
       dc.clear();
       drawStaticElements(dc);
@@ -473,19 +446,16 @@ class AnalogView extends WatchUi
     }
   }
 
-  private function drawBitMap(targetDc as Graphics.Dc,
-                              image as Graphics.BitmapReference) as Void {
-
-    _logger.trace("AnalogView", "drawBitMap");
+  // Notice I removed the strict `Graphics.BitmapReference` type so it accepts
+  // API 3 resources
+  private function drawBitMap(targetDc as Graphics.Dc, image) as Void {
     var screenW = targetDc.getWidth();
     var screenH = targetDc.getHeight();
 
-    // Get original image dimensions
-    var imageW = image.getWidth();  // original pixel width
-    var imageH = image.getHeight(); // original pixel height
+    var imageW = image.getWidth();
+    var imageH = image.getHeight();
 
     if (imageW <= 0 || imageH <= 0) {
-      _logger.trace("AnalogView", "Invalid image dimensions");
       return;
     }
 
@@ -494,33 +464,38 @@ class AnalogView extends WatchUi
     var drawW;
     var drawH;
 
-    targetDc.setColor(_currentProfile.handfgcolor, Graphics.COLOR_TRANSPARENT);
-
+    // Place the logo at the top (25% down the screen) instead of dead center
     if (targetDc has: drawScaledBitmap) {
-      // Calculate scale to fit while preserving aspect ratio
       var scaleX = screenW.toFloat() / imageW.toFloat();
       var scaleY = screenH.toFloat() / imageH.toFloat();
-      var scale = scaleX < scaleY ? scaleX : scaleY; // min()
+      var scale = scaleX < scaleY ? scaleX : scaleY;
 
       drawW = (imageW * scale * 0.8).toNumber();
       drawH = (imageH * scale * 0.8).toNumber();
       drawX = (screenW - drawW) / 2;
-      drawY = (screenH - drawH) / 2;
+      drawY = (screenH - drawH) / 2; // Upper half
 
-      _logger.trace("AnalogView", "drawScaledBitmap: " + drawX + "," + drawY +
-                                      " size: " + drawW + "x" + drawH);
+      _logger.debug("AnalogView", "drawBitMap scaled x: " + drawX +
+                                      " y: " + drawY + " width: " + drawW +
+                                      " height: " + drawH);
 
-      targetDc.drawScaledBitmap(drawX, drawY, drawW, drawH, image);
-
+      try {
+        targetDc.drawScaledBitmap(drawX, drawY, drawW, drawH, image);
+      } catch (e) {
+        _logger.error("AnalogView",
+                      "drawScaledBitmap exception: " + e.toString());
+      }
     } else {
-      // Fallback for older devices — draw unscaled, just center it
+      // Fallback for FR55 and older devices
       drawX = (screenW - imageW) / 2;
-      drawY = (screenH - imageH) / 2;
+      drawY = (screenH - imageH) / 2; // Upper half
+      _logger.debug("AnalogView", "drawBitMap x: " + drawX + " y: " + drawY);
 
-      _logger.trace("AnalogView",
-                    "drawBitmap fallback: " + drawX + "," + drawY);
-
-      targetDc.drawBitmap(drawX, drawY, image);
+      try {
+        targetDc.drawBitmap(drawX, drawY, image);
+      } catch (e) {
+        _logger.error("AnalogView", "drawBitmap exception: " + e.toString());
+      }
     }
   }
 
@@ -536,6 +511,11 @@ class AnalogView extends WatchUi
                             _layout["numberText"], _currentProfile);
 
     if (_showBackgroundImage) {
+      _logger.debug(
+          "AnalogView",
+          "drawStaticElements _showBackgroundImage: " + _showBackgroundImage +
+              " _backgroundImage width: " + _backgroundImage.getWidth() +
+              " height: " + _backgroundImage.getHeight());
       drawBitMap(dc, _backgroundImage);
     }
   }
@@ -582,9 +562,64 @@ class AnalogView extends WatchUi
   private function logDeviceInfo() as Void {
     var ds = System.getDeviceSettings();
     _logger.debug("AnalogView", "Device: " + ds.partNumber);
+    _logger.debug("AnalogView", "firmwareversion: " + ds.firmwareVersion);
     _logger.debug("AnalogView",
                   "Screen: " + ds.screenWidth + "x" + ds.screenHeight);
     _logger.debug("AnalogView", "API: " + ds.monkeyVersion.toString());
+
+    _logger.debug("AnalogView", "uniqueIdentifier: " + ds.uniqueIdentifier);
+
+    if (ds has: heightUnits) {
+      _logger.debug("AnalogView", "heightUnits: " + ds.heightUnits.toString());
+    }
+
+    if (ds has: inputButtons) {
+      _logger.debug("AnalogView",
+                    "inputButtons: " +
+                        ViewUtil.inputButtonsToString(ds.inputButtons));
+    }
+
+    if (ds has: isEnhancedReadabilityModeEnabled) {
+      _logger.debug("AnalogView",
+                    "isEnhancedReadabilityModeEnabled: " +
+                        ds.isEnhancedReadabilityModeEnabled.toString());
+    }
+
+    if (ds has: isGlanceModeEnabled) {
+
+      _logger.debug("AnalogView", "isGlanceModeEnabled: " +
+                                      ds.isGlanceModeEnabled.toString());
+    }
+
+    if (ds has: isTouchScreen) {
+      _logger.debug("AnalogView",
+                    "isTouchScreen: " + ds.isTouchScreen.toString());
+    }
+
+    if (ds has: paceUnits) {
+      _logger.debug("AnalogView", "paceUnits: " + ds.paceUnits.toString());
+    }
+
+    if (ds has: phoneOperatingSystem) {
+      _logger.debug("AnalogView", "phoneOperatingSystem: " +
+                                      ViewUtil.phoneOperatingSystemToString(
+                                          ds.phoneOperatingSystem));
+    }
+
+    if (ds has: requiresBurnInProtection) {
+      _logger.debug("AnalogView",
+                    "requiresBurnInProtection: " + ds.requiresBurnInProtection);
+    }
+
+    if (ds has: screenShape) {
+      _logger.debug("AnalogView",
+                    "screenShape: " +
+                        ViewUtil.screenShapeToString(ds.screenShape));
+    }
+
+    if (DRAG_TYPE_START has: vibrateOn) {
+      _logger.debug("AnalogView", "vibrateOn: " + ds.vibrateOn);
+    }
   }
 }
 

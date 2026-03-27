@@ -2,11 +2,8 @@ using Toybox.Math;
 using Toybox.Lang;
 
 class LayoutCalculator {
-  //  private var _logger;
 
-  function initialize() {
-    //_logger = getLogger();
-  }
+  function initialize() {}
 
   function calculateLayout(dc, useOuterCircle) as Lang.Dictionary {
     var centerX = dc.getWidth() / 2;

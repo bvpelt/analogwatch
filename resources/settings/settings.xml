@@ -103,6 +103,7 @@
             <listEntry value="6">@Strings.VariantWhite</listEntry>
             <listEntry value="7">@Strings.VariantWhiteish</listEntry>
         </settingConfig>
+        
     </setting>
 
     <setting propertyKey="@Properties.DataFieldNorth" title="@Strings.DataFieldNorthTitle">

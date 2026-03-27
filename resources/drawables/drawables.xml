@@ -1,55 +1,70 @@
 <drawables xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
     <bitmap id="VAVLogoBlack"
-        filename="vav-logo-black.svg" />
+        filename="vav-logo-black.svg" scaleX="45%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
-        id="VAVLogoBlue" filename="vav-logo-blue.svg" />
+        id="VAVLogoBlue" filename="vav-logo-blue.svg" scaleX="45%" scaleRelativeTo="screen"
+        dithering="none" />
     <bitmap id="VAVLogoBlueSteel"
-        filename="vav-logo-bluesteel.svg" />
+        filename="vav-logo-bluesteel.svg" scaleX="45%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
         id="VAVLogoClassic"
-        filename="vav-logo-classic.svg" />
-    <bitmap id="VAVLogoGray" filename="vav-logo-gray.svg" />
+        filename="vav-logo-classic.svg" scaleX="45%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
-        id="VAVLogoOrange" filename="vav-logo-orange.svg" />
+        id="VAVLogoGray" filename="vav-logo-gray.svg" scaleX="45%" scaleRelativeTo="screen"
+        dithering="none" />
+    <bitmap
+        id="VAVLogoOrange" filename="vav-logo-orange.svg" scaleX="45%" scaleRelativeTo="screen"
+        dithering="none" />
     <bitmap id="VAVLogoWhite"
-        filename="vav-logo-white.svg" />
-    <bitmap id="VAVLogoWhiteish"
-        filename="vav-logo-whiteish.svg" />
-
-    <bitmap id="BETHELLogoBlack"
-        filename="bethel-logo-black.svg" />
+        filename="vav-logo-white.svg" scaleX="45%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
-        id="BETHELLogoBlue" filename="bethel-logo-blue.svg" />
+        id="VAVLogoWhiteish"
+        filename="vav-logo-whiteish.svg" scaleX="45%" scaleRelativeTo="screen" dithering="none" />
+
+    <bitmap
+        id="BETHELLogoBlack"
+        filename="bethel-logo-black.svg" scaleX="35%" scaleRelativeTo="screen" dithering="none" />
+    <bitmap
+        id="BETHELLogoBlue" filename="bethel-logo-blue.svg" scaleX="35%" scaleRelativeTo="screen"
+        dithering="none" />
     <bitmap id="BETHELLogoBlueSteel"
-        filename="bethel-logo-bluesteel.svg" />
+        filename="bethel-logo-bluesteel.svg" scaleX="35%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
         id="BETHELLogoClassic"
-        filename="bethel-logo-classic.svg" />
-    <bitmap id="BETHELLogoGray"
-        filename="bethel-logo-gray.svg" />
+        filename="bethel-logo-classic.svg" scaleX="35%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
-        id="BETHELLogoOrange" filename="bethel-logo-orange.svg" />
+        id="BETHELLogoGray"
+        filename="bethel-logo-gray.svg" scaleX="35%" scaleRelativeTo="screen" dithering="none" />
+    <bitmap
+        id="BETHELLogoOrange" filename="bethel-logo-orange.svg" scaleX="35%"
+        scaleRelativeTo="screen" dithering="none" />
     <bitmap id="BETHELLogoWhite"
-        filename="bethel-logo-white.svg" />
-    <bitmap id="BETHELLogoWhiteish"
-        filename="bethel-logo-whiteish.svg" />
-
-    <bitmap id="KRUISLogoBlack"
-        filename="kruis-black.svg" />
+        filename="bethel-logo-white.svg" scaleX="35%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
-        id="KRUISLogoBlue" filename="kruis-blue.svg" />
+        id="BETHELLogoWhiteish"
+        filename="bethel-logo-whiteish.svg" scaleX="35%" scaleRelativeTo="screen" dithering="none" />
+
+    <bitmap
+        id="KRUISLogoBlack"
+        filename="kruis-black.svg" scaleX="30%" scaleRelativeTo="screen" dithering="none" />
+    <bitmap
+        id="KRUISLogoBlue" filename="kruis-blue.svg" scaleX="30%" scaleRelativeTo="screen"
+        dithering="none" />
     <bitmap id="KRUISLogoBlueSteel"
-        filename="kruis-bluesteel.svg" />
+        filename="kruis-bluesteel.svg" scaleX="30%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
         id="KRUISLogoClassic"
-        filename="kruis-classic.svg" />
-    <bitmap id="KRUISLogoGray"
-        filename="kruis-gray.svg" />
+        filename="kruis-classic.svg" scaleX="30%" scaleRelativeTo="screen" dithering="none" />
     <bitmap
-        id="KRUISLogoOrange" filename="kruis-orange.svg" />
+        id="KRUISLogoGray"
+        filename="kruis-gray.svg" scaleX="30%" scaleRelativeTo="screen" dithering="none" />
+    <bitmap
+        id="KRUISLogoOrange" filename="kruis-orange.svg" scaleX="30%" scaleRelativeTo="screen"
+        dithering="none" />
     <bitmap id="KRUISLogoWhite"
-        filename="kruis-white.svg" />
-    <bitmap id="KRUISLogoWhiteish"
-        filename="kruis-whiteish.svg" />
+        filename="kruis-white.svg" scaleX="30%" scaleRelativeTo="screen" dithering="none" />
+    <bitmap
+        id="KRUISLogoWhiteish"
+        filename="kruis-whiteish.svg" scaleX="30%" scaleRelativeTo="screen" dithering="none" />
 </drawables>

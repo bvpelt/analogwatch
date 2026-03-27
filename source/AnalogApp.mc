@@ -8,15 +8,12 @@ class AnalogApp extends Application
   private var _analogView;
   private var _logger;
   private var _propertieUtility;
-  //  private var _phoneConnection;
-  //  private var _lastPhoneConnectionStatus;
 
   function initialize() {
     AppBase.initialize();
     _logger = getLogger();
-    //    _phoneConnection = getPhoneConnection();
     _propertieUtility = getPropertieUtility();
-    //    _lastPhoneConnectionStatus = false;
+
     _logger.debug("AnalogApp", "=== AnalogApp initialize START ===");
 
     var minimumDebugLevel =
@@ -39,7 +36,6 @@ class AnalogApp extends Application
     _logger.debug("AnalogApp", "=== AnalogApp initialize COMPLETE ===");
   }
 
-  // Use manually tracked view
   function onHeartbeat() as Void {
     // Update the current display
     WatchUi.requestUpdate();
@@ -51,8 +47,8 @@ class AnalogApp extends Application
     // 1. Update the IsCustomProfile logic
     var profile = Application.Properties.getValue("ColorProfile");
 
-    // If profile is 4 (Custom), set the hidden property to true
-    Application.Properties.setValue("IsCustomProfile", profile == 4);
+    // If profile is 7 (Custom), set the hidden property to true
+    Application.Properties.setValue("IsCustomProfile", profile == 7);
 
     // 2. Tell the active views to refresh their colors/settings
     // Since we use Singletons, we can call them directly

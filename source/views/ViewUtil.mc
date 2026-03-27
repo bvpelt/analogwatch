@@ -7,15 +7,17 @@ module ViewUtil {
   var _logger = getLogger();
 
   public function drawBlueTooth(dc as Graphics.Dc, x, y, font, color) as Void {
-    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
     var bluetoothIcon = "\ue904";
-    // var bluetoothIcon = "\uF000";
+
+    dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+
     dc.drawText(x, y, font, bluetoothIcon,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
   }
 
   public function drawBattery(dc as Graphics.Dc, x, y, font, percentage) {
     var batterySymbol = mapPercentageToBatterySymbol(percentage);
+
     dc.drawText(x, y, font, batterySymbol,
                 Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
   }
@@ -79,77 +81,6 @@ module ViewUtil {
     return batterySymbol;
   }
 
-  /*
-  BUTTON_INPUT_SELECT	0x00000001
-  API Level 1.2.0
-
-  BUTTON_INPUT_UP	0x00000002
-  API Level 1.2.0
-
-  BUTTON_INPUT_DOWN	0x00000004
-  API Level 1.2.0
-
-  BUTTON_INPUT_MENU	0x00000008
-  API Level 1.2.0
-
-  BUTTON_INPUT_CLOCK	0x00000010
-  API Level 3.1.0
-
-  BUTTON_INPUT_DOWN_LEFT	0x00000020
-  API Level 3.1.0
-
-  BUTTON_INPUT_DOWN_RIGHT	0x00000040
-  API Level 3.1.0
-
-  BUTTON_INPUT_ESC	0x00000080
-  API Level 3.1.0
-
-  BUTTON_INPUT_FIND	0x00000100
-  API Level 3.1.0
-
-  BUTTON_INPUT_LAP	0x00000200
-  API Level 3.1.0
-
-  BUTTON_INPUT_LEFT	0x00000400
-  API Level 3.1.0
-
-  BUTTON_INPUT_LIGHT	0x00000800
-  API Level 3.1.0
-
-  BUTTON_INPUT_MODE	0x00001000
-  API Level 3.1.0
-
-  BUTTON_INPUT_PAGE	0x00002000
-  API Level 3.1.0
-
-  BUTTON_INPUT_POWER	0x00004000
-  API Level 3.1.0
-
-  BUTTON_INPUT_RESET	0x00008000
-  API Level 3.1.0
-
-  BUTTON_INPUT_RIGHT	0x00010000
-  API Level 3.1.0
-
-  BUTTON_INPUT_SPORT	0x00020000
-  API Level 3.1.0
-
-  BUTTON_INPUT_START	0x00040000
-  API Level 3.1.0
-
-  BUTTON_INPUT_UP_LEFT	0x00080000
-  API Level 3.1.0
-
-  BUTTON_INPUT_UP_RIGHT	0x00100000
-  API Level 3.1.0
-
-  BUTTON_INPUT_ZIN	0x00200000
-  API Level 3.1.0
-
-  BUTTON_INPUT_ZOUT	0x00400000
-  API Level 3.1.0
-
-  */
   public function inputButtonsToString(inputButtons as System.ButtonInputs) {
     var buttons = "";
 
@@ -225,17 +156,7 @@ module ViewUtil {
 
     return buttons;
   }
-  /*
-  PHONE_OS_NOT_KNOWN	0
-  API Level 5.1.0
 
-  PHONE_OS_ANDROID	1
-  API Level 5.1.0
-
-  PHONE_OS_IOS	2
-  API Level 5.1.0
-
-  */
   public function phoneOperatingSystemToString(
       phoneOperatingSystem as System.PhoneOperatingSystem) {
     var pos = "";
@@ -254,19 +175,6 @@ module ViewUtil {
     return pos;
   }
 
-  /*
-  SCREEN_SHAPE_ROUND	1
-  API Level 1.2.0
-
-  SCREEN_SHAPE_SEMI_ROUND	2
-  API Level 1.2.0
-
-  SCREEN_SHAPE_RECTANGLE	3
-  API Level 1.2.0
-
-  SCREEN_SHAPE_SEMI_OCTAGON	4
-  API Level 3.3.0
-  */
   public function screenShapeToString(screenShape as System.ScreenShape) {
     var shape = "";
 
