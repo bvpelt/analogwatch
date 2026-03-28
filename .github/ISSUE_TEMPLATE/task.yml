@@ -1,0 +1,33 @@
+name: 🔧 Task
+description: Internal development task
+labels: [task]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      placeholder: |
+        - [ ] Condition 1
+        - [ ] Condition 2
+
+  - type: input
+    id: related
+    attributes:
+      label: Related Issues / PRs
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - Refactor
+        - CI/CD
+        - Documentation
+        - Testing
