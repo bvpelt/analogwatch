@@ -6,15 +6,15 @@ class FaceDrawer {
 
   function initialize() { _logger = getLogger(); }
 
-  function drawFace(dc, layout as Lang.Dictionary, profile,
-                    useOuterCircle) as Void {
+  function drawFace(dc, layout as Lang.Dictionary, profile, useOuterCircle,
+                    centerRadius) as Void {
     _logger.trace("FaceDrawer", "Drawing face");
 
     var centerX = layout["centerX"];
     var centerY = layout["centerY"];
     var r097 = layout["r097"];
     var r090 = layout["r090"];
-    var r004 = layout["r004"];
+    //   var r004 = layout["r004"];
     var outerPenWidth = layout["outerPenWidth"];
     var innerPenWidth = layout["innerPenWidth"];
 
@@ -31,8 +31,9 @@ class FaceDrawer {
     dc.drawCircle(centerX, centerY, r090);
 
     if (profile.handcentercolor != profile.facebgcolor) {
+      _logger.debug("FaceDrawer", "drawFace centerRadius: " + centerRadius);
       dc.setColor(profile.handcentercolor, Graphics.COLOR_TRANSPARENT);
-      dc.fillCircle(centerX, centerY, r004);
+      dc.fillCircle(centerX, centerY, centerRadius);
     }
   }
 

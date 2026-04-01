@@ -2,10 +2,9 @@ using Toybox.Graphics;
 using Toybox.Math;
 using Toybox.Lang;
 
-class HandDrawer {
-  // private var _logger;
+class HandDrawer extends HandBaseDrawer {
 
-  function initialize() { /* _logger = getLogger(); */ }
+  function initialize() { HandBaseDrawer.initialize(); }
 
   function drawHands(dc, clockTime, layout as Lang.Dictionary, profile,
                      updateEverySecond, secondPenWidth) as Void {

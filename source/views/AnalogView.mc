@@ -13,7 +13,7 @@ class AnalogView extends WatchUi
 
   // Utilities
   private var _faceDrawer;
-  private var _handDrawer;
+  private var _handDrawer as HandBaseDrawer;
   private var _dateDrawer;
   private var _dataFieldDrawer;
   private var _layoutCalculator;
@@ -64,7 +64,7 @@ class AnalogView extends WatchUi
 
     // Initialize drawers
     _faceDrawer = new FaceDrawer();
-    _handDrawer = new HandDrawer();
+    _handDrawer = new SvgHandDrawer(); // new HandDrawer();
     _dateDrawer = new DateDrawer();
     _dataFieldDrawer = new DataFieldDrawer();
     _layoutCalculator = new LayoutCalculator();
@@ -501,7 +501,15 @@ class AnalogView extends WatchUi
 
   private function drawStaticElements(dc) as Void {
 
-    _faceDrawer.drawFace(dc, _layout, _currentProfile, _useOuterCircle);
+    var centerRadius = _layout["r004"];
+
+    if (_handDrawer instanceof SvgHandDrawer) {
+      centerRadius = (_layout["r004"] * 0.5).toNumber();
+      _logger.debug("AnalogView",
+                    "drawStaticElements svg centerRadius: " + centerRadius);
+    }
+    _faceDrawer.drawFace(dc, _layout, _currentProfile, _useOuterCircle,
+                         centerRadius);
 
     _faceDrawer.drawHourMarkers(dc, _layout["hourMarkerPoints"],
                                 _currentProfile);

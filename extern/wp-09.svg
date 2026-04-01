@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   id="svg1"
+   width="50"
+   height="120.75"
+   viewBox="0 0 50 120.75"
+   sodipodi:docname="wp-09.svg"
+   inkscape:version="1.4.3 (fcd0343856, 2026-01-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="30.575569"
+     inkscape:cx="15.469867"
+     inkscape:cy="58.559825"
+     inkscape:window-width="1854"
+     inkscape:window-height="1131"
+     inkscape:window-x="66"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <g
+     id="layer3" inkscape:label="Center"
+     transform="translate(-65,-10)">
+    <circle
+       id="path2"
+       style="fill:#b3b3b3;stroke-linecap:round"
+       cx="70"
+       cy="70"
+       r="5" />
+  </g>
+  <g
+     id="layer1" inkscape:label="BigHand"
+     transform="matrix(0.5,0,0,1.034153,-30,-10.34153)">
+    <!-- Outer shape -->
+    <path
+       id="big_outside"
+       style="fill:#b3b3b3;stroke-linecap:round"
+       d="m 70,66.5 -4,-4 V 20 l 4,-10 4,10 v 42.5 z" />
+    <!-- Corrected inner shape (parallel + symmetric) -->
+    <path
+       id="big_inside"
+       style="fill:#999999;stroke-linecap:round"
+       d="M 70,65 67.5,62.5 V 22 l 2.5,-7 2.5,7 v 40.5 z" />
+  </g>
+  <g
+     id="layer2" inkscape:label="SmallHand"
+     transform="matrix(1,0,0,0.5,-65,25)">
+    <path
+       id="small_outside"
+       style="fill:#b3b3b3;stroke-linecap:round"
+       d="M 73.5,70 L 79.5,64 H 103 l 12,6 -12,6 H 79.5 Z" />
+    <path
+       id="small_inside"
+       style="fill:#999999;stroke-width:0.707107;stroke-linecap:round"
+       d="M 73.5,70 L 77.5,68 H 103 l 8,2 -8,2 H 77.5 Z" />
+  </g>
+  <g
+     id="layer4" inkscape:label="Seconds"
+     transform="translate(-65,-10)">
+    <path
+       id="second"
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round"
+       d="M 70,73.5 V 130" />
+  </g>
+</svg>
