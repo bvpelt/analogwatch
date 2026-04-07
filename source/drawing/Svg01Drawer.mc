@@ -3,7 +3,7 @@ using Toybox.Graphics;
 using Toybox.Math;
 using Toybox.Lang;
 
-class SvgHandDrawer extends HandBaseDrawer {
+class Svg01Drawer extends HandBaseDrawer {
 
   function initialize() { HandBaseDrawer.initialize(); }
 
@@ -41,15 +41,15 @@ class SvgHandDrawer extends HandBaseDrawer {
 
   // ─── Minute hand ─────────────────────────────────────────────────────────
   //
-  // SVG source (center 100,200, points UP, total length 200):
-  //   Outer: (100,192.5) (95,187.5) (95,5) (100,0) (105,5) (105,187.5)
-  //   Inner: (100,187.5) (97.5,185) (97.5,7.5) (100,5) (102.5,7.5) (102.5,185)
+  // SVG source (center 100,200, points UP, total forward length 200):
+  //   Outer: (100,185) (95,180) (95,5) (100,0) (105,5) (105,180)
+  //   Inner: (100,177.5) (97.5,175) (97.5,10) (100,7.5) (102.5,10) (102.5,175)
   //
   // Normalized: forward = (200-y)/200,  lateral = (x-100)/5
-  //   Outer forward ratios: -0.0375, 0.0625, 0.975, 1.0, 0.975, 0.0625
-  //   Outer lateral ratios:  0,     -1.0,   -1.0,  0,   1.0,   1.0
-  //   Inner forward ratios:  0.0625, 0.075,  0.9625, 0.975, 0.9625, 0.075
-  //   Inner lateral ratios:  0,     -1.0,   -1.0,  0,    1.0,   1.0
+  //   Outer forward ratios:  0.075, 0.10, 0.975, 1.0, 0.975, 0.10
+  //   Outer lateral ratios:  0,    -1.0, -1.0,   0,   1.0,   1.0
+  //   Inner forward ratios:  0.1125, 0.125, 0.95, 0.9625, 0.95, 0.125
+  //   Inner lateral ratios:  0,     -1.0,  -1.0,  0,      1.0,  1.0
 
   private function drawMinuteHand(dc, angle, length, width, centerX, centerY,
                                   profile) as Void {
@@ -79,39 +79,32 @@ class SvgHandDrawer extends HandBaseDrawer {
 
   private function buildMinuteOuterPolygon(cx, cy, cos, sin, l,
                                            w) as Lang.Array<Lang.Number> {
-    // Normalized shape from SVG:
-    // fwd:  -0.0375  0.0625  0.975  1.0   0.975   0.0625
-    // lat:   0.0    -1.0    -1.0    0.0   1.0     1.0
     return buildPolygon(cx, cy, cos, sin, l, w, [
-      [-0.0375, 0.0], [0.0625, -1.0], [0.975, -1.0], [1.0, 0.0], [0.975, 1.0],
-      [0.0625, 1.0]
+      [0.075, 0.0], [0.10, -1.0], [0.975, -1.0], [1.0, 0.0], [0.975, 1.0],
+      [0.10, 1.0]
     ]);
   }
 
   private function buildMinuteInnerPolygon(cx, cy, cos, sin, l,
                                            w) as Lang.Array<Lang.Number> {
-    // Normalized shape from SVG:
-    // fwd:  0.0625  0.075  0.9625  0.975  0.9625  0.075
-    // lat:  0.0    -1.0   -1.0     0.0    1.0     1.0
     return buildPolygon(cx, cy, cos, sin, l, w, [
-      [0.0625, 0.0], [0.075, -1.0], [0.9625, -1.0], [0.975, 0.0], [0.9625, 1.0],
-      [0.075, 1.0]
+      [0.1125, 0.0], [0.125, -1.0], [0.95, -1.0], [0.9625, 0.0], [0.95, 1.0],
+      [0.125, 1.0]
     ]);
   }
 
   // ─── Hour hand ───────────────────────────────────────────────────────────
   //
-  // SVG source (center 100,200, points RIGHT, total length 162.5):
-  //   Outer: (107.5,200) (112.5,192.5) (257.5,192.5) (262.5,200)
-  //          (257.5,207.5) (112.5,207.5)
-  //   Inner: (112.5,200) (117.5,195) (252.5,195) (257.5,200)
-  //          (252.5,205) (117.5,205)
+  // SVG source (center 100,200, points RIGHT, total forward length 160):
+  //   Outer: (115,200) (120,192.5) (255,192.5) (260,200) (255,207.5)
+  //   (120,207.5) Inner: (120,200) (125,195) (250,195) (255,200) (250,205)
+  //   (125,205)
   //
-  // Normalized: forward = (x-100)/162.5,  lateral = (200-y)/7.5
-  //   Outer fwd:  0.0462  0.0769  0.9692  1.0   0.9692  0.0769
-  //   Outer lat:  0.0     1.0     1.0     0.0  -1.0    -1.0
-  //   Inner fwd:  0.0769  0.1077  0.9385  0.9692  0.9385  0.1077
-  //   Inner lat:  0.0     1.0     1.0     0.0    -1.0    -1.0
+  // Normalized: forward = (x-100)/160,  lateral = (200-y)/7.5
+  //   Outer fwd:  0.09375  0.125  0.96875  1.0  0.96875  0.125
+  //   Outer lat:  0.0      1.0    1.0      0.0 -1.0     -1.0
+  //   Inner fwd:  0.125    0.15625 0.9375  0.96875 0.9375 0.15625
+  //   Inner lat:  0.0      1.0     1.0     0.0    -1.0   -1.0
 
   private function drawHourHand(dc, angle, length, width, centerX, centerY,
                                 profile) as Void {
@@ -137,25 +130,27 @@ class SvgHandDrawer extends HandBaseDrawer {
     }
   }
 
-  private function buildHourOuterPolygon(cx, cy, cos, sin, l, w) as Lang.Array<Lang.Number> {
+  private function buildHourOuterPolygon(cx, cy, cos, sin, l,
+                                         w) as Lang.Array<Lang.Number> {
     return buildPolygon(cx, cy, cos, sin, l, w, [
-      [0.0462, 0.0], [0.0769, 1.0], [0.9692, 1.0], [1.0, 0.0], [0.9692, -1.0],
-      [0.0769, -1.0]
+      [0.09375, 0.0], [0.125, 1.0], [0.96875, 1.0], [1.0, 0.0], [0.96875, -1.0],
+      [0.125, -1.0]
     ]);
   }
 
-  private function buildHourInnerPolygon(cx, cy, cos, sin, l, w) as Lang.Array<Lang.Number> {
+  private function buildHourInnerPolygon(cx, cy, cos, sin, l,
+                                         w) as Lang.Array<Lang.Number> {
     return buildPolygon(cx, cy, cos, sin, l, w, [
-      [0.0769, 0.0], [0.1077, 1.0], [0.9385, 1.0], [0.9692, 0.0],
-      [0.9385, -1.0], [0.1077, -1.0]
+      [0.125, 0.0], [0.15625, 1.0], [0.9375, 1.0], [0.96875, 0.0],
+      [0.9375, -1.0], [0.15625, -1.0]
     ]);
   }
 
   // ─── Second hand ─────────────────────────────────────────────────────────
   //
-  // SVG: line from (100, 207.5) to (100, 390)
+  // SVG: line from (100, 215) to (100, 390)
   // Center at (100, 200), points DOWN (opposite of minute)
-  // Tail: 7.5/190 = 0.0395 of total forward length behind center
+  // Tail: 15/190 = 0.0789 of total forward length behind center
   // Total forward = 190 units
 
   private function drawSecondHand(dc, second, centerX, centerY, radius,
@@ -167,9 +162,10 @@ class SvgHandDrawer extends HandBaseDrawer {
     var cos = Math.cos(secondAngle);
     var sin = Math.sin(secondAngle);
 
-    // Tail: 7.5/190 = ~0.0395 behind center
-    // Tip:  190/190 = 1.0 (scaled to 75% of radius to match original)
-    var tailRatio = 0.0395;
+    // Tail: 15/190 = ~0.0789 behind center
+    // Tip:  190/190 = 1.0 (scaled to 75% of radius to match original scaling
+    // strategy)
+    var tailRatio = 0.0789;
     var tipRatio = 0.75;
 
     var x1 = (centerX - cos * radius * tailRatio).toNumber();
@@ -188,8 +184,9 @@ class SvgHandDrawer extends HandBaseDrawer {
   // l             : hand length in pixels (e.g. r070 for minute hand)
   // w             : half-width in pixels  (e.g. r025 for minute hand)
 
-  private function buildPolygon(cx, cy, cos, sin, l, w,
-                                  shape as Lang.Array<Lang.Array<Lang.Float>>) as Lang.Array<Lang.Number> {
+  private function buildPolygon(
+      cx, cy, cos, sin, l, w,
+      shape as Lang.Array<Lang.Array<Lang.Float>>) as Lang.Array<Lang.Number> {
     var result = new[shape.size()];
     for (var i = 0; i < shape.size(); i++) {
       var fwd = (shape[i][0] as Lang.Float) * l;
@@ -201,6 +198,4 @@ class SvgHandDrawer extends HandBaseDrawer {
     }
     return result;
   }
-
-  
 }

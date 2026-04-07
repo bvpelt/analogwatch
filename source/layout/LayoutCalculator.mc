@@ -16,7 +16,7 @@ class LayoutCalculator {
                    "radius" => radius,
                    "outerPenWidth" => calculatePenWidth(radius * 0.06),
                    "innerPenWidth" => calculatePenWidth(radius * 0.01),
-                   "loadPenWidth" => calculatePenWidth(radius * 0.05),
+                   "loadPenWidth" => calculatePenWidth(radius * 0.06),
                    "dateBoxOutlinePenWidth" =>
                        calculatePenWidth(radius * 0.008) };
 

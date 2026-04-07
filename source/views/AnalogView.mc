@@ -64,7 +64,7 @@ class AnalogView extends WatchUi
 
     // Initialize drawers
     _faceDrawer = new FaceDrawer();
-    _handDrawer = new SvgHandDrawer(); // new HandDrawer();
+    _handDrawer = new Svg03Drawer(); // new HandDrawer();
     _dateDrawer = new DateDrawer();
     _dataFieldDrawer = new DataFieldDrawer();
     _layoutCalculator = new LayoutCalculator();
@@ -503,11 +503,6 @@ class AnalogView extends WatchUi
 
     var centerRadius = _layout["r004"];
 
-    if (_handDrawer instanceof SvgHandDrawer) {
-      centerRadius = (_layout["r004"] * 0.5).toNumber();
-      _logger.debug("AnalogView",
-                    "drawStaticElements svg centerRadius: " + centerRadius);
-    }
     _faceDrawer.drawFace(dc, _layout, _currentProfile, _useOuterCircle,
                          centerRadius);
 

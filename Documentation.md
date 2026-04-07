@@ -169,3 +169,31 @@ Simplify: If there are too many dots (nodes), go to Path > Simplify (Ctrl + L) t
 
 Pro Tip: Contrast is King
 The "Trace Bitmap" tool looks for contrast. If your source image is blurry or has low contrast, use a photo editor first to crank up the brightness and contrast. The cleaner the input, the sharper the output.
+
+
+# Graphic system
+
+## Coordinates
+```text
+(0,0) ─────────────────────────> +X (Width)
+  │  Top-Left Corner
+  │
+  │
+  │             (Center)
+  │        (width/2, height/2)
+  │
+  │
+  │
+  v
+ +Y (Height)
+ ```
+
+ ## Angles
+
+ | Angle | Axis  Alignment | Clock Position |
+ |------:|----------------:|---------------:|
+ | 0°    | Positive X (+X) | 3 o'clock      |
+ | 90°   | Negative Y (-Y) | 12 o'clock     |
+ | 180°  | Negative X (-X) | 9 o'clock      |
+ | 270°  | Positive Y (+Y) | 6 o'clock      |
+ | 360°  | Positive X (+X) | 3 o'clock      |

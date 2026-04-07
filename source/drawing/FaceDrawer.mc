@@ -14,7 +14,6 @@ class FaceDrawer {
     var centerY = layout["centerY"];
     var r097 = layout["r097"];
     var r090 = layout["r090"];
-    //   var r004 = layout["r004"];
     var outerPenWidth = layout["outerPenWidth"];
     var innerPenWidth = layout["innerPenWidth"];
 
