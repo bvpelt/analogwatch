@@ -10,6 +10,14 @@
     <string id="Connected">Connected</string>
     <string id="Disconnected">Disconnected</string>
 
+
+    <string id="ClockStyleTitle">Clock Style</string>
+    <string id="Svg00">SVG 00</string>
+    <string id="Svg01">SVG 01</string>
+    <string id="Svg02">SVG 02</string>
+    <string id="Svg03">SVG 03</string>
+
+    
     <!-- Profile names -->
     <string id="ColorProfileTitle">Color Profile</string>
     <string id="ProfileClassic">Classic</string>

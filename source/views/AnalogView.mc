@@ -64,7 +64,7 @@ class AnalogView extends WatchUi
 
     // Initialize drawers
     _faceDrawer = new FaceDrawer();
-    _handDrawer = new Svg03Drawer(); // new HandDrawer();
+    _handDrawer = new Svg00Drawer(); // new HandDrawer();
     _dateDrawer = new DateDrawer();
     _dataFieldDrawer = new DataFieldDrawer();
     _layoutCalculator = new LayoutCalculator();
@@ -120,6 +120,23 @@ class AnalogView extends WatchUi
     _dataFieldWest = _propertieUtility.getPropertyNumber("DataFieldWest", 2);
     _logoName = _propertieUtility.getPropertyNumber("LogoName", 1);
     _logoVariant = _propertieUtility.getPropertyNumber("LogoVariant", 3);
+
+    // Load clock style
+    var clockStyle = _propertieUtility.getPropertyNumber("ClockStyle", 0);
+    _logger.debug("AnalogView", "Selected clockStyle: " + clockStyle);
+    if (clockStyle == 0) {
+      _handDrawer = new Svg00Drawer();
+    } else if (clockStyle == 1) {
+      _handDrawer = new Svg01Drawer();
+    } else if (clockStyle == 2) {
+      _handDrawer = new Svg02Drawer();
+    } else if (clockStyle == 3) {
+      _handDrawer = new Svg03Drawer();
+    } else {
+      _logger.warn("AnalogView", "Invalid clockStyle: " + clockStyle +
+                                     " defaulting to Svg00Drawer");
+      _handDrawer = new Svg00Drawer();
+    }
 
     // Load profile
     _currentProfile = ProfileFactory.createProfile(profileId);

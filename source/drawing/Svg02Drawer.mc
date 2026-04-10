@@ -11,42 +11,6 @@ class Svg02Drawer extends HandBaseDrawer {
 
   function initialize() { HandBaseDrawer.initialize(); }
 
-  // ── Public entry point ────────────────────────────────────────────────────
-  // Drop-in replacement for HandDrawer.drawHands() — identical signature
-
-  function drawHands(dc, clockTime, layout as Lang.Dictionary, profile,
-                     updateEverySecond, secondPenWidth) as Void {
-    var hour = clockTime.hour % 12;
-    var minute = clockTime.min;
-    var second = clockTime.sec;
-
-    var centerX = layout["centerX"];
-    var centerY = layout["centerY"];
-    var radius = layout["radius"];
-    var r055 = layout["r055"];
-    var r070 = layout["r070"];
-    var r035 = layout["r035"];
-    var r025 = layout["r025"];
-
-    var hourAngle =
-        (hour * Math.PI) / 6.0 + (minute * Math.PI) / 360.0 - Math.PI / 2.0;
-
-    var minuteAngle =
-        (minute * Math.PI) / 30.0 + (second * Math.PI) / 1800.0 - Math.PI / 2.0;
-
-    // Draw order: hour first, then minute on top, second last
-    drawHourHand(dc, hourAngle, r055, r035, centerX, centerY, profile);
-    drawMinuteHand(dc, minuteAngle, r070, r025, centerX, centerY, profile);
-
-    if (updateEverySecond && profile.secondfgcolor != profile.facebgcolor) {
-      drawSecondHand(dc, second, centerX, centerY, radius, secondPenWidth,
-                     profile);
-    }
-
-    // Center cap drawn last — always on top
-    // drawCenterCap(dc, centerX, centerY, r025, profile);
-  }
-
   // ── Minute hand ───────────────────────────────────────────────────────────
   //
   // Shape from SVG "Small" layer — pentagon (arrow pointing forward):
@@ -59,8 +23,8 @@ class Svg02Drawer extends HandBaseDrawer {
   //
   // Inner accent is same shape, scaled to 50% half-width, slightly shorter
 
-  private function drawMinuteHand(dc, angle, length, width, centerX, centerY,
-                                  profile) as Void {
+  protected function drawMinuteHand(dc, angle, length, width, centerX, centerY,
+                                    profile) as Void {
     var cos = Math.cos(angle).toFloat();
     var sin = Math.sin(angle).toFloat();
     var l = length.toFloat();
@@ -104,8 +68,8 @@ class Svg02Drawer extends HandBaseDrawer {
   //  Inner accent: same shape from (0.096) to arrowhead at (0.979)
   //  Circle accent: at forward ratio 0.884, radius = 3.82 × half-width
 
-  private function drawHourHand(dc, angle, length, width, centerX, centerY,
-                                profile) as Void {
+  protected function drawHourHand(dc, angle, length, width, centerX, centerY,
+                                  profile) as Void {
     var cos = Math.cos(angle).toFloat();
     var sin = Math.sin(angle).toFloat();
     var l = length.toFloat();
@@ -161,8 +125,8 @@ class Svg02Drawer extends HandBaseDrawer {
   // tip extends 0.75 × radius forward.
   // Decorative circle at tail end.
 
-  private function drawSecondHand(dc, second, centerX, centerY, radius,
-                                  penWidth, profile) as Void {
+  protected function drawSecondHand(dc, second, centerX, centerY, radius,
+                                    penWidth, profile) as Void {
     var angle = (second * Math.PI) / 30.0 - Math.PI / 2.0;
     var cos = Math.cos(angle);
     var sin = Math.sin(angle);
@@ -207,26 +171,4 @@ class Svg02Drawer extends HandBaseDrawer {
       dc.drawCircle(centerX, centerY, r);
     }
   */
-  // ── Core polygon builder ──────────────────────────────────────────────────
-  //
-  // Converts normalized (forwardRatio, lateralRatio) pairs to screen coords.
-  //   fwd:  0.0 = center, 1.0 = tip, negative = behind center (tail)
-  //   lat: -1.0 = full left, 0.0 = centerline, +1.0 = full right
-  //   l   = hand length in pixels (e.g. r070 for minute hand)
-  //   w   = hand half-width in pixels (e.g. r025 for minute hand)
-
-  private function buildPolygon(
-      cx, cy, cos, sin, l, w,
-      shape as Lang.Array<Lang.Array<Lang.Float>>) as Lang.Array<Lang.Number> {
-    var pts = new[shape.size()];
-    for (var i = 0; i < shape.size(); i++) {
-      var fwd = (shape[i][0] as Lang.Float) * l;
-      var lat = (shape[i][1] as Lang.Float) * w;
-      pts[i] = [
-        (cx + cos * fwd - sin * lat).toNumber(),
-        (cy + sin * fwd + cos * lat).toNumber()
-      ];
-    }
-    return pts;
-  }
 }

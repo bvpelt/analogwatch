@@ -9,6 +9,9 @@
     -->
     <property id="MinimalDebugLevel" type="number">1</property>
 
+    <!-- Clock style -->
+    <property id="ClockStyle" type="number">0</property>
+
     <!-- Profile selector -->
     <property id="ColorProfile" type="number">0</property>
 

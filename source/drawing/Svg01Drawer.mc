@@ -7,38 +7,6 @@ class Svg01Drawer extends HandBaseDrawer {
 
   function initialize() { HandBaseDrawer.initialize(); }
 
-  // Drop-in replacement for HandDrawer.drawHands() — same signature
-  function drawHands(dc, clockTime, layout as Lang.Dictionary, profile,
-                     updateEverySecond, secondPenWidth) as Void {
-    var hour = clockTime.hour % 12;
-    var minute = clockTime.min;
-    var second = clockTime.sec;
-
-    var centerX = layout["centerX"];
-    var centerY = layout["centerY"];
-    var radius = layout["radius"];
-    var r055 = layout["r055"];
-    var r070 = layout["r070"];
-    var r035 = layout["r035"];
-    var r025 = layout["r025"];
-
-    // Hour hand
-    var hourAngle =
-        (hour * Math.PI) / 6 + (minute * Math.PI) / 360 - Math.PI / 2;
-    drawHourHand(dc, hourAngle, r055, r035, centerX, centerY, profile);
-
-    // Minute hand
-    var minuteAngle =
-        (minute * Math.PI) / 30 + (second * Math.PI) / 1800 - Math.PI / 2;
-    drawMinuteHand(dc, minuteAngle, r070, r025, centerX, centerY, profile);
-
-    // Second hand
-    if (updateEverySecond && profile.secondfgcolor != profile.facebgcolor) {
-      drawSecondHand(dc, second, centerX, centerY, radius, secondPenWidth,
-                     profile);
-    }
-  }
-
   // ─── Minute hand ─────────────────────────────────────────────────────────
   //
   // SVG source (center 100,200, points UP, total forward length 200):
@@ -51,8 +19,8 @@ class Svg01Drawer extends HandBaseDrawer {
   //   Inner forward ratios:  0.1125, 0.125, 0.95, 0.9625, 0.95, 0.125
   //   Inner lateral ratios:  0,     -1.0,  -1.0,  0,      1.0,  1.0
 
-  private function drawMinuteHand(dc, angle, length, width, centerX, centerY,
-                                  profile) as Void {
+  protected function drawMinuteHand(dc, angle, length, width, centerX, centerY,
+                                    profile) as Void {
     var cos = Math.cos(angle);
     var sin = Math.sin(angle);
 
@@ -106,8 +74,8 @@ class Svg01Drawer extends HandBaseDrawer {
   //   Inner fwd:  0.125    0.15625 0.9375  0.96875 0.9375 0.15625
   //   Inner lat:  0.0      1.0     1.0     0.0    -1.0   -1.0
 
-  private function drawHourHand(dc, angle, length, width, centerX, centerY,
-                                profile) as Void {
+  protected function drawHourHand(dc, angle, length, width, centerX, centerY,
+                                  profile) as Void {
     var cos = Math.cos(angle);
     var sin = Math.sin(angle);
 
@@ -153,8 +121,8 @@ class Svg01Drawer extends HandBaseDrawer {
   // Tail: 15/190 = 0.0789 of total forward length behind center
   // Total forward = 190 units
 
-  private function drawSecondHand(dc, second, centerX, centerY, radius,
-                                  penWidth, profile) as Void {
+  protected function drawSecondHand(dc, second, centerX, centerY, radius,
+                                    penWidth, profile) as Void {
     var secondAngle = (second * Math.PI) / 30 - Math.PI / 2;
     dc.setColor(profile.secondfgcolor, Graphics.COLOR_TRANSPARENT);
     dc.setPenWidth(penWidth);
@@ -174,28 +142,5 @@ class Svg01Drawer extends HandBaseDrawer {
     var y2 = (centerY + sin * radius * tipRatio).toNumber();
 
     dc.drawLine(x1, y1, x2, y2);
-  }
-
-  // ─── Core polygon builder ─────────────────────────────────────────────────
-  //
-  // Converts normalized (forwardRatio, lateralRatio) pairs to screen coords.
-  // forwardRatio  : 0.0 = center, 1.0 = tip, negative = tail
-  // lateralRatio  : -1.0 = full left, 0.0 = center line, 1.0 = full right
-  // l             : hand length in pixels (e.g. r070 for minute hand)
-  // w             : half-width in pixels  (e.g. r025 for minute hand)
-
-  private function buildPolygon(
-      cx, cy, cos, sin, l, w,
-      shape as Lang.Array<Lang.Array<Lang.Float>>) as Lang.Array<Lang.Number> {
-    var result = new[shape.size()];
-    for (var i = 0; i < shape.size(); i++) {
-      var fwd = (shape[i][0] as Lang.Float) * l;
-      var lat = (shape[i][1] as Lang.Float) * w;
-      result[i] = [
-        (cx + cos * fwd - sin * lat).toNumber(),
-        (cy + sin * fwd + cos * lat).toNumber()
-      ];
-    }
-    return result;
   }
 }

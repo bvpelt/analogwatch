@@ -11,37 +11,6 @@ class Svg03Drawer extends HandBaseDrawer {
     _logger = getLogger();
   }
 
-  function drawHands(dc, clockTime, layout as Lang.Dictionary, profile,
-                     updateEverySecond, secondPenWidth) as Void {
-    var hour = clockTime.hour % 12;
-    var minute = clockTime.min;
-    var second = clockTime.sec;
-
-    var centerX = layout["centerX"];
-    var centerY = layout["centerY"];
-    var radius = layout["radius"];
-    var r055 = layout["r055"];
-    var r070 = layout["r070"];
-    var r035 = layout["r035"];
-    var r025 = layout["r025"];
-
-    var hourAngle =
-        (hour * Math.PI) / 6.0 + (minute * Math.PI) / 360.0 - Math.PI / 2.0;
-
-    var minuteAngle =
-        (minute * Math.PI) / 30.0 + (second * Math.PI) / 1800.0 - Math.PI / 2.0;
-
-    drawHourHand(dc, hourAngle, r055, r035, centerX, centerY, profile);
-    drawMinuteHand(dc, minuteAngle, r070, r025, centerX, centerY, profile);
-
-    if (updateEverySecond && profile.secondfgcolor != profile.facebgcolor) {
-      drawSecondHand(dc, second, centerX, centerY, radius, secondPenWidth,
-                     profile);
-    }
-
-    drawCenterCap(dc, centerX, centerY, r025, profile);
-  }
-
   // ── Minute hand ───────────────────────────────────────────────────────────
   // Shape: needle pointing forward
   //
@@ -52,8 +21,8 @@ class Svg03Drawer extends HandBaseDrawer {
   //       └──────────────────────┘
   //         rect body         triangle tip
 
-  private function drawMinuteHand(dc, angle, length, width, centerX, centerY,
-                                  profile) as Void {
+  protected function drawMinuteHand(dc, angle, length, width, centerX, centerY,
+                                    profile) as Void {
     var cos = Math.cos(angle).toFloat();
     var sin = Math.sin(angle).toFloat();
     var l = length.toFloat();
@@ -94,8 +63,8 @@ class Svg03Drawer extends HandBaseDrawer {
   //   tail●─────────────────────────►tip
   //             ●  ← circle at fwd=0.55
 
-  private function drawHourHand(dc, angle, length, width, centerX, centerY,
-                                profile) as Void {
+  protected function drawHourHand(dc, angle, length, width, centerX, centerY,
+                                  profile) as Void {
     var cos = Math.cos(angle).toFloat();
     var sin = Math.sin(angle).toFloat();
     var l = length.toFloat();
@@ -126,6 +95,7 @@ class Svg03Drawer extends HandBaseDrawer {
       dc.fillPolygon(pts);
     }
 
+    /*
     // Decorative circle on hand body at fwd=0.55
     var circleR = (w * 2.0f).toNumber();
     if (circleR < 2) {
@@ -137,12 +107,13 @@ class Svg03Drawer extends HandBaseDrawer {
     dc.fillCircle(bcx, bcy, circleR);
     dc.setColor(profile.handbgcolor, Graphics.COLOR_TRANSPARENT);
     dc.drawCircle(bcx, bcy, circleR);
+    */
   }
 
   // ── Second hand ───────────────────────────────────────────────────────────
 
-  private function drawSecondHand(dc, second, centerX, centerY, radius,
-                                  penWidth, profile) as Void {
+  protected function drawSecondHand(dc, second, centerX, centerY, radius,
+                                    penWidth, profile) as Void {
     var angle = (second * Math.PI) / 30.0 - Math.PI / 2.0;
     var cos = Math.cos(angle);
     var sin = Math.sin(angle);
@@ -159,9 +130,12 @@ class Svg03Drawer extends HandBaseDrawer {
 
     // Decorative circle at tail end
     var tailR = (radius * 0.06f).toNumber();
-    if (tailR < 4) {
-      tailR = 4;
+    if (tailR < 3) {
+      tailR = 3;
     }
+    _logger.debug("Svg03Drawer",
+                  "drawSecondHand decorative circle tail end: tail=(" + x1 +
+                      "," + y1 + ") r=" + tailR);
     dc.fillCircle(x1, y1, tailR);
   }
 
@@ -169,39 +143,14 @@ class Svg03Drawer extends HandBaseDrawer {
 
   private function drawCenterCap(dc, centerX, centerY, width, profile) as Void {
     var r = (width * 0.9f).toNumber();
-    if (r < 3) {
-      r = 3;
+    if (r < 2) {
+      r = 2;
     }
+    _logger.debug("Svg03Drawer", "drawCenterCap: center=(" + centerX + "," +
+                                     centerY + ") width=" + width + " r=" + r);
     dc.setColor(profile.handcentercolor, Graphics.COLOR_TRANSPARENT);
     dc.fillCircle(centerX, centerY, r);
     dc.setColor(profile.handbgcolor, Graphics.COLOR_TRANSPARENT);
     dc.drawCircle(centerX, centerY, r);
-  }
-
-  // ── Core polygon builder ──────────────────────────────────────────────────
-  //
-  // shape[i] = [forwardRatio, lateralRatio]
-  //   forwardRatio : 0.0=center, 1.0=tip, negative=behind center
-  //   lateralRatio : -1.0=full left, 0.0=centerline, +1.0=full right
-  //   l = hand length in pixels
-  //   w = hand half-width in pixels
-  //
-  // Screen transform:
-  //   x = cx + cos*fwd - sin*lat
-  //   y = cy + sin*fwd + cos*lat
-
-  private function buildPolygon(
-      cx, cy, cos, sin, l, w,
-      shape as Lang.Array<Lang.Array<Lang.Float>>) as Lang.Array<Lang.Number> {
-    var pts = new[shape.size()];
-    for (var i = 0; i < shape.size(); i++) {
-      var fwd = (shape[i][0] as Lang.Float) * l;
-      var lat = (shape[i][1] as Lang.Float) * w;
-      pts[i] = [
-        (cx + cos * fwd - sin * lat).toNumber(),
-        (cy + sin * fwd + cos * lat).toNumber()
-      ];
-    }
-    return pts;
   }
 }

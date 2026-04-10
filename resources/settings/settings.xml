@@ -70,6 +70,15 @@
         </settingConfig>
     </setting>
 
+    <setting propertyKey="@Properties.ClockStyle" title="@Strings.ClockStyleTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.Svg00</listEntry>
+            <listEntry value="1">@Strings.Svg01</listEntry>
+            <listEntry value="2">@Strings.Svg02</listEntry>
+            <listEntry value="3">@Strings.Svg03</listEntry>
+        </settingConfig>
+    </setting>
+
     <setting propertyKey="@Properties.UpdateSeconds" title="@Strings.UpdateSecondsTitle">
         <settingConfig type="boolean" />
     </setting>
@@ -103,7 +112,7 @@
             <listEntry value="6">@Strings.VariantWhite</listEntry>
             <listEntry value="7">@Strings.VariantWhiteish</listEntry>
         </settingConfig>
-        
+
     </setting>
 
     <setting propertyKey="@Properties.DataFieldNorth" title="@Strings.DataFieldNorthTitle">
